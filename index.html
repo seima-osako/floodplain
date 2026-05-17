@@ -671,21 +671,21 @@ tr:hover td{background:rgba(255,255,255,.02)}
 
   <h3>Flood Mechanism Taxonomy</h3>
   <div class="acc-item open">
-    <div class="acc-header">Three Flood Types + Compound Events</div>
+    <div class="acc-header">Three Flood Types + Japanese Terms</div>
     <div class="acc-body">
       <table>
-        <tr><th>Type</th><th>Driver</th><th>Typical Setting</th><th>Key Characteristic</th></tr>
-        <tr><td><strong>Pluvial</strong></td><td>Rainfall exceeds soil/drain capacity</td><td>Urban, impervious surfaces, flat terrain</td><td>Most under-mapped; no FIRM coverage in most cities; dominates urban claims</td></tr>
-        <tr><td><strong>Fluvial</strong></td><td>River overbank flow</td><td>Valleys, floodplains</td><td>Best mapped (FIRMs); NFIP system designed primarily for this</td></tr>
-        <tr><td><strong>Coastal</strong></td><td>Storm surge, wave runup, sea level rise</td><td>Shorelines, estuaries</td><td>V zones; tidal influence; SLOSH/ADCIRC models; no FIRM in U.S. territories</td></tr>
-        <tr><td><strong>Compound</strong></td><td>Multiple mechanisms simultaneously</td><td>River mouths, urban coastal areas</td><td>Helene = pluvial+fluvial in Appalachians; not captured in any single FIRM analysis</td></tr>
-        <tr><td><strong>Great Lakes</strong></td><td>Lake level, wind setup, wave runup, seiches</td><td>Great Lakes shoreline</td><td>No astronomical tide; seiches up to ~3 ft; bluff failure; 6.33 ft total level range</td></tr>
+        <tr><th>Type</th><th>日本で通じやすい言い方</th><th>Driver</th><th>Key Characteristic</th></tr>
+        <tr><td><strong>Pluvial</strong></td><td>内水氾濫・雨水出水・都市型浸水</td><td>局地的な降雨が下水・排水・地表浸透能力を超える</td><td>河川洪水とは別に評価。内水浸水想定区域図や内水ハザードマップの整備状況は自治体差が大きい</td></tr>
+        <tr><td><strong>Fluvial</strong></td><td>外水氾濫・河川氾濫・洪水</td><td>河川水位上昇、越水、破堤、堤内地への氾濫</td><td>洪水浸水想定区域図・洪水ハザードマップの主対象。水深、浸水継続時間、家屋倒壊等氾濫想定区域と結びつく</td></tr>
+        <tr><td><strong>Coastal</strong></td><td>高潮・高波・沿岸浸水</td><td>高潮、波浪、潮位、湖面水位、津波など</td><td>高潮浸水想定区域、津波浸水想定などで扱う。水位だけでなく波力、漂流物、洗掘が支配的</td></tr>
+        <tr><td><strong>Compound</strong></td><td>複合型浸水</td><td>内水+外水、高潮+河川、高潮+内水などが同時・連鎖的に発生</td><td>単一のハザード区分では見落としやすい。排水先の河川・海面水位が高い時に内水が抜けないケースが典型</td></tr>
+        <tr><td><strong>Great Lakes</strong></td><td>湖岸・大水面沿岸の浸水</td><td>湖面水位、吹き寄せ、波浪、seiche</td><td>この workshop 固有の文脈。日本で説明するなら湖岸・湾奥・沿岸低地の水位変動に近い</td></tr>
       </table>
     </div>
   </div>
 
   <!-- FLOOD TYPES DIAGRAM -->
-  <h3>洪水メカニズム図解 — Three Flood Types</h3>
+  <h3>洪水メカニズム図解 — 内水・外水・沿岸浸水</h3>
   <div class="diagram">
     <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" style="background:#0f1117">
       <defs>
@@ -737,9 +737,9 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <!-- Label -->
       <rect x="10" y="12" width="100" height="22" rx="4" fill="#1d3a6b"/>
       <text x="60" y="27" text-anchor="middle" fill="#60a5fa" font-size="12" font-weight="700" font-family="sans-serif">PLUVIAL</text>
-      <text x="150" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">降雨超過型</text>
-      <text x="150" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">最も過小評価されているリスク</text>
-      <text x="150" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">FIRMによる把握: ほぼゼロ</text>
+      <text x="150" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">内水氾濫・雨水出水</text>
+      <text x="150" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">排水能力を超える局地豪雨</text>
+      <text x="150" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">整備状況は自治体差が大きい</text>
 
       <!-- === PANEL 2: FLUVIAL === -->
       <!-- Ground/valley -->
@@ -760,9 +760,9 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <!-- Label -->
       <rect x="310" y="12" width="100" height="22" rx="4" fill="#064e3b"/>
       <text x="360" y="27" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700" font-family="sans-serif">FLUVIAL</text>
-      <text x="450" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">河川氾濫型</text>
-      <text x="450" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">FIRMが最も詳細に把握</text>
-      <text x="450" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">NFIP設計の主対象</text>
+      <text x="450" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">外水氾濫・河川氾濫</text>
+      <text x="450" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">洪水浸水想定区域図の主対象</text>
+      <text x="450" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">越水・破堤・河道からの氾濫</text>
 
       <!-- === PANEL 3: COASTAL === -->
       <!-- Sky/sea background -->
@@ -780,18 +780,18 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <polygon points="618,110 635,98 653,110" fill="#4b5563"/>
       <!-- Storm surge arrow -->
       <path d="M760,100 L720,100 L720,120" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arr)"/>
-      <text x="770" y="104" fill="#f59e0b" font-size="9" font-family="sans-serif">storm surge</text>
+      <text x="770" y="104" fill="#f59e0b" font-size="9" font-family="sans-serif">高潮</text>
       <!-- Wave runup indicator -->
       <line x1="680" y1="115" x2="680" y2="145" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2"/>
-      <text x="684" y="112" fill="#fbbf24" font-size="8" font-family="sans-serif">runup</text>
+      <text x="684" y="112" fill="#fbbf24" font-size="8" font-family="sans-serif">遡上</text>
       <!-- Label -->
       <rect x="610" y="12" width="100" height="22" rx="4" fill="#7f1d1d"/>
       <text x="660" y="27" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="700" font-family="sans-serif">COASTAL</text>
-      <text x="750" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">高潮・波浪型</text>
-      <text x="750" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">V/VEゾーン: 波浪力あり</text>
-      <text x="750" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">乾式防水: 絶対禁止</text>
+      <text x="750" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">高潮・高波・沿岸浸水</text>
+      <text x="750" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">波力・漂流物・洗掘が支配的</text>
+      <text x="750" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">津波は別シナリオで扱うことが多い</text>
     </svg>
-    <div class="diagram-label">3種類の洪水メカニズム — 複合型(Compound)はHelene(2024)やMilwaukee(2025)で発生</div>
+    <div class="diagram-label">3種類の洪水メカニズム — Pluvial=内水、Fluvial=外水、Coastal=沿岸浸水として理解すると日本でも通じやすい</div>
   </div>
 
   <h3>Nonstructural Mitigation Toolbox</h3>
@@ -1103,6 +1103,38 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <tr><td><strong>STRLF/STORM Act</strong></td><td>IIJA-funded</td><td>$500M FY22–FY26</td><td>Active; revolving loan fund for mitigation infrastructure</td></tr>
       </table>
       <div class="highlight green"><strong>Application timing alert:</strong> BRIC FY24+FY25 applications due July 23, 2026 — 7 weeks after this conference. Ready-to-implement infrastructure projects are prioritized. If your community has a shovel-ready project, this is the conversation to have at the conference.</div>
+    </div>
+  </div>
+
+  <h3>USACE Nonstructural Delivery Context</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Why USACE Matters for Workshop 2</div>
+    <div class="acc-body">
+      <p>Workshop 2 is not only about which building retrofit works. The live policy question is who can deliver nonstructural mitigation at scale when FEMA hazard mitigation is politically unstable. ASFPM's October 2025 commentary frames USACE as a long-standing but contested implementer of nonstructural flood mitigation.</p>
+      <table>
+        <tr><th>Context</th><th>Why it matters</th></tr>
+        <tr><td><strong>WRDA Section 73 (1974)</strong></td><td>USACE has had authority to evaluate nonstructural alternatives in flood damage reduction studies for more than 50 years.</td></tr>
+        <tr><td><strong>WRDA Section 202 (1981)</strong></td><td>The Tug Fork / Levisa Fork / Upper Cumberland work became a landmark mixed structural + nonstructural flood damage reduction example.</td></tr>
+        <tr><td><strong>NNC / ERDC / FM Approvals</strong></td><td>USACE built national expertise around floodproofing research, testing, and certification; ERDC water-testing capacity supports flood mitigation equipment evaluation.</td></tr>
+        <tr><td><strong>Delivery tension</strong></td><td>Recent debate over pausing new USACE nonstructural projects raises the question: if communities want elevations, floodproofing, and acquisitions, which federal agency is responsible for implementation?</td></tr>
+        <tr><td><strong>Scale signal</strong></td><td>ASFPM reports 88,000+ structures identified for nonstructural mitigation in approved or developing USACE projects. This is not a niche retrofit topic.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header">FIMP Case Study — Fire Island to Montauk Point</div>
+    <div class="acc-body">
+      <p>The USACE New York District FIMP nonstructural program is a concrete example of the workshop toolbox becoming an implementation program.</p>
+      <ul>
+        <li><strong>Project type:</strong> Coastal Storm Risk Management (CSRM) with a nonstructural component.</li>
+        <li><strong>Scale:</strong> ASFPM describes FIMP as elevating and floodproofing 4,000+ structures in the 10-year floodplain along 83 miles of New York shoreline.</li>
+        <li><strong>Pilot:</strong> Mastic Beach and Frederick Shores; 245 structures in the pilot area; construction scheduled to begin in 2026; broader nonstructural implementation scheduled to begin in 2027.</li>
+        <li><strong>Eligibility logic:</strong> Homes identified in the 10-year floodplain and not already elevated; prior federal elevation funding can make a home ineligible.</li>
+        <li><strong>Implementation design:</strong> Voluntary opt-in, homeowner applications, Rights of Entry, restrictive covenants, title/loan subordination, surveys, elevation certificates, code compliance, and HTRW/asbestos responsibilities.</li>
+        <li><strong>Environmental clearance:</strong> Final Supplemental Environmental Assessment and Final Finding of No Significant Impact issued for the pilot in November 2025.</li>
+      </ul>
+      <div class="highlight amber"><strong>Workshop angle:</strong> FIMP shows that "nonstructural" becomes a real estate, construction sequencing, sponsor, documentation, and OMRRR problem as soon as it leaves the slide deck.</div>
     </div>
   </div>
 
@@ -1596,6 +1628,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="q-why">Why: Highly practical question that may save a community months of wasted application preparation.</div>
   </div>
 
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q7 · USACE Delivery</div>
+    <div class="q-text">FEMA HMA programs are unstable, while USACE has more than 50 years of nonstructural authority and active programs like FIMP. If communities increasingly want elevation, floodproofing, relocation, and acquisition at scale, how should they decide whether to pursue FEMA HMA funding versus USACE project authorities, and who owns implementation risk after construction?</div>
+    <div class="q-why">Why sharp: Moves the discussion from "what works technically" to "which institution can actually deliver it, inspect it, maintain it, and carry liability."</div>
+  </div>
+
   <h3>Questions to Avoid / Not Lead With</h3>
   <div class="card danger">
     <h4>Avoid These — They Signal Non-Expert Status</h4>
@@ -1671,6 +1709,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="arg-topic">Pluvial Flooding Gap</div>
     <div class="arg-claim">Pluvial flooding is the fastest-growing urban flood risk and is essentially unmapped by the current FIRM system.</div>
     <div class="arg-evidence">~25% of NFIP claims come from outside the SFHA — many attributable to pluvial flooding. Urban catchment concentration times under 30 minutes. Storm sewer systems designed for 2–10 year storms are overwhelmed by 100-year events. FEMA has no systematic methodology for pluvial FIRM delineation. Milwaukee August 9–10, 2025 was primarily pluvial — most damaged properties were not in the SFHA.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">USACE Delivery Capacity</div>
+    <div class="arg-claim">Nonstructural mitigation is becoming a federal delivery-capacity question, not just a mitigation-method question.</div>
+    <div class="arg-evidence">USACE has had statutory nonstructural authority since WRDA Section 73 in 1974 and built floodproofing expertise through the National Nonstructural Committee, ERDC testing, Silver Jackets, and major projects. ASFPM reports 88,000+ structures identified for nonstructural mitigation in approved or developing USACE projects. FIMP alone targets 4,000+ structures in the 10-year floodplain, with a 245-structure pilot. The contested question is whether USACE will embrace or pause this implementation role while FEMA mitigation remains unstable.</div>
   </div>
 
   <h3>Stakeholder Map</h3>
@@ -1817,6 +1861,9 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td>44 CFR 80</td><td>Property Acquisition</td><td>Open space requirement for acquired parcels in perpetuity</td></tr>
     <tr><td>EO 14148 (Jan 20, 2025)</td><td>FFRMS Rescission</td><td>Revoked EO 13690; ended federal FFRMS requirement</td></tr>
     <tr><td>DRRA 2018 §1234</td><td>BRIC Authorization</td><td>Established BRIC as statutory program (basis for court injunction)</td></tr>
+    <tr><td>WRDA §73 (1974)</td><td>USACE Nonstructural Alternatives</td><td>Requires consideration of nonstructural alternatives in flood damage reduction studies</td></tr>
+    <tr><td>WRDA §202 (1981)</td><td>USACE Implementation Authority</td><td>Flexible authority used for Tug Fork / Levisa Fork / Upper Cumberland flood damage reduction measures</td></tr>
+    <tr><td>NEPA FONSI / SEA</td><td>Environmental Review</td><td>FIMP pilot issued Final SEA and Final FONSI in November 2025</td></tr>
     <tr><td>Wisconsin NR 116</td><td>State Floodplain Rules</td><td>FPE = BFE+2 ft; 0.01-ft floodway tolerance</td></tr>
     <tr><td>ANSI/FM 2510 (2020)</td><td>Flood Barriers</td><td>Only national consensus standard for flood-mitigation equipment</td></tr>
     <tr><td>OMB Circular A-94</td><td>BCA Discount Rate</td><td>7% real discount rate for federal program evaluation</td></tr>
@@ -1850,6 +1897,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>CLOMR</strong></td><td>Conditional Letter of Map Revision; FEMA conditional approval of proposed map change before construction</td></tr>
     <tr><td><strong>Compound Flooding</strong></td><td>Simultaneous or sequential flooding from multiple mechanisms (e.g., storm surge + heavy rainfall; riverine + coastal)</td></tr>
     <tr><td><strong>CRS</strong></td><td>Community Rating System; voluntary NFIP program; credit points reduce premiums 5–45%; ~1,500 communities enrolled</td></tr>
+    <tr><td><strong>CSRM</strong></td><td>Coastal Storm Risk Management; USACE project category for reducing storm surge, wave, erosion, and coastal flood risk</td></tr>
     <tr><td><strong>DEM</strong></td><td>Digital Elevation Model; raster grid representing terrain elevation; derived from lidar; foundation of hydraulic models</td></tr>
     <tr><td><strong>DFE</strong></td><td>Design Flood Elevation; in ASCE 24-24, the flood elevation used for design; varies by Flood Design Class (FDC)</td></tr>
     <tr><td><strong>DRRA</strong></td><td>Disaster Recovery Reform Act (2018); authorized BRIC; established statutory basis for program (used in court challenge to termination)</td></tr>
@@ -1857,18 +1905,22 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>Early Warning System (EWS)</strong></td><td>Sensor + forecast + alert + action protocol; effective only if lead time exceeds response time</td></tr>
     <tr><td><strong>EC</strong></td><td>Elevation Certificate; FEMA form documenting lowest floor elevation relative to BFE; required for new NFIP policies in SFHA</td></tr>
     <tr><td><strong>EO 14148</strong></td><td>Executive Order signed Jan 20, 2025; rescinded FFRMS (EO 13690); ended federal requirement to build to higher flood standard</td></tr>
+    <tr><td><strong>ERDC</strong></td><td>U.S. Army Engineer Research and Development Center; USACE research facility used for hydraulic testing, including floodproofing technology evaluation</td></tr>
     <tr><td><strong>FAIR</strong></td><td>Federal Assistance for Individuals and Renters; proposed replacement for FEMA Individual Assistance; up to $150K per household</td></tr>
     <tr><td><strong>FDC</strong></td><td>Flood Design Class; ASCE 24-24 classification 1–4 determining required design flood elevation</td></tr>
     <tr><td><strong>FEMA Review Council</strong></td><td>Advisory body; submitted final report May 7, 2026 proposing RAPID, R3P, FAIR replacements for PA, HMGP, IA</td></tr>
     <tr><td><strong>FFRMS</strong></td><td>Federal Flood Risk Management Standard; established by EO 13690 (2015); rescinded by EO 14148 (2025); required federal agencies to build to higher flood standard</td></tr>
     <tr><td><strong>FGCS</strong></td><td>Federal Geodetic Control Subcommittee; body responsible for approving national datum transitions; NAPGD2022 vote expected mid-2026</td></tr>
     <tr><td><strong>FIRM</strong></td><td>Flood Insurance Rate Map; FEMA's regulatory flood map; designates SFHA, BFEs, flood zones; used for permitting and insurance</td></tr>
+    <tr><td><strong>FIMP</strong></td><td>Fire Island to Montauk Point; USACE New York coastal storm risk project with a major nonstructural component, including home elevations in the 10-year floodplain</td></tr>
     <tr><td><strong>FIS</strong></td><td>Flood Insurance Study; engineering report underlying FIRM; contains hydraulic model, frequency analysis, BFE profiles</td></tr>
     <tr><td><strong>FMA</strong></td><td>Flood Mitigation Assistance; NFIP-funded HMA grant; $600M FY24 base; prioritizes SRL/RL properties</td></tr>
+    <tr><td><strong>FM Approvals</strong></td><td>Certification organization that partnered with USACE and ASFPM on flood mitigation equipment certification; related to ANSI/FM 2510 barrier standards</td></tr>
     <tr><td><strong>Flood Fringe</strong></td><td>Area between floodway and outer SFHA boundary; fill allowed if BFE not exceeded; lower regulatory burden than floodway</td></tr>
     <tr><td><strong>Flood Opening</strong></td><td>Opening in enclosed area below BFE that allows water to equalize; required for NFIP compliance in wet floodproofed spaces; minimum 1 in²/ft² of enclosed area</td></tr>
     <tr><td><strong>Floodway</strong></td><td>Channel + adjacent floodplain area needed to convey 100-yr flood without increasing BFE more than the allowable surcharge (1.00 ft federal; 0.01 ft in Wisconsin)</td></tr>
     <tr><td><strong>FFRD</strong></td><td>Future of Flood Risk Data; USACE-FEMA IRWA; probabilistic flood products 5-yr to 2,000-yr; Monte Carlo via HEC-WAT; non-regulatory; three pilot watersheds</td></tr>
+    <tr><td><strong>FONSI</strong></td><td>Finding of No Significant Impact; NEPA document stating that a federal action is not expected to cause significant adverse environmental effects</td></tr>
     <tr><td><strong>FPE</strong></td><td>Flood Protection Elevation; Wisconsin NR 116 term = BFE + 2 ft</td></tr>
     <tr><td><strong>FY</strong></td><td>Federal Fiscal Year; October 1 – September 30</td></tr>
     <tr><td><strong>GIS</strong></td><td>Geographic Information System; software/data ecosystem for spatial analysis; ArcGIS (Esri), QGIS (open source) are dominant platforms</td></tr>
@@ -1893,23 +1945,32 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>MT-2</strong></td><td>FEMA form set for LOMR applications; requires engineering data, community concurrence, and signed certifications</td></tr>
     <tr><td><strong>NAPGD2022</strong></td><td>North American-Pacific Geodetic Datum of 2022; replacement for NAVD88; FGCS vote expected mid-2026</td></tr>
     <tr><td><strong>NAVD88</strong></td><td>North American Vertical Datum of 1988; current national vertical reference; ~0.5 m national bias; ~1 m coast-to-coast tilt; all FIRMs and ECs currently reference this datum</td></tr>
+    <tr><td><strong>NFS</strong></td><td>Non-federal Sponsor; local or state project sponsor that partners with USACE and may hold responsibilities for access, cost share, inspections, OMRRR, and real estate interests</td></tr>
     <tr><td><strong>NFHL</strong></td><td>National Flood Hazard Layer; FEMA GIS database of all effective FIRM data; &gt;90% U.S. population coverage; updated piecemeal</td></tr>
     <tr><td><strong>NFIP</strong></td><td>National Flood Insurance Program; est. 1968; 4.6M policies; $1.3T coverage; 22,700+ communities; expires Sep 30, 2026; $20B+ Treasury debt</td></tr>
     <tr><td><strong>NIBS</strong></td><td>National Institute of Building Sciences; published 2017 study showing $7:1 BCR for natural hazard mitigation</td></tr>
+    <tr><td><strong>NNC</strong></td><td>USACE National Nonstructural Committee; successor to the National Nonstructural / Flood Proofing Committee, focused on nonstructural flood risk management expertise</td></tr>
     <tr><td><strong>NR 116</strong></td><td>Wisconsin administrative code governing floodplain management; FPE = BFE+2 ft; 0.01-ft floodway tolerance</td></tr>
     <tr><td><strong>NVA</strong></td><td>Non-Vegetated Vertical Accuracy; lidar accuracy measured on hard surfaces; primary accuracy metric; RMSEz-based</td></tr>
+    <tr><td><strong>OMRRR</strong></td><td>Operation, Maintenance, Repair, Replacement, and Rehabilitation; post-construction responsibility question in USACE and local sponsor projects</td></tr>
     <tr><td><strong>OMB Circular A-94</strong></td><td>Office of Management and Budget guidance on discount rates for federal programs; sets 7% real discount rate for BCA</td></tr>
     <tr><td><strong>PA</strong></td><td>Public Assistance; FEMA reimbursement program for local governments' disaster costs; proposed replacement: RAPID</td></tr>
+    <tr><td><strong>PED</strong></td><td>Preconstruction Engineering and Design; USACE phase between feasibility and construction where designs, agreements, and implementation details are developed</td></tr>
     <tr><td><strong>Pluvial Flooding</strong></td><td>Flooding driven by rainfall exceeding soil/stormwater capacity; not riverine; dominates urban areas; essentially unmapped by current FIRM system</td></tr>
+    <tr><td><strong>PPA</strong></td><td>Project Partnership Agreement; formal agreement between USACE and a Non-federal Sponsor defining cost share, responsibilities, and project implementation terms</td></tr>
     <tr><td><strong>QL0/QL1/QL2/QL3</strong></td><td>USGS 3DEP lidar quality levels; QL2 = minimum for FEMA mapping (≥2 pts/m², ≤10 cm RMSEz); QL1 preferred for floodplain mapping</td></tr>
     <tr><td><strong>R3P</strong></td><td>Resilience, Recovery, and Rebuild Program; proposed FEMA Review Council replacement for HMGP; two-phase structure</td></tr>
     <tr><td><strong>RAPID</strong></td><td>Responsive Aid for Public Infrastructure Disaster; proposed FEMA Review Council replacement for Public Assistance; parametric block grant</td></tr>
     <tr><td><strong>Repetitive Loss (RL)</strong></td><td>NFIP property with ≥2 paid claims of ≥$1,000 within 10 years; priority for FMA mitigation funding</td></tr>
+    <tr><td><strong>Restrictive Covenant</strong></td><td>Recorded property restriction used in nonstructural projects to preserve mitigation conditions and bind future owners</td></tr>
     <tr><td><strong>Risk MAP</strong></td><td>Risk Mapping, Assessment, and Planning; FEMA's flood mapping program; produces FIRMs and risk products</td></tr>
     <tr><td><strong>Risk Rating 2.0</strong></td><td>NFIP pricing methodology implemented Oct 2021; property-specific pricing replacing FIRM zone-based rates; associated with 11–39% policy declines in some states</td></tr>
     <tr><td><strong>RMSEz</strong></td><td>Root Mean Square Error in the vertical dimension; primary accuracy metric for lidar in ASPRS 2024</td></tr>
+    <tr><td><strong>ROE</strong></td><td>Right of Entry; property-owner authorization allowing project officials or contractors to enter private property for surveys, inspections, or construction-related work</td></tr>
+    <tr><td><strong>SEA</strong></td><td>Supplemental Environmental Assessment; NEPA environmental review document supplementing prior analysis when project details or impacts need additional review</td></tr>
     <tr><td><strong>SFHA</strong></td><td>Special Flood Hazard Area; area with 1% or greater annual chance of flooding; regulatory zone for NFIP</td></tr>
     <tr><td><strong>SI</strong></td><td>Substantial Improvement; any renovation where cost ≥50% of pre-improvement market value; triggers bring-to-code requirement</td></tr>
+    <tr><td><strong>Silver Jackets</strong></td><td>USACE-led interagency teams that coordinate federal, state, and local flood risk management and often support nonstructural approaches</td></tr>
     <tr><td><strong>SLOSH</strong></td><td>Sea, Lake, and Overland Surges from Hurricanes; NOAA storm surge model; used in coastal FIRM production</td></tr>
     <tr><td><strong>SRL</strong></td><td>Severe Repetitive Loss; NFIP property with ≥4 paid claims OR 2 claims exceeding building value; priority for acquisition/elevation</td></tr>
     <tr><td><strong>STORM Act</strong></td><td>Safeguarding Tomorrow through Ongoing Risk Mitigation Act; IIJA-funded revolving loan fund; $500M FY22–26</td></tr>
@@ -1917,9 +1978,11 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>Substantial Damage (SD)</strong></td><td>Damage where cost to restore ≥50% of pre-damage fair market value; triggers bring-to-code (elevation or acquisition) requirement</td></tr>
     <tr><td><strong>Swift Current</strong></td><td>FEMA HMA program; $500M for streamlined post-disaster buyouts of SRL/RL properties</td></tr>
     <tr><td><strong>3DEP</strong></td><td>USGS 3D Elevation Program; national lidar acquisition initiative; goal: QL2 coverage of entire U.S.</td></tr>
+    <tr><td><strong>USACE</strong></td><td>U.S. Army Corps of Engineers; federal water resources agency with flood risk management, coastal storm risk management, and nonstructural mitigation authorities</td></tr>
     <tr><td><strong>V Zone / VE Zone</strong></td><td>Coastal high hazard area; subject to wave action; dry floodproofing absolutely prohibited; elevated foundations required</td></tr>
     <tr><td><strong>VVA</strong></td><td>Vegetated Vertical Accuracy; lidar accuracy under forest canopy; always worse than NVA; reported at 95th percentile</td></tr>
     <tr><td><strong>Wet Floodproofing</strong></td><td>Allow water to enter; use flood-resistant materials; required for enclosed areas below BFE in residential structures; flood openings required</td></tr>
+    <tr><td><strong>WRDA</strong></td><td>Water Resources Development Act; recurring federal legislation authorizing USACE water resources projects and policy changes, including nonstructural flood mitigation authorities</td></tr>
     <tr><td><strong>WSE</strong></td><td>Water Surface Elevation; the elevation of the water surface at a given location and time; used for calibration and BFE determination</td></tr>
     <tr><td><strong>X Zone (shaded)</strong></td><td>0.2% annual chance (500-yr) flood area; outside SFHA; no mandatory purchase requirement; accounts for ~25% of NFIP claims</td></tr>
     <tr><td><strong>X Zone (unshaded)</strong></td><td>Minimal flood hazard; outside 500-yr floodplain; lowest regulatory burden</td></tr>
