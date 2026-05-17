@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASFPM 2026 — Conference Intelligence Dossier</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+.chart-wrap{position:relative;height:260px;margin:16px 0}
+.chart-wrap-sm{position:relative;height:200px;margin:12px 0}
+.diagram{background:var(--bg3);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:16px 0}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram-label{text-align:center;font-size:11px;color:var(--muted);padding:6px 0}
+.infographic{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:16px 0}
+.info-tile{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;position:relative;overflow:hidden}
+.info-tile .val-big{font-size:28px;font-weight:900;display:block;line-height:1}
+.info-tile .label-sm{font-size:11px;color:var(--muted);margin-top:4px}
+.info-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.info-tile.blue::before{background:var(--blue)}
+.info-tile.green::before{background:var(--green)}
+.info-tile.amber::before{background:var(--amber)}
+.info-tile.red::before{background:var(--red)}
+.info-tile.purple::before{background:var(--purple)}
+</style>
+<style>
+:root {
+  --bg: #0f1117;
+  --bg2: #1a1d27;
+  --bg3: #252836;
+  --border: #2e3347;
+  --text: #e2e8f0;
+  --muted: #8892a4;
+  --blue: #3b82f6;
+  --blue-dim: #1d3a6b;
+  --green: #10b981;
+  --green-dim: #064e3b;
+  --amber: #f59e0b;
+  --amber-dim: #78350f;
+  --red: #ef4444;
+  --red-dim: #7f1d1d;
+  --purple: #a855f7;
+  --purple-dim: #4c1d95;
+  --cyan: #06b6d4;
+  --sidebar-w: 240px;
+  --topbar-h: 52px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+/* TOPBAR */
+#topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100}
+#topbar h1{font-size:15px;font-weight:700;color:var(--text);white-space:nowrap}
+#topbar .conf-tag{background:var(--blue-dim);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;white-space:nowrap}
+#search-box{flex:1;max-width:400px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text);font-size:13px}
+#search-box::placeholder{color:var(--muted)}
+#search-box:focus{outline:none;border-color:var(--blue)}
+.print-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px}
+.print-btn:hover{color:var(--text);border-color:var(--blue)}
+/* SIDEBAR */
+#sidebar{position:fixed;top:var(--topbar-h);left:0;bottom:0;width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;z-index:90}
+.nav-section{padding:4px 16px 2px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 16px;cursor:pointer;color:var(--muted);font-size:13px;transition:all .15s}
+.nav-item:hover{color:var(--text);background:var(--bg3)}
+.nav-item.active{color:var(--blue);background:rgba(59,130,246,.08);border-right:2px solid var(--blue)}
+.nav-item .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.nav-item.ws1 .dot{background:var(--blue)}
+.nav-item.ws2 .dot{background:var(--green)}
+/* MAIN */
+#main{margin-left:var(--sidebar-w);margin-top:var(--topbar-h);padding:24px;max-width:1200px}
+.section{display:none}
+.section.active{display:block}
+/* COMPONENTS */
+h2{font-size:22px;font-weight:700;margin-bottom:4px}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:var(--text)}
+h4{font-size:13px;font-weight:700;margin:14px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+p{margin-bottom:10px;color:#cbd5e1}
+ul,ol{padding-left:20px;margin-bottom:10px;color:#cbd5e1}
+li{margin-bottom:3px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:24px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px}
+.card.ws1{border-left:3px solid var(--blue)}
+.card.ws2{border-left:3px solid var(--green)}
+.card.warn{border-left:3px solid var(--amber)}
+.card.danger{border-left:3px solid var(--red)}
+.card.info{border-left:3px solid var(--cyan)}
+.card h3{margin-top:0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:16px 0}
+.stat{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+.stat .val{font-size:24px;font-weight:800;display:block}
+.stat .lbl{font-size:11px;color:var(--muted);margin-top:2px}
+.stat.blue .val{color:var(--blue)}
+.stat.green .val{color:var(--green)}
+.stat.amber .val{color:var(--amber)}
+.stat.red .val{color:var(--red)}
+.stat.purple .val{color:var(--purple)}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
+.badge.blue{background:var(--blue-dim);color:var(--blue)}
+.badge.green{background:var(--green-dim);color:var(--green)}
+.badge.amber{background:var(--amber-dim);color:var(--amber)}
+.badge.red{background:var(--red-dim);color:var(--red)}
+.badge.purple{background:var(--purple-dim);color:var(--purple)}
+.highlight{background:rgba(59,130,246,.08);border-left:3px solid var(--blue);padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.highlight.green{background:rgba(16,185,129,.08);border-color:var(--green)}
+.highlight.amber{background:rgba(245,158,11,.08);border-color:var(--amber)}
+.highlight.red{background:rgba(239,68,68,.08);border-color:var(--red)}
+.highlight.purple{background:rgba(168,85,247,.08);border-color:var(--purple)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th{background:var(--bg3);color:var(--muted);padding:8px 12px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.acc-item{border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.acc-header{padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--bg2);font-weight:600;font-size:13px;user-select:none}
+.acc-header:hover{background:var(--bg3)}
+.acc-header::after{content:'▸';color:var(--muted);transition:transform .2s}
+.acc-item.open .acc-header::after{transform:rotate(90deg)}
+.acc-body{display:none;padding:14px 16px;background:var(--bg);font-size:13px}
+.acc-item.open .acc-body{display:block}
+.q-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+.q-box .q-num{font-size:11px;color:var(--muted);margin-bottom:4px}
+.q-box .q-text{font-weight:600;color:var(--text);margin-bottom:6px}
+.q-box .q-why{font-size:12px;color:var(--muted);font-style:italic}
+.q-box.sharp{border-left:3px solid var(--amber)}
+.timeline{margin:12px 0}
+.tl-item{display:flex;gap:14px;margin-bottom:12px}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px}
+.tl-dot.green{background:var(--green)}
+.tl-dot.amber{background:var(--amber)}
+.tl-dot.red{background:var(--red)}
+.tl-content .date{font-size:11px;color:var(--muted)}
+.tl-content .event{font-size:13px;color:var(--text)}
+.cheat{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:monospace;font-size:12px;margin:10px 0}
+.cheat .row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)}
+.cheat .row:last-child{border-bottom:none}
+.cheat .key{color:var(--muted)}
+.cheat .val2{color:var(--amber);font-weight:700}
+.tag-ws1{background:var(--blue-dim);color:var(--blue);padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700}
+.tag-ws2{background:var(--green-dim);color:var(--green);padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700}
+.scenario{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+.scenario .sc-num{font-size:11px;color:var(--muted)}
+.scenario .sc-title{font-weight:700;color:var(--amber);margin:4px 0}
+.argument{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px}
+.argument .arg-topic{font-size:11px;color:var(--blue);font-weight:700;text-transform:uppercase;margin-bottom:4px}
+.argument .arg-claim{font-weight:600;color:var(--text);margin-bottom:4px}
+.argument .arg-evidence{font-size:12px;color:var(--muted)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.grid2,.grid3,.two-col{grid-template-columns:1fr}#sidebar{width:100%;position:static;border-right:none;border-bottom:1px solid var(--border)}#main{margin-left:0}}
+@media print{#topbar,#sidebar{display:none}#main{margin:0;padding:0}.section{display:block!important}.acc-body{display:block!important}}
+.search-match{background:#f59e0b33;border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <h1>ASFPM 2026</h1>
+  <span class="conf-tag">Milwaukee · May 31–Jun 4</span>
+  <input id="search-box" type="text" placeholder="Search topics, acronyms, numbers…" oninput="doSearch(this.value)">
+  <button class="print-btn" onclick="window.print()">⎙ Print</button>
+</div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="nav-section">Overview</div>
+  <div class="nav-item active" onclick="show('overview', this)"><span class="dot" style="background:var(--text)"></span>Dashboard</div>
+  <div class="nav-item" onclick="show('power', this)"><span class="dot" style="background:var(--amber)"></span>Power Facts</div>
+
+  <div class="nav-section">Workshops</div>
+  <div class="nav-item ws1" onclick="show('ws1', this)"><span class="dot"></span>WS1: Geospatial</div>
+  <div class="nav-item ws2" onclick="show('ws2', this)"><span class="dot"></span>WS2: Nonstructural</div>
+
+  <div class="nav-section">Technical</div>
+  <div class="nav-item" onclick="show('tech', this)"><span class="dot" style="background:var(--cyan)"></span>Technical Primer</div>
+  <div class="nav-item" onclick="show('policy', this)"><span class="dot" style="background:var(--purple)"></span>Policy Dossier</div>
+  <div class="nav-item" onclick="show('milwaukee', this)"><span class="dot" style="background:var(--amber)"></span>Milwaukee / Great Lakes</div>
+
+  <div class="nav-section">Strategy</div>
+  <div class="nav-item" onclick="show('qbank', this)"><span class="dot" style="background:var(--amber)"></span>Question Banks</div>
+  <div class="nav-item" onclick="show('args', this)"><span class="dot" style="background:var(--green)"></span>Argument Bank</div>
+  <div class="nav-item" onclick="show('foresight', this)"><span class="dot" style="background:var(--red)"></span>Strategic Foresight</div>
+
+  <div class="nav-section">Reference</div>
+  <div class="nav-item" onclick="show('quickref', this)"><span class="dot" style="background:var(--muted)"></span>Quick Reference</div>
+  <div class="nav-item" onclick="show('glossary', this)"><span class="dot" style="background:var(--muted)"></span>Glossary</div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<!-- ===================== OVERVIEW ===================== -->
+<div id="overview" class="section active">
+  <h2>ASFPM 50th Annual Conference — Intelligence Dossier</h2>
+  <p class="subtitle">The Fresh Coast Legacy · Milwaukee, WI · May 31–June 4, 2026 · Compiled from 4 source documents</p>
+
+  <div class="stat-grid">
+    <div class="stat blue"><span class="val">2</span><span class="lbl">Target Workshops</span></div>
+    <div class="stat amber"><span class="val">4.6M</span><span class="lbl">NFIP Policies Active</span></div>
+    <div class="stat red"><span class="val">$20B+</span><span class="lbl">NFIP Debt to Treasury</span></div>
+    <div class="stat green"><span class="val">Sep 30</span><span class="lbl">2026 NFIP Expiry</span></div>
+    <div class="stat purple"><span class="val">22,700+</span><span class="lbl">NFIP Communities</span></div>
+    <div class="stat amber"><span class="val">Jul 23</span><span class="lbl">BRIC App Deadline 2026</span></div>
+  </div>
+
+  <!-- CHARTS ROW -->
+  <div class="grid2">
+    <div class="card">
+      <h3>NFIP Claims — Inside vs. Outside SFHA</h3>
+      <p style="font-size:12px;color:var(--muted)">約25%の保険金請求がSFHA（特別洪水危険区域）外から発生</p>
+      <div class="chart-wrap"><canvas id="chart-claims"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Risk Rating 2.0 — 政策件数への影響</h3>
+      <p style="font-size:12px;color:var(--muted)">新料率制度導入後、全国で11〜39%の保険契約が失効</p>
+      <div class="chart-wrap"><canvas id="chart-policies"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card ws1">
+      <h3>Workshop 1 — Geospatial Decision Making</h3>
+      <p><strong>Full title:</strong> "They did what??? Geospatial decision making, How it drives the data that applies to floodplain management and mapping"</p>
+      <p><strong>Presenters (AECOM):</strong> Hope Morgan (NCPLS, GISP, CFM) · Scott Davis (NC WAM, NC SAM, SWIT) · Kelsey Peterson (CFM)</p>
+      <ul>
+        <li>FIRM accuracy, BLE vs. detailed studies</li>
+        <li>Lidar quality levels (QL0–QL2) and ASPRS 2024</li>
+        <li>HEC-RAS 1D vs 2D pitfalls</li>
+        <li>NAVD88 → NAPGD2022 datum transition</li>
+        <li>NFHL limitations and LOMC workflows</li>
+        <li>FFRD probabilistic risk products</li>
+      </ul>
+    </div>
+    <div class="card ws2">
+      <h3>Workshop 2 — Nonstructural Mitigation</h3>
+      <p><strong>Full title:</strong> "Nonstructural Mitigation for Pluvial, Fluvial, and Coastal Flood Events: Integrating Wet and Dry Floodproofing with Early Warning Systems and Building Elevation/Relocation"</p>
+      <p><strong>Presenters:</strong> Randall Behm PE CFM · Tom Little CFM · Roderick Scott CFM · David Elvir (US Flood Control)</p>
+      <ul>
+        <li>Dry vs. wet floodproofing rules and limits</li>
+        <li>ANSI/FM 2510 barrier standard</li>
+        <li>Elevation, relocation, acquisition</li>
+        <li>Early Warning Systems integration</li>
+        <li>BCA / FEMA BCA Toolkit</li>
+        <li>HMA programs (HMGP, BRIC, FMA, Swift Current)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card warn">
+      <h3>Hot Political Context (May 2026)</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot red"></div><div class="tl-content"><div class="date">Jan 20, 2025</div><div class="event">EO 14148 rescinds FFRMS; FEMA stops implementation Mar 25</div></div></div>
+        <div class="tl-item"><div class="tl-dot red"></div><div class="tl-content"><div class="date">Apr 4, 2025</div><div class="event">BRIC terminated by DOGE/FEMA; permanent injunction Dec 11, 2025</div></div></div>
+        <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><div class="date">Mar 25, 2026</div><div class="event">$1B BRIC FY24+FY25 combined NOFO issued (court-ordered)</div></div></div>
+        <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><div class="date">May 7, 2026</div><div class="event">FEMA Review Council Final Report: replace PA→RAPID, HMGP→R3P, IA→FAIR</div></div></div>
+        <div class="tl-item"><div class="tl-dot red"></div><div class="tl-content"><div class="date">Sep 30, 2026</div><div class="event">NFIP authorization expires (35th short-term extension since FY2017)</div></div></div>
+      </div>
+    </div>
+    <div class="card info">
+      <h3>Conference Context: Milwaukee</h3>
+      <ul>
+        <li><strong>August 9–10, 2025:</strong> 14.55" rain (new WI 24-hr record); Milwaukee River 11.19 ft (record); 1,500+ homes damaged, 51+ destroyed</li>
+        <li><strong>FEMA Major Disaster:</strong> Declared Sep 11, 2025; Public Assistance DENIED Oct 24, 2025</li>
+        <li><strong>Wisconsin NR 116:</strong> FPE = BFE + 2 ft; 0.01-ft floodway tolerance</li>
+        <li><strong>MMSD:</strong> 411 mi², 28 communities, Deep Tunnel 521MG; Fresh Coast 740 = capture 0.5" = 740MG stormwater</li>
+        <li><strong>Great Lakes:</strong> 6.33 ft total water level range; wind setup seiches ~3 ft; no astronomical tide</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight amber">
+    <strong>Dominant strategic framing:</strong> Both workshops occur against a backdrop of FEMA restructuring, NFIP reauthorization pressure, BRIC litigation, and the fresh memory of August 2025 Milwaukee floods. The audience will be practitioners frustrated by federal policy instability. Demonstrating knowledge of these intersections will set you apart.
+  </div>
+</div>
+
+<!-- ===================== POWER FACTS ===================== -->
+<div id="power" class="section">
+  <h2>Power Facts &amp; Key Numbers</h2>
+  <p class="subtitle">Memorize these — drop them precisely in discussion to signal expert command</p>
+
+  <h3>NFIP Core Numbers</h3>
+  <div class="cheat">
+    <div class="row"><span class="key">Active policies</span><span class="val2">4.6 million</span></div>
+    <div class="row"><span class="key">Total coverage</span><span class="val2">$1.3 trillion</span></div>
+    <div class="row"><span class="key">Communities enrolled</span><span class="val2">22,700+</span></div>
+    <div class="row"><span class="key">Treasury debt</span><span class="val2">$20B+ (forgiven $16B in 2017)</span></div>
+    <div class="row"><span class="key">Next expiry</span><span class="val2">September 30, 2026</span></div>
+    <div class="row"><span class="key">Short-term extensions since FY2017</span><span class="val2">35</span></div>
+    <div class="row"><span class="key">Risk Rating 2.0 policy drop</span><span class="val2">11–39% depending on state</span></div>
+    <div class="row"><span class="key">Glide path cap</span><span class="val2">18% per year increase</span></div>
+    <div class="row"><span class="key">Claims outside SFHA</span><span class="val2">~25%</span></div>
+    <div class="row"><span class="key">SRLPs outside higher-risk zones</span><span class="val2">21%</span></div>
+  </div>
+
+  <h3>Lidar &amp; Geospatial Standards</h3>
+  <div class="cheat">
+    <div class="row"><span class="key">QL2 density</span><span class="val2">≥2 pts/m²</span></div>
+    <div class="row"><span class="key">QL2 accuracy (NVA RMSEz)</span><span class="val2">≤10 cm</span></div>
+    <div class="row"><span class="key">QL2 accuracy (VVA)</span><span class="val2">&lt;0.7 m at 95th %ile</span></div>
+    <div class="row"><span class="key">ASPRS 2024 min checkpoints</span><span class="val2">30 (was 20)</span></div>
+    <div class="row"><span class="key">ASPRS 2024 primary metric</span><span class="val2">RMSEz (95% CI factor eliminated)</span></div>
+    <div class="row"><span class="key">BLE BFE error range (no bathymetry)</span><span class="val2">1–3 ft over/under</span></div>
+    <div class="row"><span class="key">NAVD88 bias</span><span class="val2">~0.5 m national; ~1 m coast-to-coast tilt</span></div>
+    <div class="row"><span class="key">FGCS datum vote</span><span class="val2">Expected mid-2026</span></div>
+    <div class="row"><span class="key">NFHL coverage</span><span class="val2">&gt;90% U.S. population</span></div>
+  </div>
+
+  <h3>Nonstructural Mitigation &amp; BCA</h3>
+  <div class="cheat">
+    <div class="row"><span class="key">NIBS 2017 riverine BCR</span><span class="val2">$7:1 median</span></div>
+    <div class="row"><span class="key">FEMA BCA discount rate</span><span class="val2">7% (OMB Circular A-94)</span></div>
+    <div class="row"><span class="key">FMA base NOFO FY24</span><span class="val2">$600 million</span></div>
+    <div class="row"><span class="key">Swift Current</span><span class="val2">$500M (post-disaster SRL/RL)</span></div>
+    <div class="row"><span class="key">HMGP share</span><span class="val2">15% of federal disaster spending</span></div>
+    <div class="row"><span class="key">BRIC FY24+FY25 combined NOFO</span><span class="val2">$1 billion</span></div>
+    <div class="row"><span class="key">CRS discount range</span><span class="val2">5–45% premium reduction</span></div>
+    <div class="row"><span class="key">CRS enrolled communities</span><span class="val2">~1,500</span></div>
+    <div class="row"><span class="key">ASCE 24-24 FDC3 MRI</span><span class="val2">750-year</span></div>
+    <div class="row"><span class="key">ASCE 24-24 FDC4 MRI</span><span class="val2">1,000-year</span></div>
+  </div>
+
+  <h3>Milwaukee / Recent Events</h3>
+  <div class="cheat">
+    <div class="row"><span class="key">Aug 9-10, 2025 rainfall</span><span class="val2">14.55" (new WI 24-hr record)</span></div>
+    <div class="row"><span class="key">Milwaukee River crest</span><span class="val2">11.19 ft (record)</span></div>
+    <div class="row"><span class="key">Homes damaged / destroyed</span><span class="val2">1,500+ / 51+</span></div>
+    <div class="row"><span class="key">FEMA Major Disaster declared</span><span class="val2">September 11, 2025</span></div>
+    <div class="row"><span class="key">Public Assistance status</span><span class="val2">DENIED October 24, 2025</span></div>
+    <div class="row"><span class="key">Helene (Sep 2024) Busick, NC rainfall</span><span class="val2">30.78 inches</span></div>
+    <div class="row"><span class="key">Helene deaths</span><span class="val2">≥250 (≥175 direct); deadliest since Katrina</span></div>
+    <div class="row"><span class="key">Texas Hill Country Jul 4, 2025</span><span class="val2">139+ deaths; river +26 ft in 45 min</span></div>
+    <div class="row"><span class="key">Great Lakes total level range</span><span class="val2">6.33 ft (record high Oct 1986: 582.35 ft)</span></div>
+  </div>
+</div>
+
+<!-- ===================== WORKSHOP 1 ===================== -->
+<div id="ws1" class="section">
+  <h2 style="color:var(--blue)">Workshop 1: Geospatial Decision Making</h2>
+  <p class="subtitle">"They did what??? Geospatial decision making, How it drives the data that applies to floodplain management and mapping" — AECOM (Morgan, Davis, Peterson)</p>
+
+  <div class="grid2">
+    <div class="card ws1">
+      <h3>Core Argument of This Workshop</h3>
+      <p>Every regulatory outcome—BFE, flood zone, LOMC, insurance rate—traces back to geospatial decisions made years or decades ago, often with tools and data far inferior to today's. Practitioners who understand those choices can challenge, improve, and communicate them. Those who don't are at the mercy of legacy data.</p>
+    </div>
+    <div class="card ws1">
+      <h3>AECOM Presenter Context</h3>
+      <ul>
+        <li><strong>Hope Morgan:</strong> NCPLS (NC Professional Land Surveyor) + GISP + CFM — brings geodetic accuracy, datum expertise, legal boundary surveying perspective to GIS</li>
+        <li><strong>Scott Davis:</strong> NC WAM + NC SAM + SWIT — wetland/stream assessment; field-calibration mindset</li>
+        <li><strong>Kelsey Peterson:</strong> CFM — floodplain management implementation, community compliance</li>
+        <li>Expect NC case studies; AECOM does large-scale risk MAP work</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Flood Map Fundamentals</h3>
+  <div class="acc-item open">
+    <div class="acc-header">FIRM — Flood Insurance Rate Map</div>
+    <div class="acc-body">
+      <ul>
+        <li>Regulatory map used by communities for permitting under 44 CFR 60.3</li>
+        <li>Zones: <strong>AE</strong> = detailed study with BFE; <strong>A</strong> = approximate, no BFE; <strong>AO</strong> = shallow sheet flow (depth shown); <strong>AH</strong> = shallow ponding with BFE; <strong>V/VE</strong> = coastal wave action; <strong>X-shaded</strong> = 500-yr; <strong>X-unshaded</strong> = minimal hazard</li>
+        <li>FIRM panels updated piecemeal — not a unified national snapshot</li>
+        <li>Effective date can be 5–30+ years old for rural areas</li>
+        <li><strong>FIS (Flood Insurance Study)</strong> = engineering report that underlies the FIRM; contains the hydraulic model, frequency analysis, cross-sections, and BFE profiles</li>
+        <li>FIRM = regulatory product; BLE = non-regulatory screening tool (unless state converts it)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">NFHL — National Flood Hazard Layer</div>
+    <div class="acc-body">
+      <ul>
+        <li>FEMA's GIS database aggregating all effective FIRM data nationwide</li>
+        <li>Covers &gt;90% of U.S. population</li>
+        <li>Updated continuously with each new effective FIRM and each LOMC</li>
+        <li>NOT a unified snapshot — every polygon references its own effective date and study method</li>
+        <li>Critical limitation: querying NFHL gives you the <em>current regulatory</em> zone, not the current <em>physical risk</em></li>
+        <li>Accessible via FEMA's National Flood Map Service Center and ArcGIS REST services</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Flood Zones — Regulatory Significance</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Zone</th><th>Description</th><th>BFE?</th><th>Mandatory purchase?</th></tr>
+        <tr><td>AE</td><td>1% annual chance; detailed study</td><td>Yes</td><td>Yes (federally-backed loan)</td></tr>
+        <tr><td>A</td><td>1% annual chance; approximate only</td><td>No</td><td>Yes</td></tr>
+        <tr><td>AO</td><td>Shallow sheet flow; depth labeled</td><td>Depth (not elevation)</td><td>Yes</td></tr>
+        <tr><td>AH</td><td>Shallow ponding</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>VE</td><td>Coastal; wave action; velocity</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>X (shaded)</td><td>500-yr / 0.2% annual chance</td><td>No</td><td>No (but ~25% of claims come from here)</td></tr>
+        <tr><td>X (unshaded)</td><td>Minimal hazard</td><td>No</td><td>No</td></tr>
+      </table>
+      <div class="highlight amber">~25% of NFIP claims come from outside the SFHA (X zones). This is the strongest argument for flood insurance regardless of zone.</div>
+    </div>
+  </div>
+
+  <!-- FLOODPLAIN CROSS-SECTION DIAGRAM -->
+  <h3>洪水平野の断面図 — Floodplain Cross-Section</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" style="background:#0f1117">
+      <!-- Sky gradient -->
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0f1117"/>
+          <stop offset="100%" stop-color="#1a1d27"/>
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#1d3a6b" stop-opacity="0.9"/>
+        </linearGradient>
+        <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6b5a3e"/>
+          <stop offset="100%" stop-color="#3d3220"/>
+        </linearGradient>
+        <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.3"/>
+        </pattern>
+        <pattern id="hatch2" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#60a5fa" stroke-width="1.5" stroke-opacity="0.2"/>
+        </pattern>
+      </defs>
+
+      <!-- Ground profile polygon: valley shape -->
+      <!-- Ground fills bottom -->
+      <polygon points="0,280 0,180 100,165 200,145 280,120 340,100 380,85 420,80 450,80 480,80 520,85 560,100 620,120 700,145 780,165 860,180 900,185 900,280" fill="url(#ground)"/>
+      <!-- Channel bottom (darker) -->
+      <polygon points="390,95 410,80 450,75 490,80 510,95 490,95 450,88 410,95" fill="#2a1f0f"/>
+
+      <!-- BFE water surface line: horizontal at y=120 -->
+      <!-- Flood water fill (from BFE down to ground, within SFHA) -->
+      <polygon points="170,120 200,145 280,120 340,100 380,85 420,80 450,80 480,80 520,85 560,100 620,120 700,145 730,120" fill="url(#water)" opacity="0.7"/>
+
+      <!-- Floodway hatching (center zone) -->
+      <polygon points="340,100 380,85 420,80 450,80 480,80 520,85 560,100 620,120 560,120 520,108 480,105 450,105 420,108 380,120" fill="url(#hatch)"/>
+
+      <!-- BFE line -->
+      <line x1="170" y1="120" x2="730" y2="120" stroke="#3b82f6" stroke-width="2" stroke-dasharray="8,4"/>
+      <!-- SFHA boundary lines -->
+      <line x1="170" y1="80" x2="170" y2="220" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <line x1="730" y1="80" x2="730" y2="220" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <!-- Floodway boundary lines -->
+      <line x1="340" y1="88" x2="340" y2="200" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="560" y1="88" x2="560" y2="200" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+      <!-- Labels -->
+      <!-- BFE label -->
+      <rect x="740" y="112" width="80" height="18" rx="3" fill="#1d3a6b"/>
+      <text x="780" y="125" text-anchor="middle" fill="#60a5fa" font-size="11" font-weight="700" font-family="monospace">BFE</text>
+      <!-- Left arrow for BFE -->
+      <line x1="740" y1="120" x2="730" y2="120" stroke="#3b82f6" stroke-width="1"/>
+
+      <!-- Zone labels -->
+      <text x="60" y="155" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700" font-family="sans-serif">X Zone</text>
+      <text x="60" y="168" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">Minimal</text>
+
+      <text x="230" y="108" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700" font-family="sans-serif">Flood Fringe</text>
+      <text x="230" y="119" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">(SFHA)</text>
+
+      <text x="450" y="105" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700" font-family="sans-serif">FLOODWAY</text>
+      <text x="450" y="117" text-anchor="middle" fill="#60a5fa" font-size="9" font-family="sans-serif">conveyance zone</text>
+
+      <text x="650" y="108" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700" font-family="sans-serif">Flood Fringe</text>
+      <text x="650" y="119" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">(SFHA)</text>
+
+      <text x="840" y="155" text-anchor="middle" fill="#e2e8f0" font-size="11" font-weight="700" font-family="sans-serif">X Zone</text>
+      <text x="840" y="168" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">Minimal</text>
+
+      <!-- SFHA label with red bracket -->
+      <text x="450" y="50" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700" font-family="sans-serif">← SFHA (Special Flood Hazard Area / 特別洪水危険区域) →</text>
+      <line x1="170" y1="58" x2="730" y2="58" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- Surcharge annotations -->
+      <text x="450" y="230" text-anchor="middle" fill="#8892a4" font-size="10" font-family="sans-serif">Floodway surcharge: 1.00 ft max (federal) / 0.01 ft (Wisconsin NR 116)</text>
+      <text x="450" y="244" text-anchor="middle" fill="#8892a4" font-size="10" font-family="sans-serif">Mandatory flood insurance (federally-backed loans) required within SFHA</text>
+
+      <!-- Flood resistant materials note -->
+      <text x="450" y="265" text-anchor="middle" fill="#6b7280" font-size="9" font-family="monospace">AE Zone: BFE shown · A Zone: no BFE · Floodway: no fill allowed · X-shaded: 500-yr</text>
+    </svg>
+    <div class="diagram-label">洪水平野断面図 — 規制ゾーン、BFE、フラッドウェイの関係</div>
+  </div>
+
+  <h3>Lidar &amp; Terrain Data Quality</h3>
+  <div class="acc-item">
+    <div class="acc-header">USGS 3DEP Quality Levels</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Level</th><th>Density</th><th>NVA RMSEz</th><th>Use Case</th></tr>
+        <tr><td><strong>QL0</strong></td><td>≥8 pts/m²</td><td>≤5 cm</td><td>Engineering-grade; bridge/culvert design</td></tr>
+        <tr><td><strong>QL1</strong></td><td>≥4 pts/m²</td><td>≤10 cm (preferred)</td><td>Detailed floodplain mapping; preferred for new FIS</td></tr>
+        <tr><td><strong>QL2</strong></td><td>≥2 pts/m²</td><td>≤10 cm; VVA &lt;0.7 m @ 95th %ile</td><td>Base for BLE; minimum for new FEMA mapping</td></tr>
+        <tr><td><strong>QL3</strong></td><td>&lt;2 pts/m²</td><td>Variable</td><td>Legacy; not acceptable for new FEMA mapping</td></tr>
+      </table>
+      <p>FEMA requires QL2 minimum for new Risk MAP studies. QL1 preferred for floodplain mapping accuracy. Channel bathymetry (below waterline) requires acoustic sonar or wading surveys — lidar cannot penetrate water.</p>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">ASPRS Positional Accuracy Standards Ed. 2 V2 (2024)</div>
+    <div class="acc-body">
+      <ul>
+        <li>Published 2024; supersedes 2014 edition</li>
+        <li><strong>Key change 1:</strong> Primary metric is now <strong>RMSEz</strong> — 95% confidence interval factor eliminated as primary metric</li>
+        <li><strong>Key change 2:</strong> Minimum checkpoints increased from 20 to 30</li>
+        <li><strong>Key change 3:</strong> Checkpoint distribution rules tightened (vegetated vs. open terrain)</li>
+        <li>Vertical Accuracy Classes: RMSEz ≤5 cm, 10 cm, 20 cm, etc.</li>
+        <li>Non-Vegetated Vertical Accuracy (NVA) = hard surface checkpoints</li>
+        <li>Vegetated Vertical Accuracy (VVA) = under canopy — always worse than NVA; reported at 95th percentile</li>
+        <li>Why it matters: FEMA's lidar acceptance spec references ASPRS standards; a 2014-spec survey delivered in 2025 may not meet the updated standard</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LIDAR QL CHART -->
+  <div class="card ws1">
+    <h3>Lidar品質レベル比較 (USGS 3DEP)</h3>
+    <div class="chart-wrap"><canvas id="chart-lidar"></canvas></div>
+  </div>
+
+  <h3>Base Level Engineering (BLE)</h3>
+  <div class="acc-item">
+    <div class="acc-header">BLE — What It Is and What It Isn't</div>
+    <div class="acc-body">
+      <ul>
+        <li>Automated 1D/2D HEC-RAS modeling at HUC-8 or HUC-12 scale using QL2 lidar terrain</li>
+        <li>Produced by FEMA contractors for screening/prioritization — NOT regulatory</li>
+        <li>Key limitation: no surveyed channel bathymetry → BFEs can be off by 1–3 ft</li>
+        <li>No field calibration required → model not validated against observed events</li>
+        <li>Some states have converted BLE to regulatory: Kansas KDA has; most have not</li>
+        <li>BLE is the starting point for community outreach — don't let it become the endpoint</li>
+        <li>BLE shows approximate floodplain extent; communities should commission detailed studies for regulated areas</li>
+      </ul>
+      <div class="highlight red"><strong>Critical framing:</strong> BLE being shown as a "preliminary" map to communities who then assume it IS the regulatory map is a documented source of planning confusion. Raise this in discussion.</div>
+    </div>
+  </div>
+
+  <h3>HEC-RAS 1D vs 2D Modeling</h3>
+  <div class="acc-item">
+    <div class="acc-header">1D vs. 2D — Core Differences</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Dimension</th><th>1D</th><th>2D</th></tr>
+        <tr><td>Flow assumption</td><td>Channel-direction only</td><td>Solves 2D shallow-water equations across mesh</td></tr>
+        <tr><td>Best for</td><td>Simple channels, culverts, bridges</td><td>Floodplains with complex flow paths, overbank areas</td></tr>
+        <tr><td>Mesh requirements</td><td>Cross-sections only</td><td>Computational mesh (resolution matters enormously)</td></tr>
+        <tr><td>Computational cost</td><td>Low</td><td>High (hours to days for large watersheds)</td></tr>
+        <tr><td>FEMA BLE approach</td><td>Hybrid 1D/2D</td><td>Full 2D for complex areas</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">2D Modeling Pitfalls (Know These Cold)</div>
+    <div class="acc-body">
+      <ol>
+        <li><strong>Mesh resolution:</strong> Too coarse = overestimates flood extent; too fine = computational instability. Rule of thumb: mesh cells ≤ 1/3 channel width</li>
+        <li><strong>Boundary conditions:</strong> Upstream flow hydrograph + downstream stage or normal depth. Wrong downstream BC = wrong backwater profile</li>
+        <li><strong>Terrain preprocessing:</strong> Must "burn" channel bathymetry into lidar DEM; must remove bridges/culverts from terrain (then re-add as structures)</li>
+        <li><strong>Manning's n calibration:</strong> Land cover-based n values without field calibration are educated guesses; ±20% uncertainty in peak BFE</li>
+        <li><strong>Bridge/culvert representation:</strong> HEC-RAS bridge routines work in 1D; in 2D you must use SA/2D connection or inline structures</li>
+        <li><strong>Calibration requirement:</strong> At least 2 independent flood events with observed WSEs and discharges; single-event calibration is insufficient</li>
+        <li><strong>Unsteady vs. steady:</strong> Unsteady better for dynamic floodplain; steady simpler but misses timing-related effects</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>Letters of Map Change (LOMC)</h3>
+  <div class="acc-item">
+    <div class="acc-header">LOMC Types and Triggers</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Type</th><th>Basis</th><th>Result</th><th>Key Requirement</th></tr>
+        <tr><td><strong>LOMA</strong></td><td>Natural ground above BFE</td><td>Property removed from SFHA</td><td>Elevation certificate showing ground or lowest floor above BFE+0</td></tr>
+        <tr><td><strong>LOMR-F</strong></td><td>Fill placed above BFE</td><td>Property removed from SFHA</td><td>Must prove fill won't increase BFE elsewhere; community must amend FPO</td></tr>
+        <tr><td><strong>LOMR</strong></td><td>Engineering revision to hydrology/hydraulics</td><td>Map revised; new BFEs/zones</td><td>MT-2 forms; CLOMR first if construction involved; community concurrence</td></tr>
+        <tr><td><strong>CLOMR</strong></td><td>Conditional — proposed change pre-construction</td><td>FEMA conditional approval; triggers LOMR upon completion</td><td>Required before constructing anything that changes floodplain</td></tr>
+      </table>
+      <p>Process time: LOMA ~30 days; LOMR 6–18 months depending on complexity and FEMA workload.</p>
+    </div>
+  </div>
+
+  <h3>Datum Transition: NAVD88 → NAPGD2022</h3>
+  <div class="acc-item">
+    <div class="acc-header">Why This Matters to Every FIRM in America</div>
+    <div class="acc-body">
+      <ul>
+        <li>NAVD88 (North American Vertical Datum of 1988) = current national vertical reference for all FIRMs, BFEs, elevation certificates</li>
+        <li><strong>Known errors:</strong> biased ~0.5 m nationally; coast-to-coast tilt of ~1 m (higher in east, lower in west)</li>
+        <li>NAPGD2022 (North American-Pacific Geodetic Datum of 2022) = replacement; FGCS vote expected mid-2026</li>
+        <li>Transition will NOT happen overnight — FEMA, USGS, NOAA all need to update products</li>
+        <li><strong>Implication:</strong> Every FIRM, BFE, and elevation certificate referencing NAVD88 will eventually need datum transformation; properties currently "above BFE" may shift status</li>
+        <li>Practical planning: communities near coasts where NAVD88 error is largest should begin assessing impact now</li>
+        <li>Elevation certificates should note datum; surveyors doing ECs now should be aware of future transformation requirement</li>
+      </ul>
+      <div class="highlight amber">The FGCS vote expected mid-2026 means this topic is live at the conference. Expect it to come up in workshop discussion.</div>
+    </div>
+  </div>
+
+  <h3>Future of Flood Risk Data (FFRD)</h3>
+  <div class="acc-item">
+    <div class="acc-header">FFRD — Probabilistic Risk Products</div>
+    <div class="acc-body">
+      <ul>
+        <li>Joint USACE-FEMA Interagency Research Working Agreement (IRWA)</li>
+        <li>Goal: replace binary SFHA/non-SFHA with probabilistic, graduated risk products</li>
+        <li>Return period range: ~5-year to 2,000-year</li>
+        <li>Method: Monte Carlo via HEC-WAT (Watershed Analysis Tool) + ensemble hydraulic modeling</li>
+        <li>Three pilot watersheds currently underway (locations vary; check FEMA 2026 updates)</li>
+        <li><strong>Non-regulatory at this time</strong> — not replacing FIRMs yet</li>
+        <li>If implemented: could transform NFIP pricing, CRS, and building code triggers</li>
+        <li>Biggest challenge: regulatory framework is binary (SFHA/non-SFHA); probabilistic products require legislative or rulemaking change</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>GIS / Geospatial Decision Making</h3>
+  <div class="acc-item">
+    <div class="acc-header">How GIS Decisions Propagate Downstream</div>
+    <div class="acc-body">
+      <p>Every GIS decision—coordinate system, projection, datum, raster resolution, vectorization method, attribute schema—cascades into regulatory outcomes:</p>
+      <ol>
+        <li><strong>Projection errors:</strong> Using a geographic CRS instead of projected CRS in HEC-RAS introduces systematic distance errors; cross-sections may be misaligned</li>
+        <li><strong>DEM resolution:</strong> 1m DEM vs. 3m DEM yields measurably different floodplain extents; FEMA requires ≤3m for detailed studies</li>
+        <li><strong>Datum confusion:</strong> Mixing NAVD88 and NGVD29 terrains without transformation is a documented source of BFE errors (can be 1-3 ft)</li>
+        <li><strong>Hydrologic connectivity:</strong> Sinks, flat areas, and bridges must be handled correctly in terrain preprocessing; automated fill-sink routines sometimes create phantom drainage paths</li>
+        <li><strong>Attribution errors:</strong> NFHL polygon attributes (zone designation, BFE, effective date) can be inconsistent across county boundaries due to stitching of different effective FIRMs</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="highlight ws1">
+    <strong>Workshop 1 key insight to share:</strong> The gap between QL2 lidar accuracy (10 cm RMSEz) and the 1-foot freeboard in most ordinances suggests communities are managing to a false precision. When BLE BFEs can be off by 1–3 ft due to missing bathymetry, the 1-foot surcharge standard is illusory. Push for mandatory bathymetric surveys in detailed study watersheds.
+  </div>
+</div>
+
+<!-- ===================== WORKSHOP 2 ===================== -->
+<div id="ws2" class="section">
+  <h2 style="color:var(--green)">Workshop 2: Nonstructural Mitigation</h2>
+  <p class="subtitle">"Nonstructural Mitigation for Pluvial, Fluvial, and Coastal Flood Events" — Behm, Little, Scott, Elvir</p>
+
+  <div class="grid2">
+    <div class="card ws2">
+      <h3>Core Argument of This Workshop</h3>
+      <p>Structural measures (levees, floodwalls) are expensive, often inequitable, and create residual risk. Nonstructural approaches—elevation, relocation, buyouts, floodproofing, early warning—offer flexible, scalable, property-specific solutions that reduce both risk and federal fiscal exposure. The challenge is matching the right tool to each flood mechanism.</p>
+    </div>
+    <div class="card danger">
+      <h3>The Unresolved Tension (Know This)</h3>
+      <p><strong>NFIP PROHIBITS dry floodproofing of residential structures in the SFHA.</strong> (44 CFR 60.3)</p>
+      <p>Dry floodproofing of non-residential buildings in A zones = allowed. Dry floodproofing in V zones = NEVER (wave action would destroy seals).</p>
+      <p>No rulemaking to change the residential prohibition is pending. This is the most contested topic in Workshop 2's universe. Presenters may propose policy changes — be ready to probe the evidence base.</p>
+    </div>
+  </div>
+
+  <h3>Flood Mechanism Taxonomy</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Three Flood Types + Compound Events</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Type</th><th>Driver</th><th>Typical Setting</th><th>Key Characteristic</th></tr>
+        <tr><td><strong>Pluvial</strong></td><td>Rainfall exceeds soil/drain capacity</td><td>Urban, impervious surfaces, flat terrain</td><td>Most under-mapped; no FIRM coverage in most cities; dominates urban claims</td></tr>
+        <tr><td><strong>Fluvial</strong></td><td>River overbank flow</td><td>Valleys, floodplains</td><td>Best mapped (FIRMs); NFIP system designed primarily for this</td></tr>
+        <tr><td><strong>Coastal</strong></td><td>Storm surge, wave runup, sea level rise</td><td>Shorelines, estuaries</td><td>V zones; tidal influence; SLOSH/ADCIRC models; no FIRM in U.S. territories</td></tr>
+        <tr><td><strong>Compound</strong></td><td>Multiple mechanisms simultaneously</td><td>River mouths, urban coastal areas</td><td>Helene = pluvial+fluvial in Appalachians; not captured in any single FIRM analysis</td></tr>
+        <tr><td><strong>Great Lakes</strong></td><td>Lake level, wind setup, wave runup, seiches</td><td>Great Lakes shoreline</td><td>No astronomical tide; seiches up to ~3 ft; bluff failure; 6.33 ft total level range</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- FLOOD TYPES DIAGRAM -->
+  <h3>洪水メカニズム図解 — Three Flood Types</h3>
+  <div class="diagram">
+    <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" style="background:#0f1117">
+      <defs>
+        <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a1d27"/><stop offset="100%" stop-color="#0f1117"/>
+        </linearGradient>
+        <linearGradient id="pluvGround" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#374151"/><stop offset="100%" stop-color="#1f2937"/>
+        </linearGradient>
+        <linearGradient id="rivWater" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2563eb" stop-opacity="0.9"/><stop offset="100%" stop-color="#1d4ed8"/>
+        </linearGradient>
+        <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.8"/><stop offset="100%" stop-color="#0369a1"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Dividers -->
+      <line x1="300" y1="10" x2="300" y2="210" stroke="#2e3347" stroke-width="2"/>
+      <line x1="600" y1="10" x2="600" y2="210" stroke="#2e3347" stroke-width="2"/>
+
+      <!-- === PANEL 1: PLUVIAL === -->
+      <!-- Ground / pavement -->
+      <rect x="0" y="160" width="300" height="60" fill="url(#pluvGround)"/>
+      <!-- Buildings -->
+      <rect x="30" y="110" width="45" height="52" fill="#374151" stroke="#4b5563" stroke-width="1"/>
+      <rect x="35" y="118" width="12" height="14" fill="#1d4ed8" opacity="0.5"/>
+      <rect x="55" y="118" width="12" height="14" fill="#1d4ed8" opacity="0.5"/>
+      <polygon points="30,110 52,90 75,110" fill="#4b5563"/>
+      <rect x="95" y="120" width="55" height="42" fill="#374151" stroke="#4b5563" stroke-width="1"/>
+      <polygon points="95,120 122,100 150,120" fill="#4b5563"/>
+      <rect x="200" y="130" width="40" height="32" fill="#374151" stroke="#4b5563" stroke-width="1"/>
+      <polygon points="200,130 220,115 240,130" fill="#4b5563"/>
+      <!-- Flood water pooling -->
+      <ellipse cx="65" cy="162" rx="50" ry="8" fill="#3b82f6" opacity="0.7"/>
+      <ellipse cx="160" cy="163" rx="60" ry="7" fill="#3b82f6" opacity="0.6"/>
+      <ellipse cx="240" cy="162" rx="35" ry="7" fill="#3b82f6" opacity="0.65"/>
+      <!-- Rain drops -->
+      <g fill="#60a5fa" opacity="0.8">
+        <ellipse cx="40" cy="45" rx="2" ry="5"/><ellipse cx="70" cy="30" rx="2" ry="5"/>
+        <ellipse cx="100" cy="50" rx="2" ry="5"/><ellipse cx="130" cy="35" rx="2" ry="5"/>
+        <ellipse cx="160" cy="55" rx="2" ry="5"/><ellipse cx="190" cy="25" rx="2" ry="5"/>
+        <ellipse cx="220" cy="48" rx="2" ry="5"/><ellipse cx="250" cy="38" rx="2" ry="5"/>
+        <ellipse cx="55" cy="68" rx="2" ry="5"/><ellipse cx="85" cy="75" rx="2" ry="5"/>
+        <ellipse cx="115" cy="65" rx="2" ry="5"/><ellipse cx="145" cy="72" rx="2" ry="5"/>
+        <ellipse cx="175" cy="60" rx="2" ry="5"/><ellipse cx="205" cy="70" rx="2" ry="5"/>
+        <ellipse cx="235" cy="62" rx="2" ry="5"/><ellipse cx="265" cy="68" rx="2" ry="5"/>
+      </g>
+      <!-- Label -->
+      <rect x="10" y="12" width="100" height="22" rx="4" fill="#1d3a6b"/>
+      <text x="60" y="27" text-anchor="middle" fill="#60a5fa" font-size="12" font-weight="700" font-family="sans-serif">PLUVIAL</text>
+      <text x="150" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">降雨超過型</text>
+      <text x="150" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">最も過小評価されているリスク</text>
+      <text x="150" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">FIRMによる把握: ほぼゼロ</text>
+
+      <!-- === PANEL 2: FLUVIAL === -->
+      <!-- Ground/valley -->
+      <polygon points="300,220 300,155 360,138 420,125 460,118 480,115 500,115 540,118 580,125 600,138 600,155 600,220" fill="#3d3220"/>
+      <!-- River channel -->
+      <polygon points="420,125 450,118 480,115 500,115 530,118 560,128 540,140 500,145 480,145 460,145 440,140" fill="url(#rivWater)"/>
+      <!-- Flood water overbank -->
+      <polygon points="340,130 380,120 420,118 450,118 480,115 500,115 530,118 560,125 590,135 590,145 540,148 500,145 480,145 460,145 420,145 380,148 340,155" fill="#2563eb" opacity="0.5"/>
+      <!-- BFE line -->
+      <line x1="310" y1="130" x2="590" y2="130" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="595" y="128" fill="#60a5fa" font-size="8" font-family="monospace">BFE</text>
+      <!-- House on floodplain -->
+      <rect x="340" y="116" width="28" height="18" fill="#dc2626" stroke="#b91c1c" stroke-width="1"/>
+      <polygon points="340,116 354,106 368,116" fill="#b91c1c"/>
+      <!-- Tree -->
+      <rect x="552" y="128" width="4" height="12" fill="#4b5563"/>
+      <ellipse cx="554" cy="124" rx="8" ry="6" fill="#166534"/>
+      <!-- Label -->
+      <rect x="310" y="12" width="100" height="22" rx="4" fill="#064e3b"/>
+      <text x="360" y="27" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700" font-family="sans-serif">FLUVIAL</text>
+      <text x="450" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">河川氾濫型</text>
+      <text x="450" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">FIRMが最も詳細に把握</text>
+      <text x="450" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">NFIP設計の主対象</text>
+
+      <!-- === PANEL 3: COASTAL === -->
+      <!-- Sky/sea background -->
+      <rect x="600" y="0" width="300" height="220" fill="#0c1a2e"/>
+      <!-- Ocean -->
+      <rect x="600" y="130" width="300" height="90" fill="url(#ocean)"/>
+      <!-- Wave 1 -->
+      <path d="M600,125 Q630,110 660,125 Q690,140 720,125 Q750,110 780,125 Q810,140 840,125 Q870,110 900,125 L900,140 Q870,125 840,140 Q810,155 780,140 Q750,125 720,140 Q690,155 660,140 Q630,125 600,140 Z" fill="#2563eb" opacity="0.8"/>
+      <!-- Wave 2 -->
+      <path d="M600,140 Q630,125 660,140 Q690,155 720,140 Q750,125 780,140 Q810,155 840,140 Q870,125 900,140 L900,155 Q870,140 840,155 Q810,170 780,155 Q750,140 720,155 Q690,170 660,155 Q630,140 600,155 Z" fill="#1d4ed8" opacity="0.6"/>
+      <!-- Shore / cliff -->
+      <polygon points="600,220 600,145 650,138 680,135 680,220" fill="#3d3220"/>
+      <!-- Structure -->
+      <rect x="618" y="110" width="35" height="28" fill="#374151" stroke="#4b5563" stroke-width="1"/>
+      <polygon points="618,110 635,98 653,110" fill="#4b5563"/>
+      <!-- Storm surge arrow -->
+      <path d="M760,100 L720,100 L720,120" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+      <text x="770" y="104" fill="#f59e0b" font-size="9" font-family="sans-serif">storm surge</text>
+      <!-- Wave runup indicator -->
+      <line x1="680" y1="115" x2="680" y2="145" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="684" y="112" fill="#fbbf24" font-size="8" font-family="sans-serif">runup</text>
+      <!-- Label -->
+      <rect x="610" y="12" width="100" height="22" rx="4" fill="#7f1d1d"/>
+      <text x="660" y="27" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="700" font-family="sans-serif">COASTAL</text>
+      <text x="750" y="15" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">高潮・波浪型</text>
+      <text x="750" y="185" text-anchor="middle" fill="#8892a4" font-size="9" font-family="sans-serif">V/VEゾーン: 波浪力あり</text>
+      <text x="750" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">乾式防水: 絶対禁止</text>
+    </svg>
+    <div class="diagram-label">3種類の洪水メカニズム — 複合型(Compound)はHelene(2024)やMilwaukee(2025)で発生</div>
+  </div>
+
+  <h3>Nonstructural Mitigation Toolbox</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Elevation (Freeboard / Raise Lowest Floor)</div>
+    <div class="acc-body">
+      <ul>
+        <li>Most reliable long-term mitigation; reduces damage geometrically with elevation above BFE</li>
+        <li>NFIP rate reductions: 1 ft above BFE = ~30% premium reduction; 2 ft = ~60%; 3 ft = ~70%+</li>
+        <li>Practical limit: foundation type (slab, crawlspace, basement) determines cost and feasibility</li>
+        <li>Wisconsin NR 116: FPE = BFE + 2 ft (state freeboard = most stringent in Midwest)</li>
+        <li>FEMA Hazard Mitigation Grant Program funds elevation for SRL/RL properties</li>
+        <li>Acquisition preferred over elevation for properties ≥50% damaged (Substantial Damage trigger)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Relocation &amp; Acquisition / Buyouts</div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Relocation:</strong> Move structure out of floodplain; preserves building; expensive; requires suitable alternate site</li>
+        <li><strong>Acquisition:</strong> Purchase property at pre-flood fair market value; demolish; deed-restrict as open space; most permanent solution</li>
+        <li>FEMA requires acquired parcels remain open space in perpetuity (44 CFR 80)</li>
+        <li>Voluntary only — no eminent domain under HMGP/FMA</li>
+        <li>Key equity issue: buyout programs can displace low-income renters without compensating them; owners paid but renters lose housing</li>
+        <li>Swift Current program ($500M): expedited buyouts for SRL/RL properties post-disaster</li>
+        <li>Community resistance: "shrinkage" fears, tax base loss, neighborhood dissolution</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Dry Floodproofing — Rules, Limits, ANSI/FM 2510</div>
+    <div class="acc-body">
+      <p><strong>Definition:</strong> Make the building watertight below the DFE using barriers, sealed walls, waterproof coatings, check valves. Water does NOT enter.</p>
+      <ul>
+        <li><strong>Allowed:</strong> Non-residential structures in A zones (AE, A, AO, AH) — 44 CFR 60.3(c)(3)</li>
+        <li><strong>NOT allowed:</strong> Residential structures in SFHA — 44 CFR 60.3 (no exception; no rulemaking pending)</li>
+        <li><strong>NEVER:</strong> V zones (coastal wave action would destroy any seal)</li>
+        <li>Structural limit: FEMA P-936 limits application to ≤3 ft of flooding above BFE for most structures</li>
+        <li>Hydrostatic pressure at 3 ft water depth = 187 lb/ft²; at 6 ft = 375 lb/ft²</li>
+        <li><strong>ANSI/FM 2510 (2020):</strong> Only U.S. national consensus standard for flood mitigation equipment — covers perimeter barriers, opening barriers, backwater valves, flood glazing</li>
+        <li>FEMA deployable barrier requirement in ASCE 24-24: written O&amp;M plan + annual deployment drills + ANSI/FM 2510 compliance</li>
+      </ul>
+      <div class="highlight red"><strong>The residential prohibition is the elephant in the room.</strong> Presenters from US Flood Control (Elvir) sell commercial flood barriers — watch for implicit arguments that the residential prohibition should be relaxed. Push back with: what is the failure rate data? What happens when barriers fail and residents stayed?</div>
+    </div>
+  </div>
+  <!-- WET VS DRY BUILDING CROSS-SECTION -->
+  <div class="diagram">
+    <svg viewBox="0 0 860 320" xmlns="http://www.w3.org/2000/svg" style="background:#0f1117">
+      <defs>
+        <linearGradient id="floodWater" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#1d3a6b" stop-opacity="0.8"/>
+        </linearGradient>
+        <pattern id="floodPattern" width="8" height="8" patternUnits="userSpaceOnUse">
+          <path d="M0,4 Q2,0 4,4 Q6,8 8,4" stroke="#60a5fa" stroke-width="1" fill="none" opacity="0.5"/>
+        </pattern>
+        <linearGradient id="wallGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#374151"/><stop offset="100%" stop-color="#4b5563"/>
+        </linearGradient>
+      </defs>
+
+      <!-- TITLES -->
+      <text x="215" y="22" text-anchor="middle" fill="#60a5fa" font-size="14" font-weight="700" font-family="sans-serif">WET FLOODPROOFING</text>
+      <text x="215" y="36" text-anchor="middle" fill="#8892a4" font-size="10" font-family="sans-serif">湿式防水 — 水が侵入する設計</text>
+      <text x="645" y="22" text-anchor="middle" fill="#10b981" font-size="14" font-weight="700" font-family="sans-serif">DRY FLOODPROOFING</text>
+      <text x="645" y="36" text-anchor="middle" fill="#8892a4" font-size="10" font-family="sans-serif">乾式防水 — 水を完全に遮断 ※非住居のみ</text>
+
+      <!-- Divider -->
+      <line x1="430" y1="10" x2="430" y2="310" stroke="#2e3347" stroke-width="2" stroke-dasharray="6,4"/>
+
+      <!-- === LEFT: WET FLOODPROOFING === -->
+      <!-- Ground -->
+      <rect x="20" y="230" width="400" height="50" fill="#1a1d27" stroke="#2e3347" stroke-width="1"/>
+      <!-- Foundation -->
+      <rect x="80" y="210" width="280" height="22" fill="#374151" stroke="#4b5563" stroke-width="1.5"/>
+      <!-- Walls (left and right) -->
+      <rect x="80" y="100" width="22" height="115" fill="url(#wallGrad)" stroke="#4b5563" stroke-width="1"/>
+      <rect x="338" y="100" width="22" height="115" fill="url(#wallGrad)" stroke="#4b5563" stroke-width="1"/>
+      <!-- Roof -->
+      <polygon points="60,100 220,60 380,100" fill="#4b5563" stroke="#6b7280" stroke-width="1.5"/>
+      <rect x="195" y="60" width="50" height="42" fill="#374151"/>
+      <!-- Interior floor -->
+      <rect x="102" y="205" width="236" height="8" fill="#4b5563"/>
+      <!-- FLOOD WATER INSIDE (same level as outside) -->
+      <rect x="102" y="158" width="236" height="47" fill="url(#floodWater)"/>
+      <path d="M102,158 Q125,152 148,158 Q171,164 194,158 Q217,152 240,158 Q263,164 286,158 Q309,152 338,158" stroke="#60a5fa" stroke-width="1" fill="none"/>
+      <!-- FLOOD WATER OUTSIDE -->
+      <rect x="20" y="158" width="60" height="72" fill="url(#floodWater)"/>
+      <rect x="360" y="158" width="60" height="72" fill="url(#floodWater)"/>
+      <line x1="20" y1="158" x2="80" y2="158" stroke="#60a5fa" stroke-width="1.5"/>
+      <line x1="360" y1="158" x2="420" y2="158" stroke="#60a5fa" stroke-width="1.5"/>
+      <!-- Flood openings (holes in wall at base) -->
+      <rect x="80" y="195" width="22" height="14" fill="#3b82f6" stroke="#60a5fa" stroke-width="1.5" rx="2"/>
+      <rect x="338" y="195" width="22" height="14" fill="#3b82f6" stroke="#60a5fa" stroke-width="1.5" rx="2"/>
+      <!-- Opening labels -->
+      <text x="108" y="193" text-anchor="start" fill="#60a5fa" font-size="8" font-family="sans-serif">開口部</text>
+      <text x="332" y="193" text-anchor="end" fill="#60a5fa" font-size="8" font-family="sans-serif">開口部</text>
+      <!-- Water level label -->
+      <line x1="22" y1="158" x2="22" y2="230" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="5" y="155" fill="#fbbf24" font-size="9" font-family="monospace">BFE</text>
+      <!-- Inside water equal arrow -->
+      <text x="220" y="148" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700" font-family="sans-serif">水位: 内=外</text>
+      <!-- Flood-resistant materials label -->
+      <rect x="135" y="168" width="170" height="26" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+      <text x="220" y="180" text-anchor="middle" fill="#10b981" font-size="9" font-weight="700" font-family="sans-serif">耐水材料必須 (TB-2 Class 4/5)</text>
+      <text x="220" y="190" text-anchor="middle" fill="#6ee7b7" font-size="8" font-family="sans-serif">concrete · CMU · closed-cell foam</text>
+      <!-- Allowed label -->
+      <rect x="135" y="286" width="170" height="20" rx="4" fill="#064e3b"/>
+      <text x="220" y="300" text-anchor="middle" fill="#10b981" font-size="10" font-weight="700" font-family="sans-serif">✓ 住居・非住居ともに適用可</text>
+
+      <!-- === RIGHT: DRY FLOODPROOFING === -->
+      <!-- Ground -->
+      <rect x="440" y="230" width="400" height="50" fill="#1a1d27" stroke="#2e3347" stroke-width="1"/>
+      <!-- Foundation (sealed) -->
+      <rect x="500" y="210" width="280" height="22" fill="#374151" stroke="#10b981" stroke-width="2"/>
+      <!-- Walls (sealed, green border) -->
+      <rect x="500" y="100" width="22" height="115" fill="url(#wallGrad)" stroke="#10b981" stroke-width="2"/>
+      <rect x="758" y="100" width="22" height="115" fill="url(#wallGrad)" stroke="#10b981" stroke-width="2"/>
+      <!-- Roof -->
+      <polygon points="480,100 640,60 800,100" fill="#4b5563" stroke="#6b7280" stroke-width="1.5"/>
+      <rect x="615" y="60" width="50" height="42" fill="#374151"/>
+      <!-- Interior floor (DRY) -->
+      <rect x="522" y="205" width="236" height="8" fill="#4b5563"/>
+      <!-- Interior is DRY -->
+      <rect x="522" y="160" width="236" height="45" fill="#1a1d27"/>
+      <text x="640" y="187" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700" font-family="sans-serif">DRY 乾燥</text>
+      <!-- FLOOD WATER OUTSIDE ONLY -->
+      <rect x="440" y="158" width="60" height="72" fill="url(#floodWater)"/>
+      <rect x="780" y="158" width="60" height="72" fill="url(#floodWater)"/>
+      <line x1="440" y1="158" x2="500" y2="158" stroke="#3b82f6" stroke-width="1.5"/>
+      <line x1="780" y1="158" x2="840" y2="158" stroke="#3b82f6" stroke-width="1.5"/>
+      <!-- Deployable barrier at foundation -->
+      <rect x="490" y="206" width="22" height="24" fill="#f59e0b" stroke="#d97706" stroke-width="1.5" rx="2"/>
+      <rect x="768" y="206" width="22" height="24" fill="#f59e0b" stroke="#d97706" stroke-width="1.5" rx="2"/>
+      <text x="484" y="196" text-anchor="end" fill="#f59e0b" font-size="8" font-family="sans-serif">バリア</text>
+      <text x="796" y="196" text-anchor="start" fill="#f59e0b" font-size="8" font-family="sans-serif">バリア</text>
+      <!-- Sealed wall indicators -->
+      <text x="488" y="152" text-anchor="end" fill="#10b981" font-size="9" font-family="sans-serif">密封</text>
+      <text x="792" y="152" text-anchor="start" fill="#10b981" font-size="9" font-family="sans-serif">密封</text>
+      <!-- BFE line -->
+      <line x1="442" y1="158" x2="442" y2="230" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="445" y="155" fill="#fbbf24" font-size="9" font-family="monospace">BFE</text>
+      <!-- ANSI FM 2510 label -->
+      <rect x="552" y="238" width="176" height="32" rx="4" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+      <text x="640" y="251" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="700" font-family="sans-serif">ANSI/FM 2510 準拠バリア必須</text>
+      <text x="640" y="263" text-anchor="middle" fill="#fcd34d" font-size="8" font-family="sans-serif">O&amp;M計画 + 年次展開訓練 (ASCE 24-24)</text>
+      <!-- WARNING label -->
+      <rect x="535" y="284" width="210" height="22" rx="4" fill="#7f1d1d"/>
+      <text x="640" y="299" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="700" font-family="sans-serif">⚠ 住居のSFHA適用: 44 CFR 60.3 禁止</text>
+    </svg>
+    <div class="diagram-label">湿式 vs 乾式防水の建物断面比較 — NFIPルールと適用範囲</div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header">Wet Floodproofing</div>
+    <div class="acc-body">
+      <p><strong>Definition:</strong> Allow water to enter; use flood-resistant materials and design to minimize damage. Water DOES enter.</p>
+      <ul>
+        <li>Required for enclosed areas below BFE in residential structures (with flood openings)</li>
+        <li>Typically used for: crawlspaces, attached garages, below-grade parking, accessory structures</li>
+        <li>Flood openings (vents): must provide 1 sq in net open area per sq ft of enclosed space (NFIP standard) OR engineered alternative</li>
+        <li>FEMA Technical Bulletin 1 (2021): flood opening sizing requirements</li>
+        <li>FEMA Technical Bulletin 7 (2022): wet floodproofing design</li>
+        <li>Flood-resistant materials: FEMA TB-2 (2025 revision): Class 4 and 5 materials; concrete, CMU, ceramic tile, pressure-treated wood, closed-cell foam — can be submerged 72 hrs without significant damage</li>
+        <li>Does NOT satisfy NFIP minimum compliance for the main structure — only for ancillary spaces</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Early Warning Systems (EWS)</div>
+    <div class="acc-body">
+      <ul>
+        <li>Sensor network (rain gauges, stream gauges, soil moisture) + alert dissemination + community response protocol</li>
+        <li>USGS StreamStats / National Water Information System: real-time gauge data</li>
+        <li>NOAA Advanced Hydrologic Prediction Service (AHPS): 1-7 day forecasts at 4,000+ gauge locations</li>
+        <li>Texas Hill Country July 4, 2025: 139+ deaths despite gauge network — shows EWS alone insufficient without evacuation plan + public action</li>
+        <li>Key components: (1) detection, (2) forecast, (3) alert dissemination, (4) community action protocol</li>
+        <li>Equity concern: alerts in English only exclude non-English speakers; cell towers may fail in same storm</li>
+        <li>Integration with dry floodproofing: ANSI/FM 2510 / ASCE 24-24 require O&amp;M plans including deployment trigger (flood warning stage)</li>
+        <li>FEMA BRIC funded many EWS projects before termination; status of funded projects unclear</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Flood Openings — Technical Requirements</div>
+    <div class="acc-body">
+      <ul>
+        <li>Required in all enclosed areas below BFE for NFIP compliance (residential)</li>
+        <li>Standard: 1 in² net open area per 1 ft² of enclosed floor area; minimum 2 openings; openings within 1 ft of grade</li>
+        <li>Engineered openings: must be certified by PE; can use smaller area if designed to equalize pressure faster</li>
+        <li>Automatic openings (ICC/ANSI 1209): rated to open at ≤12 in of water depth; close when water recedes; do not require manual operation</li>
+        <li>Covers: must be removable or automatically open; screen mesh counts against net area if flow restricted</li>
+        <li>FEMA TB-1 (2021) is the authoritative reference</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>ASCE 24-24 — New Building Standard</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Four Key Changes from ASCE 24-14 to ASCE 24-24</div>
+    <div class="acc-body">
+      <ol>
+        <li><strong>Flood Design Class (FDC) replaces simple occupancy categories:</strong>
+          <ul>
+            <li>FDC 1: Low-risk (ag storage, temporary)</li>
+            <li>FDC 2: Normal (typical residential, commercial)</li>
+            <li>FDC 3: High-risk (schools, fire stations, large assembly)</li>
+            <li>FDC 4: Essential facilities (hospitals, EOCs, critical infrastructure)</li>
+          </ul>
+        </li>
+        <li><strong>Design Flood Elevation (DFE) now FDC-dependent:</strong>
+          <ul>
+            <li>FDC 1/2: 1% annual chance flood (100-yr) — same as before</li>
+            <li>FDC 3: 750-year MRI (0.13% annual chance)</li>
+            <li>FDC 4: 1,000-year MRI (0.1% annual chance)</li>
+          </ul>
+        </li>
+        <li><strong>500-year flood hazard area applies to FDC 2/3/4 buildings</strong> (expanded from 100-yr SFHA baseline for some purposes)</li>
+        <li><strong>Deployable barriers (temporary barriers):</strong> If used, must comply with ANSI/FM 2510; written O&amp;M plan required; annual deployment drills required</li>
+      </ol>
+      <div class="highlight amber">ASCE 24-24 is NOT yet referenced in the 2024 International Building Code / International Residential Code. Target adoption: 2027 I-Code cycle. Until then, it is a best-practice reference, not a code requirement — unless local jurisdiction has adopted it independently.</div>
+    </div>
+  </div>
+
+  <!-- FDC PYRAMID -->
+  <div class="diagram">
+    <svg viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg" style="background:#0f1117">
+      <defs>
+        <marker id="arrUp" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M0,8 L4,0 L8,8 Z" fill="#6b7280"/>
+        </marker>
+      </defs>
+      <!-- Stepped horizontal bar diagram for FDC 1-4 -->
+      <!-- FDC 1 -->
+      <rect x="30" y="140" width="800" height="36" rx="4" fill="#1e3a1e" stroke="#22c55e" stroke-width="1.5"/>
+      <text x="50" y="162" fill="#22c55e" font-size="12" font-weight="700" font-family="sans-serif">FDC 1</text>
+      <text x="150" y="162" fill="#86efac" font-size="11" font-family="sans-serif">低リスク — 農業倉庫・仮設構造物</text>
+      <text x="720" y="157" fill="#86efac" font-size="11" font-family="sans-serif" text-anchor="middle">100年洪水</text>
+      <text x="720" y="170" fill="#4ade80" font-size="11" font-weight="700" font-family="monospace" text-anchor="middle">1% AEP</text>
+
+      <!-- FDC 2 -->
+      <rect x="30" y="98" width="660" height="36" rx="4" fill="#1e2a4a" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="50" y="120" fill="#3b82f6" font-size="12" font-weight="700" font-family="sans-serif">FDC 2</text>
+      <text x="150" y="120" fill="#93c5fd" font-size="11" font-family="sans-serif">標準 — 住居・一般商業施設</text>
+      <text x="580" y="115" fill="#93c5fd" font-size="11" font-family="sans-serif" text-anchor="middle">100年洪水</text>
+      <text x="580" y="128" fill="#60a5fa" font-size="11" font-weight="700" font-family="monospace" text-anchor="middle">1% AEP</text>
+
+      <!-- FDC 3 -->
+      <rect x="30" y="56" width="480" height="36" rx="4" fill="#451a03" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="50" y="78" fill="#f59e0b" font-size="12" font-weight="700" font-family="sans-serif">FDC 3</text>
+      <text x="150" y="78" fill="#fcd34d" font-size="11" font-family="sans-serif">高リスク — 学校・消防署・大型集会施設</text>
+      <text x="420" y="73" fill="#fcd34d" font-size="11" font-family="sans-serif" text-anchor="middle">750年洪水</text>
+      <text x="420" y="86" fill="#f59e0b" font-size="11" font-weight="700" font-family="monospace" text-anchor="middle">0.13% AEP</text>
+
+      <!-- FDC 4 -->
+      <rect x="30" y="14" width="280" height="36" rx="4" fill="#4c0519" stroke="#ef4444" stroke-width="1.5"/>
+      <text x="50" y="36" fill="#ef4444" font-size="12" font-weight="700" font-family="sans-serif">FDC 4</text>
+      <text x="150" y="36" fill="#fca5a5" font-size="11" font-family="sans-serif">重要施設 — 病院・EOC・重要インフラ</text>
+      <text x="820" y="36" fill="#ef4444" font-size="11" font-weight="700" font-family="sans-serif" text-anchor="end">1,000年洪水 / 0.1% AEP</text>
+
+      <!-- Arrow showing escalating risk standard -->
+      <line x1="840" y1="155" x2="840" y2="30" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrUp)"/>
+      <text x="805" y="95" text-anchor="middle" fill="#8892a4" font-size="10" font-family="sans-serif" transform="rotate(-90,805,95)">設計洪水基準</text>
+
+      <!-- Note -->
+      <text x="450" y="195" text-anchor="middle" fill="#6b7280" font-size="10" font-family="sans-serif">※ ASCE 24-24: 2024 I-Codes未収載 — 2027 I-Codeサイクルで採用見込み</text>
+    </svg>
+    <div class="diagram-label">ASCE 24-24 洪水設計クラス (FDC) — 施設用途別の設計洪水基準</div>
+  </div>
+
+  <h3>Benefit-Cost Analysis (BCA)</h3>
+  <div class="acc-item">
+    <div class="acc-header">FEMA BCA Toolkit &amp; Key Numbers</div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Discount rate:</strong> 7% (OMB Circular A-94) — this is the rate at which future benefits are discounted to present value</li>
+        <li><strong>Median riverine flood mitigation BCR:</strong> $7:1 (NIBS 2017 study; often cited as $6 per $1 invested)</li>
+        <li>HMGP and BRIC require BCR ≥ 1.0 for eligibility; FMA projects often need BCR ≥ 1.5 in practice</li>
+        <li>BCA benefit categories: avoided property damage, displacement costs (temporary housing), loss of function, mental stress / fatality risk, ecosystem services</li>
+        <li>Social equity benefits: removed by current administration; previously counted for BRIC</li>
+        <li>Critical BCA sensitivity: discount rate. At 7%, a future $1M benefit in year 30 is worth only $131K today. At 3%, it's $412K. Choice of rate is a political decision disguised as an accounting one.</li>
+        <li>BCA for elevation: straightforward using depth-damage functions. BCA for EWS: harder — must estimate lives saved and displacement avoided.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card ws2">
+      <h3>BFEより高い位置 → NFIP保険料削減効果</h3>
+      <div class="chart-wrap"><canvas id="chart-elevation"></canvas></div>
+    </div>
+    <div class="card ws2">
+      <h3>HMAプログラム別 予算規模比較</h3>
+      <div class="chart-wrap"><canvas id="chart-hma"></canvas></div>
+    </div>
+  </div>
+
+  <h3>HMA Programs — Funding Landscape</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Hazard Mitigation Assistance Programs</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Program</th><th>Trigger</th><th>Funding</th><th>Status / Notes</th></tr>
+        <tr><td><strong>HMGP</strong></td><td>Presidential major disaster declaration</td><td>15% of total federal disaster spending per declaration</td><td>Active; proposed replacement "R3P" in FEMA Review Council report</td></tr>
+        <tr><td><strong>BRIC</strong></td><td>Pre-disaster (annual competition)</td><td>FY24+FY25: $1B combined NOFO issued Mar 25, 2026; apps due Jul 23, 2026</td><td>Terminated Apr 4, 2025; reinstated by court injunction Dec 11, 2025</td></tr>
+        <tr><td><strong>FMA</strong></td><td>Pre-disaster; NFIP-funded</td><td>$600M base NOFO FY24; prioritizes SRL/RL properties</td><td>Active; most stable of the three</td></tr>
+        <tr><td><strong>Swift Current</strong></td><td>Post-disaster; SRL/RL properties</td><td>$500M per declaration</td><td>Active; streamlined buyouts</td></tr>
+        <tr><td><strong>STRLF/STORM Act</strong></td><td>IIJA-funded</td><td>$500M FY22–FY26</td><td>Active; revolving loan fund for mitigation infrastructure</td></tr>
+      </table>
+      <div class="highlight green"><strong>Application timing alert:</strong> BRIC FY24+FY25 applications due July 23, 2026 — 7 weeks after this conference. Ready-to-implement infrastructure projects are prioritized. If your community has a shovel-ready project, this is the conversation to have at the conference.</div>
+    </div>
+  </div>
+
+  <div class="highlight ws2">
+    <strong>Workshop 2 key insight to share:</strong> The NFIP residential dry floodproofing prohibition (44 CFR 60.3) creates a situation where a commercial building next to a residential building can use the same flood barrier technology — legally — but the homeowner cannot. Given that pluvial flooding (the fastest-growing urban risk) is not mapped by FIRMs, and EWS gives only minutes of warning in urban catchments, the prohibition effectively strips urban homeowners of the most cost-effective rapid-deployment option. No rulemaking is pending. Ask why.
+  </div>
+</div>
+
+<!-- ===================== TECHNICAL PRIMER ===================== -->
+<div id="tech" class="section">
+  <h2>Technical Primer</h2>
+  <p class="subtitle">Shared technical foundations across both workshops</p>
+
+  <h3>Hydraulic &amp; Hydrologic Fundamentals</h3>
+  <div class="grid2">
+    <div class="card">
+      <h3>Return Period vs. Annual Exceedance Probability</h3>
+      <table>
+        <tr><th>Return Period</th><th>AEP</th><th>Regulatory Use</th></tr>
+        <tr><td>100-year</td><td>1%</td><td>SFHA boundary, BFE basis</td></tr>
+        <tr><td>500-year</td><td>0.2%</td><td>X-shaded zone; FDC 2/3/4 base in ASCE 24-24</td></tr>
+        <tr><td>750-year</td><td>0.13%</td><td>ASCE 24-24 FDC 3</td></tr>
+        <tr><td>1,000-year</td><td>0.1%</td><td>ASCE 24-24 FDC 4</td></tr>
+        <tr><td>2,000-year</td><td>0.05%</td><td>FFRD upper end; dam safety</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Floodway vs. Flood Fringe</h3>
+      <ul>
+        <li><strong>Floodway:</strong> Channel + adjacent area needed to convey 100-yr flood without increasing BFE more than 1.00 ft (federal) or 0.01 ft (Wisconsin NR 116)</li>
+        <li><strong>Flood fringe / floodway fringe:</strong> Between floodway and outer SFHA boundary; fill allowed if BFE not exceeded</li>
+        <li>Wisconsin's 0.01-ft tolerance is effectively a no-fill standard — most stringent in nation</li>
+        <li>Floodway designation requires encroachment analysis; errors in cross-section placement propagate to floodway width</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header">Hydrology Methods — Peak Discharge Estimation</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Method</th><th>Best Use</th><th>Limitation</th></tr>
+        <tr><td>Regression equations (USGS StreamStats)</td><td>Ungauged small basins; screening</td><td>±50% uncertainty; can't extrapolate far outside calibration region</td></tr>
+        <tr><td>Log-Pearson Type III (Bulletin 17C)</td><td>Gauged sites with ≥10 yr record</td><td>Requires historical data; sensitive to period of record (pre-urbanization vs. post)</td></tr>
+        <tr><td>Rational Method (Q=CiA)</td><td>Small urban catchments &lt;200 acres</td><td>Steady-state assumption; no routing; poor for complex systems</td></tr>
+        <tr><td>TR-55 / HEC-HMS</td><td>Watershed modeling; routing</td><td>CN values uncertain; calibration requires observed events</td></tr>
+        <tr><td>Atlas 14 precipitation</td><td>Rainfall frequency input to models</td><td>PDS-based; some regions have outdated data pre-2022 update</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>Substantial Damage / Substantial Improvement</h3>
+  <div class="acc-item">
+    <div class="acc-header">The 50% Rule — Critical Regulatory Trigger</div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Substantial Damage (SD):</strong> Cost to restore = ≥50% of structure's pre-damage fair market value → must bring to current code (elevate or acquire)</li>
+        <li><strong>Substantial Improvement (SI):</strong> Any reconstruction/improvement where cost ≥50% of pre-improvement market value → same requirement</li>
+        <li>Cumulative substantial improvement: many ordinances track cumulative improvements over 10-year rolling period</li>
+        <li>The 50% threshold is NFIP minimum; communities can lower it (ASFPM recommends 30%)</li>
+        <li>After Aug 9-10, 2025 Milwaukee floods: many structures hit SD threshold → mandatory elevation or buyout</li>
+        <li>Common disputes: what counts toward the 50%? Code-required work? Unrelated renovations?</li>
+        <li><strong>Repetitive Loss (RL):</strong> ≥2 paid claims ≥$1,000 over 10 years; <strong>Severe Repetitive Loss (SRL):</strong> ≥4 claims OR 2 claims exceeding building value</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Community Rating System (CRS)</h3>
+  <div class="acc-item">
+    <div class="acc-header">CRS Structure and Critiques</div>
+    <div class="acc-body">
+      <ul>
+        <li>Voluntary NFIP program; ~1,500 enrolled communities (of 22,700+)</li>
+        <li>Credit points → CRS class (1–10) → premium discount (5% per class, up to 45% for Class 1)</li>
+        <li>Activities: public information, mapping/regulation, flood damage reduction, warning/response</li>
+        <li>Documentation burden: universal complaint; smaller communities lack staff to document activities</li>
+        <li><strong>Equity critique:</strong> Communities most needing relief (lower-income, less-capacity) least able to achieve high CRS class; administratively regressive</li>
+        <li>Class 1–4 communities: &lt;50 nationally; most are Class 6–8 (15–25% discount)</li>
+        <li>CRS credit for freeboard: 2 ft above BFE = significant credit boost; this is why WI NR 116's BFE+2 standard is also a CRS strategy</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Risk Rating 2.0</h3>
+  <div class="acc-item">
+    <div class="acc-header">How Risk Rating 2.0 Works and Why It's Controversial</div>
+    <div class="acc-body">
+      <ul>
+        <li>Implemented Oct 2021 (new policies) / Apr 2022 (renewals)</li>
+        <li><strong>Pricing factors:</strong> Cost to rebuild (replacement cost value), distance to water body, foundation type, ground elevation relative to flooding sources, flood frequency</li>
+        <li>Key departure: no longer based solely on FIRM zone — property-specific risk replaces map-based pricing</li>
+        <li>Winners: properties in high-risk zones but physically elevated → often see decreases</li>
+        <li>Losers: properties in moderate-risk zones but physically close to water → often see increases</li>
+        <li>Policy count impact: 11–39% drop depending on state (largest drops in higher-risk coastal states)</li>
+        <li>Glide path: increases capped at 18%/year for existing policyholders</li>
+        <li>Louisiana lawsuit (E.D. La.): challenged RR2.0 as arbitrary/capricious under APA; survived preliminary injunction; ongoing</li>
+        <li>Congressional pressure: multiple bills to delay or modify RR2.0; none enacted as of 2026</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== POLICY DOSSIER ===================== -->
+<div id="policy" class="section">
+  <h2>Policy Dossier</h2>
+  <p class="subtitle">NFIP · BRIC · FFRMS · HMA · CRS · FEMA Review Council · Current Federal Landscape</p>
+
+  <h3>NFIP — Current Status and Reauthorization</h3>
+  <div class="acc-item open">
+    <div class="acc-header">NFIP at 50th ASFPM: The Fiscal and Political Crisis</div>
+    <div class="acc-body">
+      <ul>
+        <li>Established: National Flood Insurance Act of 1968; first policies 1969</li>
+        <li>Currently: 4.6M policies, $1.3T coverage, 22,700+ communities</li>
+        <li>Treasury debt: $20B+ (Congress forgave $16B in 2017 post-Harvey/Irma/Maria)</li>
+        <li>Authorization expires: <strong>September 30, 2026</strong> — the 35th short-term extension since FY2017</li>
+        <li>Structural deficit: Risk Rating 2.0 was designed to restore actuarial soundness but 11–39% policy drop reduces premium base</li>
+        <li>Legislative environment: comprehensive reform bills introduced every Congress since 2012 Biggert-Waters Act; none enacted except Biggert-Waters (2012) and HFIAA (2014)</li>
+        <li>Key reform proposals in circulation: means-tested means assistance, mandatory coverage for all federally-backed mortgages, private market competition, community-level policies</li>
+      </ul>
+      <div class="highlight red"><strong>Conference angle:</strong> With NFIP expiring 3 months after this conference and FEMA under restructuring pressure, the reauthorization question is existential. Practitioners here will be living its consequences daily.</div>
+    </div>
+  </div>
+
+  <h3>BRIC — Building Resilient Infrastructure and Communities</h3>
+  <div class="acc-item open">
+    <div class="acc-header">BRIC: Terminated, Litigated, Partially Reinstated</div>
+    <div class="acc-body">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot blue"></div><div class="tl-content"><div class="date">FY2020</div><div class="event">BRIC established by Disaster Recovery Reform Act (DRRA 2018); replaced Pre-Disaster Mitigation (PDM)</div></div></div>
+        <div class="tl-item"><div class="tl-dot blue"></div><div class="tl-content"><div class="date">Mar 25, 2025</div><div class="event">FEMA/DOGE terminate BRIC; $882M in approved grants "deobligated" (clawed back)</div></div></div>
+        <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><div class="date">Apr 4, 2025</div><div class="event">FEMA announces formal termination of BRIC program</div></div></div>
+        <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><div class="date">Dec 11, 2025</div><div class="event">Judge Stearns (D. Mass.) issues permanent injunction; FEMA ordered to reinstate awards</div></div></div>
+        <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><div class="date">Mar 25, 2026</div><div class="event">$1B combined FY24+FY25 NOFO issued; "ready-to-implement" infrastructure prioritized</div></div></div>
+        <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><div class="date">Jul 23, 2026</div><div class="event">BRIC applications due — 7 weeks after this conference</div></div></div>
+      </div>
+      <div class="highlight green">If you represent a community with a shovel-ready nonstructural mitigation project, the BRIC application deadline is 7 weeks away. This conference is the networking moment for subapplicant relationships.</div>
+    </div>
+  </div>
+
+  <h3>FFRMS — Federal Flood Risk Management Standard</h3>
+  <div class="acc-item">
+    <div class="acc-header">FFRMS: Rescinded, Regulatory Limbo</div>
+    <div class="acc-body">
+      <ul>
+        <li>Originally established by Obama EO 13690 (Jan 2015); required federal agencies to use higher design flood standard</li>
+        <li>Three approaches: Freeboard Value (BFE+2/3 ft) / Climate-Informed Science (2080 projected flood) / Floodplain Value (500-yr)</li>
+        <li>Rescinded by Trump EO 14148 (Jan 20, 2025) — first day of administration</li>
+        <li>FEMA stopped implementation: March 25, 2025</li>
+        <li>HUD: issued 1-year waiver Feb 21, 2025; pending rulemaking</li>
+        <li>EPA SRF rules: remain partially in effect pending separate rulemaking</li>
+        <li>Status: regulatory limbo; federal agencies no longer required to apply FFRMS to new projects</li>
+        <li>Implication: federally-funded housing, roads, bridges in floodplains may now be built to lower standard (BFE only) rather than FFRMS elevated standard</li>
+      </ul>
+      <div class="highlight amber">This is a live tension at any ASFPM event. Practitioners know FFRMS repeal increases long-term federal costs — but the current administration frames it as regulatory relief. Be prepared to quantify the cost of lower standards with NIBS data.</div>
+    </div>
+  </div>
+
+  <h3>FEMA Review Council Final Report (May 7, 2026)</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Proposed FEMA Restructuring — Three Major Changes</div>
+    <div class="acc-body">
+      <p>The FEMA Review Council submitted its final report May 7, 2026 — just 24 days before this conference. Expect heavy discussion.</p>
+      <table>
+        <tr><th>Current Program</th><th>Proposed Replacement</th><th>Key Change</th></tr>
+        <tr><td>Public Assistance (PA)</td><td><strong>RAPID</strong> (Responsive Aid for Public Infrastructure Disaster)</td><td>Parametric block grant based on pre-established formulas; eliminates project-by-project reimbursement; faster but less flexible</td></tr>
+        <tr><td>HMGP</td><td><strong>R3P</strong> (Resilience, Recovery, and Rebuild Program)</td><td>Two-phase: immediate recovery phase + longer-term resilience phase; more front-loaded funding</td></tr>
+        <tr><td>Individual Assistance (IA)</td><td><strong>FAIR</strong> (Federal Assistance for Individuals and Renters)</td><td>Up to $150K per homeowner (up from ~$43K IA max); includes renters explicitly</td></tr>
+      </table>
+      <ul>
+        <li>Per-capita disaster declaration thresholds would be raised (fewer declarations = more cost stays with states)</li>
+        <li>CRS, NFIP, FIRM mapping: not directly addressed in Review Council report</li>
+        <li>Timing: proposals require Congressional action; no legislation introduced yet as of conference date</li>
+      </ul>
+      <div class="highlight red"><strong>Political sensitivity:</strong> Milwaukee's PA denial (Oct 24, 2025) is fresh. Participants from Wisconsin will be acutely aware of what "RAPID" parametric grants would mean for a city that already got denied. Don't ignore this in discussion.</div>
+    </div>
+  </div>
+
+  <h3>Executive Order Landscape (Jan 2025–May 2026)</h3>
+  <div class="acc-item">
+    <div class="acc-header">Key EOs Affecting Floodplain Management</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>EO</th><th>Date</th><th>Effect</th></tr>
+        <tr><td>EO 14148</td><td>Jan 20, 2025</td><td>Rescinded FFRMS (EO 13690); reversed 9 years of climate-informed flood standard</td></tr>
+        <tr><td>Various DEI/equity EOs</td><td>Jan–Feb 2025</td><td>Removed social equity from FEMA BCA calculations; eliminated CRS equity activity credits</td></tr>
+        <tr><td>DOGE directives</td><td>Mar–Apr 2025</td><td>BRIC termination; FEMA staff reductions; Risk MAP slowdown</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>Risk Rating 2.0 — Detailed Policy Analysis</h3>
+  <div class="acc-item">
+    <div class="acc-header">RR2.0 Design, Impact, Legal Challenge</div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Pricing variables:</strong> (1) Cost to rebuild (RCV), (2) distance to nearest water feature, (3) foundation type, (4) ground elevation vs. flood frequency sources, (5) flood type (coastal, riverine, pluvial)</li>
+        <li><strong>Actuarial goal:</strong> Reflect actual property-level risk rather than FIRM zone proxy</li>
+        <li><strong>Transition:</strong> New policies Oct 1, 2021; renewals Apr 1, 2022</li>
+        <li><strong>Policy count impact:</strong> 11–39% drop nationally by late 2023; states with highest rate increases (coastal) saw largest drops; coverage gap is growing</li>
+        <li><strong>Glide path:</strong> Existing policyholders capped at 18%/yr increases; some properties face 20–40 years of increases to reach full risk rate</li>
+        <li><strong>Louisiana lawsuit (E.D. La.):</strong> State + parishes challenge RR2.0 as APA violation (arbitrary, failed to consider economic impacts); preliminary injunction denied; case ongoing</li>
+        <li><strong>Congressional response:</strong> Bipartisan bills to cap increases at 9%/yr or freeze RR2.0; none enacted</li>
+        <li><strong>Coverage paradox:</strong> As policies lapse (11–39% drop), federal disaster relief exposure increases — people without insurance require more federal assistance post-disaster</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MILWAUKEE / GREAT LAKES ===================== -->
+<div id="milwaukee" class="section">
+  <h2>Milwaukee &amp; Great Lakes Context</h2>
+  <p class="subtitle">Host city floods · MMSD · Wisconsin regulatory environment · Great Lakes flood dynamics</p>
+
+  <div class="card danger" style="margin-bottom:16px">
+    <h3>August 9–10, 2025 Milwaukee Flood — The Elephant in the Room</h3>
+    <ul>
+      <li><strong>Rainfall:</strong> 14.55 inches in 24 hours — new Wisconsin all-time 24-hour precipitation record</li>
+      <li><strong>Milwaukee River:</strong> Crested at 11.19 ft — new record stage</li>
+      <li><strong>Damage:</strong> 1,500+ homes with major damage; 51+ destroyed</li>
+      <li><strong>Disaster declaration:</strong> FEMA Major Disaster Declaration issued September 11, 2025</li>
+      <li><strong>Public Assistance:</strong> DENIED October 24, 2025 — politically explosive given scale of damage</li>
+      <li><strong>Context:</strong> The conference is literally in this city. Every session will be implicitly or explicitly colored by this event.</li>
+    </ul>
+  </div>
+
+  <!-- MILWAUKEE AUG 2025 IMPACT INFOGRAPHIC -->
+  <div class="infographic">
+    <div class="info-tile amber">
+      <span class="val-big" style="color:var(--amber)">14.55"</span>
+      <div class="label-sm">24時間降水量<br>ウィスコンシン州新記録</div>
+    </div>
+    <div class="info-tile blue">
+      <span class="val-big" style="color:var(--blue)">11.19ft</span>
+      <div class="label-sm">Milwaukee River水位<br>観測史上最高</div>
+    </div>
+    <div class="info-tile red">
+      <span class="val-big" style="color:var(--red)">1,500+</span>
+      <div class="label-sm">住宅 大規模被害</div>
+    </div>
+    <div class="info-tile red">
+      <span class="val-big" style="color:var(--red)">51+</span>
+      <div class="label-sm">住宅 全壊</div>
+    </div>
+    <div class="info-tile green">
+      <span class="val-big" style="color:var(--green);font-size:18px">Sep 11</span>
+      <div class="label-sm">FEMA Major Disaster<br>宣言日 (2025)</div>
+    </div>
+    <div class="info-tile red">
+      <span class="val-big" style="color:var(--red);font-size:15px">DENIED</span>
+      <div class="label-sm">Public Assistance<br>却下 (Oct 24, 2025)</div>
+    </div>
+  </div>
+
+  <!-- GREAT LAKES WATER LEVEL GAUGE SVG -->
+  <div class="diagram">
+    <svg viewBox="0 0 860 210" xmlns="http://www.w3.org/2000/svg" style="background:#0f1117">
+      <!-- Title -->
+      <text x="430" y="20" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="700" font-family="sans-serif">Lake Michigan-Huron 水位履歴 (IGLD 1985)</text>
+
+      <!-- Gauge background bar -->
+      <rect x="80" y="40" width="700" height="50" rx="6" fill="#1a1d27" stroke="#2e3347" stroke-width="1"/>
+
+      <!-- Scale marks -->
+      <!-- Min 576.02 ft (2013) = x=80 -->
+      <!-- Max 582.35 ft (1986) = x=780 -->
+      <!-- Range = 6.33 ft, width = 700 px, 1ft = 110.6 px -->
+      <!-- 2020 peak 582.20 = 80 + (582.20-576.02)*110.6 = 80 + 6.18*110.6 = 80+683 = 763 -->
+      <!-- current ~579 (approx) = 80 + (579-576.02)*110.6 = 80 + 329 = 409 -->
+
+      <!-- Fill gradient bar -->
+      <defs>
+        <linearGradient id="lakeGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1d4ed8"/>
+          <stop offset="60%" stop-color="#2563eb"/>
+          <stop offset="100%" stop-color="#0ea5e9"/>
+        </linearGradient>
+      </defs>
+      <!-- Water fill (low to current ~579 ft) -->
+      <rect x="80" y="40" width="329" height="50" rx="6" fill="url(#lakeGrad)" opacity="0.5"/>
+
+      <!-- All-time LOW marker: 576.02 ft = x=80 -->
+      <line x1="80" y1="35" x2="80" y2="98" stroke="#ef4444" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700" font-family="monospace">576.02</text>
+      <text x="80" y="112" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">最低 (Jan 2013)</text>
+
+      <!-- All-time HIGH marker: 582.35 ft = x=780 -->
+      <line x1="780" y1="35" x2="780" y2="98" stroke="#10b981" stroke-width="2"/>
+      <text x="790" y="30" text-anchor="start" fill="#10b981" font-size="10" font-weight="700" font-family="monospace">582.35</text>
+      <text x="800" y="112" text-anchor="middle" fill="#10b981" font-size="9" font-family="sans-serif">最高</text>
+      <text x="800" y="124" text-anchor="middle" fill="#10b981" font-size="8" font-family="sans-serif">Oct 1986</text>
+
+      <!-- 2020 peak: 582.20 = x=763 -->
+      <line x1="763" y1="38" x2="763" y2="98" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="753" y="30" text-anchor="end" fill="#f59e0b" font-size="9" font-family="monospace">582.20</text>
+      <text x="753" y="124" text-anchor="end" fill="#f59e0b" font-size="9" font-family="sans-serif">2020ピーク</text>
+
+      <!-- Range bracket -->
+      <line x1="80" y1="145" x2="780" y2="145" stroke="#6b7280" stroke-width="1.5"/>
+      <line x1="80" y1="140" x2="80" y2="150" stroke="#6b7280" stroke-width="1.5"/>
+      <line x1="780" y1="140" x2="780" y2="150" stroke="#6b7280" stroke-width="1.5"/>
+      <text x="430" y="160" text-anchor="middle" fill="#8892a4" font-size="11" font-weight="700" font-family="sans-serif">全範囲: 6.33 ft (1.93 m) — 天文潮位なし・セイシュ最大約3ft</text>
+
+      <!-- Scale labels -->
+      <text x="80" y="185" fill="#6b7280" font-size="9" font-family="monospace" text-anchor="middle">576 ft</text>
+      <text x="191" y="185" fill="#6b7280" font-size="9" font-family="monospace" text-anchor="middle">577 ft</text>
+      <text x="301" y="185" fill="#6b7280" font-size="9" font-family="monospace" text-anchor="middle">578 ft</text>
+      <text x="412" y="185" fill="#6b7280" font-size="9" font-family="monospace" text-anchor="middle">579 ft</text>
+      <text x="522" y="185" fill="#6b7280" font-size="9" font-family="monospace" text-anchor="middle">580 ft</text>
+      <text x="633" y="185" fill="#6b7280" font-size="9" font-family="monospace" text-anchor="middle">581 ft</text>
+      <text x="743" y="185" fill="#6b7280" font-size="9" font-family="monospace" text-anchor="middle">582 ft</text>
+
+      <!-- Tick marks -->
+      <g stroke="#2e3347" stroke-width="1">
+        <line x1="191" y1="88" x2="191" y2="95"/>
+        <line x1="301" y1="88" x2="301" y2="95"/>
+        <line x1="412" y1="88" x2="412" y2="95"/>
+        <line x1="522" y1="88" x2="522" y2="95"/>
+        <line x1="633" y1="88" x2="633" y2="95"/>
+        <line x1="743" y1="88" x2="743" y2="95"/>
+      </g>
+
+      <!-- Note: no astronomical tide -->
+      <text x="430" y="200" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">※ 五大湖には天文潮位なし — FEMAのSLOSHモデルは大洋岸用設計、五大湖のセイシュに未対応</text>
+    </svg>
+    <div class="diagram-label">五大湖 (Lake Michigan-Huron) 水位範囲 — IGLD 1985基準</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card info">
+      <h3>Wisconsin NR 116 — State Floodplain Rules</h3>
+      <ul>
+        <li><strong>FPE (Flood Protection Elevation):</strong> BFE + 2 ft — most stringent freeboard requirement in Midwest</li>
+        <li><strong>Floodway tolerance:</strong> 0.01 ft surcharge (vs. NFIP default of 1.00 ft) — effectively prohibits any fill in floodway</li>
+        <li>No residential development in floodway (stricter than federal standard)</li>
+        <li>Administered by DNR; local communities must adopt ordinance meeting state minimum</li>
+        <li>BFE+2 aligns with ASCE 24-24 for FDC 2 buildings — Wisconsin is already living the new standard</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>MMSD — Milwaukee Metropolitan Sewerage District</h3>
+      <ul>
+        <li>Serves: 411 sq mi, 28 communities, 1.1M customers</li>
+        <li><strong>Deep Tunnel:</strong> 19.5 miles, 521 million gallon capacity — captures CSO and reduces basement flooding</li>
+        <li><strong>Greenseams:</strong> Farmland/wetland preservation for stormwater retention; 5,000+ acres acquired</li>
+        <li><strong>Fresh Coast 740:</strong> Capture first 0.5" of rainfall = 740 MG stormwater storage goal</li>
+        <li><strong>2035 Vision:</strong> Zero homes in 1% annual chance floodplain</li>
+        <li>Green infrastructure + gray infrastructure hybrid approach</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Great Lakes Flood Dynamics</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Why Great Lakes Flooding Is Different</div>
+    <div class="acc-body">
+      <table>
+        <tr><th>Mechanism</th><th>Description</th><th>Magnitude / Notes</th></tr>
+        <tr><td>Lake level variability</td><td>Long-term rise/fall due to precipitation, evaporation, inflow/outflow balance</td><td>Total historical range: 6.33 ft (record high Lake Michigan-Huron 582.35 ft Oct 1986; record low 576.02 ft Jan 2013)</td></tr>
+        <tr><td>Wind setup</td><td>Wind pushes water to downwind shore; surface tilt</td><td>Can add 1–2 ft on exposed shores during storms</td></tr>
+        <tr><td>Seiches</td><td>Standing wave in enclosed lake basin; oscillates after wind stops</td><td>Lake Erie: up to 5 ft; Lake Michigan: ~3 ft; period = hours</td></tr>
+        <tr><td>Wave runup</td><td>Wave energy dissipated on shore; run-up above still water level</td><td>1–8 ft depending on fetch, wave height, shoreline profile</td></tr>
+        <tr><td>Bluff failure</td><td>Saturated bluffs collapse during high water + wave action</td><td>Irreversible property loss; not captured in FIRM</td></tr>
+        <tr><td>No astronomical tide</td><td>Unlike ocean coasts, no predictable tidal cycle</td><td>Means no "low tide window" for recovery; flooding can persist for days</td></tr>
+      </table>
+      <div class="highlight amber">FEMA's coastal FIRM methodology (SLOSH + ADCIRC) was designed for ocean coasts with astronomical tides. Great Lakes lack tides but have seiches — FEMA does NOT have a standardized Great Lakes coastal FIRM methodology. This is a critical mapping gap.</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header">2020 Great Lakes High Water Crisis</div>
+    <div class="acc-body">
+      <ul>
+        <li>2020 peak: 582.20 ft (IGLD 1985) — within 0.15 ft of all-time record</li>
+        <li>Triggered erosion, bluff failures, property damage across all 5 Great Lakes states + 2 Canadian provinces</li>
+        <li>FEMA emergency declarations in multiple states</li>
+        <li>Exposed gap: most shoreline properties mapped with outdated FIRMs or no FIRM at all</li>
+        <li>USACE Great Lakes update initiative: ongoing; new wave hazard analysis methods being developed</li>
+        <li>Long-term trend: climate projections disagree on direction — some show higher levels (more Great Plains precipitation), some lower (more evaporation)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Recent Extreme Events — Reference Points</h3>
+  <div class="acc-item">
+    <div class="acc-header">Hurricane Helene (September 2024)</div>
+    <div class="acc-body">
+      <ul>
+        <li>Made landfall: Big Bend, Florida, Sep 26, 2024 as Category 4</li>
+        <li>Inland impacts: catastrophic pluvial+fluvial flooding in southern Appalachians</li>
+        <li>Busick, NC: 30.78 inches total rainfall — among highest ever recorded in U.S. from a single storm</li>
+        <li>Western North Carolina: flooding classified as &gt;1,000-year ARI (annual recurrence interval) in many locations</li>
+        <li>Deaths: ≥250 total; ≥175 direct flood deaths — deadliest U.S. hurricane since Katrina (2005)</li>
+        <li>Key lesson: FEMA FIRMs in mountain watersheds showed minimal flood hazard; the actual hazard was compound (atmospheric river + Helene moisture) and not mapped</li>
+        <li>Asheville, NC: not in SFHA; destroyed</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Texas Hill Country Floods (July 4, 2025)</div>
+    <div class="acc-body">
+      <ul>
+        <li>Deaths: 139+ total; 117 in Kerr County alone</li>
+        <li>Guadalupe River: rose approximately 26 feet in 45 minutes at some gauges</li>
+        <li>Camp Mystic: girls' summer camp; multiple fatalities despite some warning</li>
+        <li>Key lesson: flash flood in narrow limestone canyon; EWS gave minutes of warning; even with warning, evacuation was impossible</li>
+        <li>Pluvial flash flood in terrain with minimal SFHA designation — repeat of the structural mapping gap pattern</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== QUESTION BANKS ===================== -->
+<div id="qbank" class="section">
+  <h2>Question Banks</h2>
+  <p class="subtitle">Questions to ask · Questions to avoid · Strategic framing for maximum impact</p>
+
+  <h3><span class="tag-ws1">WS1</span> Sharp Questions for Geospatial Workshop</h3>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS1 · Q1 · High Impact</div>
+    <div class="q-text">BLE BFEs can over- or under-predict by 1–3 feet without surveyed channel bathymetry. When a community acts on BLE as if it's a detailed study — setting freeboard, triggering permits — and the BLE is wrong by 2 feet, who bears the liability? Has FEMA published any guidance on BLE's acceptable use in permitting decisions?</div>
+    <div class="q-why">Why sharp: Forces acknowledgment of BLE's known limitations and the dangerous gap between "non-regulatory" label and actual community use.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS1 · Q2 · High Impact</div>
+    <div class="q-text">With the NAVD88 → NAPGD2022 transition expected mid-2026, every BFE and elevation certificate in this country will eventually need to be re-referenced. Are AECOM's current studies being dual-referenced? What does FEMA's transition plan look like for the 90%+ of population coverage in the NFHL?</div>
+    <div class="q-why">Why sharp: Datum transition is the biggest infrastructure-level technical disruption in U.S. mapping in 30 years. Asking this signals you understand the full chain of consequences.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS1 · Q3 · Technical</div>
+    <div class="q-text">In 2D HEC-RAS models, mesh resolution at bridge crossings and culverts is notorious for creating numerical instability and inaccurate headwater. How does your shop handle the 1D-2D transition at structures, and what's your protocol for validating culvert headwater predictions against observed events?</div>
+    <div class="q-why">Why sharp: This is a practitioner-level technical question that separates people who run models from people who understand them.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS1 · Q4 · Policy</div>
+    <div class="q-text">The ASPRS 2024 standard raised minimum checkpoints from 20 to 30. FEMA's lidar acceptance spec still references ASPRS 2014 in many contract vehicles. Are surveys delivered under old FEMA task orders being re-assessed against ASPRS 2024, or are communities accepting new FIRM panels based on outdated accuracy verification?</div>
+    <div class="q-why">Why sharp: Exposes a contractual gap between evolving professional standards and FEMA procurement cycles.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS1 · Q5 · Forward-looking</div>
+    <div class="q-text">FFRD probabilistic products would give communities flood risk information from 5-year to 2,000-year return periods. But the NFIP's regulatory framework is binary — you're either in the SFHA or you're not. What legislative or rulemaking changes would be needed before FFRD products could replace the current FIRM system, and what's the realistic timeline?</div>
+    <div class="q-why">Why sharp: Forces concrete discussion of the gap between where data science is going and where regulation currently sits.</div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-num">WS1 · Q6 · Community-focused</div>
+    <div class="q-text">For small communities with ≤5,000 population that can't afford a detailed engineering study, what's the gap in data quality between what BLE provides and what they actually need for sound permitting decisions? Is there a cost-effective middle path between BLE and full HEC-RAS 2D?</div>
+    <div class="q-why">Why: Opens discussion on the equity of floodplain mapping — larger cities get detailed studies, small communities rely on BLE.</div>
+  </div>
+
+  <h3><span class="tag-ws2">WS2</span> Sharp Questions for Nonstructural Workshop</h3>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q1 · The Key Question</div>
+    <div class="q-text">44 CFR 60.3 prohibits dry floodproofing of residential structures in the SFHA — full stop. Given that ANSI/FM 2510 barriers are increasingly capable, and pluvial flooding gives homeowners only minutes of warning with no FIRM protection, is there any active FEMA rulemaking to revisit this prohibition? What would the failure mode analysis need to show for the prohibition to be reconsidered?</div>
+    <div class="q-why">Why sharp: Gets to the core unresolved tension in the workshop's subject matter. David Elvir (US Flood Control) likely wants this prohibition lifted. Force the evidence question.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q2 · Equity</div>
+    <div class="q-text">HMGP and FMA acquisition programs are voluntary and compensate owners at pre-flood fair market value. But renters — who often have less financial resilience — lose housing without compensation. Under Swift Current, is there any provision for tenant displacement assistance? If not, are "successful" buyouts simply displacing flood vulnerability onto renters who land in another affordable-but-flood-prone property?</div>
+    <div class="q-why">Why sharp: The equity dimension of buyouts is rarely addressed technically. Forces the panel to engage with the full population impact.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q3 · BCA Technical</div>
+    <div class="q-text">FEMA's BCA Toolkit uses a 7% discount rate per OMB Circular A-94. For a flood mitigation project with a 50-year life, that means a $1M benefit in year 30 is worth only $131K today. The UK's HM Treasury uses 3.5% for long-term projects. Has FEMA or ASFPM formally advocated for a lower discount rate for climate adaptation investments, given the intergenerational nature of the benefits?</div>
+    <div class="q-why">Why sharp: The discount rate is a policy choice disguised as an accounting rule. A 3% rate would change the BCR of many currently ineligible projects from &lt;1.0 to &gt;1.0.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q4 · EWS Reality Check</div>
+    <div class="q-text">The Texas Hill Country floods killed 139+ people despite having gauge networks. For urban pluvial events, catchment concentration times can be under 30 minutes from rainfall onset to damaging flow. What is the minimum viable EWS lead time for a homeowner to successfully deploy a 3-foot flood barrier? Has any presenter quantified the deployment time of ANSI/FM 2510-compliant systems against real-world urban flash flood warning times?</div>
+    <div class="q-why">Why sharp: Forces honest acknowledgment that EWS + deployable barriers may not work for the fastest-onset events.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q5 · ASCE 24-24 Adoption</div>
+    <div class="q-text">ASCE 24-24 mandates ANSI/FM 2510 compliance and annual deployment drills for deployable barriers. But ASCE 24-24 isn't in the 2024 I-Codes — it won't be until the 2027 cycle at the earliest. In the meantime, if a local jurisdiction adopts ASCE 24-24 independently for a floodproofing certificate, and the deployable barrier fails during a flood, who is the responsible party — the building owner, the barrier manufacturer, the local building official?</div>
+    <div class="q-why">Why sharp: Liability chain for flood barrier failure is genuinely unresolved. Forces practitioners to think about risk transfer, not just risk reduction.</div>
+  </div>
+
+  <div class="q-box">
+    <div class="q-num">WS2 · Q6 · BRIC / Funding</div>
+    <div class="q-text">With BRIC applications due July 23, 2026 and "ready-to-implement" infrastructure prioritized, what constitutes sufficient project readiness under the current NOFO? Is preliminary engineering enough, or do applicants need completed design documents to be competitive?</div>
+    <div class="q-why">Why: Highly practical question that may save a community months of wasted application preparation.</div>
+  </div>
+
+  <h3>Questions to Avoid / Not Lead With</h3>
+  <div class="card danger">
+    <h4>Avoid These — They Signal Non-Expert Status</h4>
+    <ul>
+      <li>"What is the difference between a FIRM and a FLOOD MAP?" — too basic</li>
+      <li>"How do I get flood insurance?" — wrong audience (practitioners, not homeowners)</li>
+      <li>"Is sea level rise real?" — debating science not strategy</li>
+      <li>"What does Risk Rating 2.0 mean for me?" — personal not policy</li>
+      <li>"Can you explain what BLE is?" — should know this before attending</li>
+      <li>Any question where the answer is clearly in the FEMA Glossary or a Technical Bulletin</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===================== ARGUMENT BANK ===================== -->
+<div id="args" class="section">
+  <h2>Argument Bank</h2>
+  <p class="subtitle">Evidence-backed claims for discussion — cite numbers, not opinions</p>
+
+  <h3><span class="tag-ws1">WS1</span> Geospatial Arguments</h3>
+
+  <div class="argument">
+    <div class="arg-topic">BLE Limitations</div>
+    <div class="arg-claim">BLE is being used as a de facto regulatory tool without the validation it requires.</div>
+    <div class="arg-evidence">BLE BFEs can deviate 1–3 ft from detailed study BFEs in watersheds without surveyed channel bathymetry. Yet communities with BLE but no effective FIRM are making permitting decisions based on it. FEMA labels BLE "non-regulatory" but provides no guidance on permissible uses in local ordinance administration.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">Datum Transition Risk</div>
+    <div class="arg-claim">The NAVD88 → NAPGD2022 transition will require re-evaluation of virtually every elevation certificate and BFE in the country.</div>
+    <div class="arg-evidence">NAVD88 carries a ~0.5 m national bias and ~1 m coast-to-coast tilt. Properties certified as "above BFE" today may shift status after transformation — or vice versa. FEMA has not yet published a transition roadmap for the NFHL, FIRMs, or elevation certificates.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">Mapping Coverage Gap</div>
+    <div class="arg-claim">The NFHL's &gt;90% population coverage statistic conceals massive accuracy heterogeneity.</div>
+    <div class="arg-evidence">A 1990 flood study in a rural county and a 2024 2D HEC-RAS study in an urban corridor are both "in the NFHL." The 90% number counts both. Meanwhile, pluvial flooding — the dominant urban risk — has essentially zero FIRM coverage anywhere in the U.S.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">Calibration Standards</div>
+    <div class="arg-claim">Single-event calibration is insufficient for flood mapping models used to set regulatory BFEs.</div>
+    <div class="arg-evidence">Professional hydraulic modeling practice (HEC-RAS guidance, FEMA MH+T) recommends ≥2 independent events for calibration. Many FEMA-funded models are calibrated to one observed event, sometimes with limited observed WSE data, and then used to set BFEs that affect property values and insurance rates for decades.</div>
+  </div>
+
+  <h3><span class="tag-ws2">WS2</span> Nonstructural Arguments</h3>
+
+  <div class="argument">
+    <div class="arg-topic">Residential Dry Floodproofing Prohibition</div>
+    <div class="arg-claim">The blanket prohibition on residential dry floodproofing is a regulatory artifact that hasn't kept pace with barrier technology or pluvial flood risk realities.</div>
+    <div class="arg-evidence">44 CFR 60.3 was written when "floodproofing" meant masonry wall sealing — leak-prone and failure-prone. ANSI/FM 2510 (2020) establishes performance standards for deployable barriers to 3+ ft. No rulemaking to revisit the residential prohibition is pending. Meanwhile, pluvial urban flooding — not regulated by FIRMs — is the fastest-growing urban risk, leaving homeowners with no compliant active mitigation option.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">Buyout Equity</div>
+    <div class="arg-claim">HMGP/FMA voluntary buyouts, as implemented, systematically disadvantage renters and low-income homeowners.</div>
+    <div class="arg-evidence">Renters receive no compensation under current buyout programs; only property owners are paid. Pre-flood fair market value in flood-prone neighborhoods is often below replacement cost of comparable housing, because flood risk is already discounted into property prices. "Successful" buyouts may simply relocate flood vulnerability to other affordable-but-flood-prone areas.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">BCA Discount Rate</div>
+    <div class="arg-claim">FEMA's 7% BCA discount rate systematically under-values long-lived mitigation investments, making cost-effective projects appear infeasible.</div>
+    <div class="arg-evidence">At 7%, a $1M benefit in year 30 is worth $131K today. At 3% (UK HM Treasury standard for long-lived infrastructure), it's $412K. The choice of discount rate is a policy decision — not an actuarial truth. Many BRIC-eligible community projects that would pass a 3% BCR test fail at 7%. The NIBS $7:1 median BCR for riverine flood mitigation was calculated at the 7% rate — meaning the true societal return is higher.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">CRS Equity</div>
+    <div class="arg-claim">The CRS systematically rewards communities with administrative capacity, not necessarily those with the greatest flood risk or mitigation need.</div>
+    <div class="arg-evidence">~1,500 of 22,700+ NFIP communities participate in CRS. Class 1–4 (35–45% discount) = &lt;50 communities. The documentation burden required for high CRS class is feasible only for well-staffed, well-funded planning departments — typically larger, wealthier communities. Smaller, lower-income, higher-risk communities that most need premium relief are least equipped to achieve meaningful CRS class.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">Pluvial Flooding Gap</div>
+    <div class="arg-claim">Pluvial flooding is the fastest-growing urban flood risk and is essentially unmapped by the current FIRM system.</div>
+    <div class="arg-evidence">~25% of NFIP claims come from outside the SFHA — many attributable to pluvial flooding. Urban catchment concentration times under 30 minutes. Storm sewer systems designed for 2–10 year storms are overwhelmed by 100-year events. FEMA has no systematic methodology for pluvial FIRM delineation. Milwaukee August 9–10, 2025 was primarily pluvial — most damaged properties were not in the SFHA.</div>
+  </div>
+
+  <h3>Stakeholder Map</h3>
+  <div class="grid2">
+    <div class="card">
+      <h3>Workshop 1 Audience Likely Includes</h3>
+      <ul>
+        <li><strong>FEMA Regional staff:</strong> Risk MAP program managers; want practical guidance on BLE use</li>
+        <li><strong>State floodplain coordinators:</strong> Oversee local ordinance compliance; interested in mapping quality</li>
+        <li><strong>Engineering consultants:</strong> HEC-RAS modelers, GIS analysts; interested in technical standards and contracting</li>
+        <li><strong>Community floodplain managers (CFMs):</strong> Local officials using maps for permits; frustrated by BLE limitations</li>
+        <li><strong>Surveyors (LS/GISP):</strong> Lidar data production; ASPRS standards; elevation certificates</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Workshop 2 Audience Likely Includes</h3>
+      <ul>
+        <li><strong>NFIP community officials:</strong> Floodplain administrators; need practical mitigation options</li>
+        <li><strong>State HMGP coordinators:</strong> Manage HMA grant programs; BRIC-focused post-reinstatement</li>
+        <li><strong>Structural engineers:</strong> Design elevation, floodproofing projects; ASCE 24-24 adoption</li>
+        <li><strong>Vendors (US Flood Control etc.):</strong> Selling ANSI/FM 2510 products; pushing policy change</li>
+        <li><strong>Emergency managers:</strong> EWS systems; community action protocols</li>
+        <li><strong>Housing advocates:</strong> Equity dimensions of buyouts and relocation</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== STRATEGIC FORESIGHT ===================== -->
+<div id="foresight" class="section">
+  <h2>Strategic Foresight</h2>
+  <p class="subtitle">Five scenarios shaping floodplain management 2026–2035</p>
+
+  <div class="scenario">
+    <div class="sc-num">Scenario 1</div>
+    <div class="sc-title">NFIP Reform: Comprehensive Reauthorization (Low Probability, High Impact)</div>
+    <p>Congress passes NFIP reform bill before September 30, 2026 expiry: means-tested assistance, mandatory coverage expansion, private market competition framework, and FFRD as future regulatory baseline.</p>
+    <p><strong>Implications:</strong> Risk Rating 2.0 modified or frozen. Private market growth. FIRM replacement with probabilistic products accelerated. CRS reformed to reduce documentation burden. FEMA mapping budget potentially increased.</p>
+    <p><strong>Conference angle:</strong> Ask presenters: "If comprehensive reform passes, what's the first thing you'd change about mapping methodology?"</p>
+  </div>
+
+  <div class="scenario">
+    <div class="sc-num">Scenario 2</div>
+    <div class="sc-title">NFIP Muddles Through: Another Short-Term Extension (High Probability)</div>
+    <p>Congress passes 36th short-term extension; no comprehensive reform; Risk Rating 2.0 continues; policy count continues declining; fiscal deficit grows. Status quo for floodplain mapping, BRIC litigation continues.</p>
+    <p><strong>Implications:</strong> Community frustration deepens. Practitioners at this conference will be managing the same structural tensions in 2027. Private flood insurance fills some gap. Federal disaster relief becomes de facto substitute for NFIP.</p>
+    <p><strong>Conference angle:</strong> "Given this is almost certainly scenario, how are communities building resilience independent of federal program stability?"</p>
+  </div>
+
+  <div class="scenario">
+    <div class="sc-num">Scenario 3</div>
+    <div class="sc-title">FEMA Review Council Restructuring Enacted (Medium Probability)</div>
+    <p>RAPID, R3P, FAIR programs enacted legislatively. Parametric block grants replace project-by-project PA. HMGP replaced by two-phase R3P. Disaster declaration thresholds raised.</p>
+    <p><strong>Implications:</strong> Fewer presidential disaster declarations. States absorb more cost. Communities that can't document damage quantitatively get lower RAPID grants. Floodplain management programs may be decoupled from disaster assistance more cleanly.</p>
+    <p><strong>Conference angle:</strong> Milwaukee's PA denial was under the current system. Under RAPID, would Milwaukee have gotten more or less? The parametric formula matters enormously.</p>
+  </div>
+
+  <div class="scenario">
+    <div class="sc-num">Scenario 4</div>
+    <div class="sc-title">Datum Transition Disruption (Certain, Timeline Uncertain)</div>
+    <p>NAPGD2022 is adopted mid-2026 (FGCS vote). NAVD88-based products begin mandatory transition. Elevation certificates, FIRMs, BFEs all need transformation.</p>
+    <p><strong>Implications:</strong> Properties near BFE with NAVD88 ECs may gain or lose compliance status. Litigation potential when property owners find their "above BFE" status changes. FEMA needs 5–10 year transformation plan. Surveying community has both a crisis and an opportunity.</p>
+    <p><strong>Conference angle:</strong> "Is FEMA planning to grandfather existing ECs, or will every EC need to be retranscribed to NAPGD2022 upon adoption?"</p>
+  </div>
+
+  <div class="scenario">
+    <div class="sc-num">Scenario 5</div>
+    <div class="sc-title">Pluvial Flood Mapping Initiative (Aspirational, 5–10 years)</div>
+    <p>Congress or FEMA launches systematic urban pluvial flood mapping program — analogous to Risk MAP but for stormwater/pluvial risk. Probabilistic depth grids replace SFHA delineation for urban areas.</p>
+    <p><strong>Implications:</strong> Fundamentally transforms what "flood zone" means for urban homeowners. ~25% of current "outside SFHA" claims would shift to insurable zones. Would require NFIP reform (mandatory purchase in pluvial zones?). MMSD's Fresh Coast 740 becomes a model.</p>
+    <p><strong>Conference angle:</strong> Milwaukee's August 2025 flood — mostly pluvial, mostly outside SFHA — is the strongest possible argument for this initiative. Make this argument explicitly.</p>
+  </div>
+</div>
+
+<!-- ===================== QUICK REFERENCE ===================== -->
+<div id="quickref" class="section">
+  <h2>Quick Reference</h2>
+  <p class="subtitle">Cheat sheets for use during sessions</p>
+
+  <div class="two-col">
+    <div>
+      <h3>FEMA Technical Bulletins — What Each Covers</h3>
+      <div class="cheat">
+        <div class="row"><span class="key">TB-1 (2021)</span><span class="val2">Flood openings sizing &amp; requirements</span></div>
+        <div class="row"><span class="key">TB-2 (2025 rev)</span><span class="val2">Flood-resistant materials; Classes 4 &amp; 5</span></div>
+        <div class="row"><span class="key">TB-3 (2021)</span><span class="val2">Non-residential dry floodproofing design</span></div>
+        <div class="row"><span class="key">TB-6</span><span class="val2">Below-grade parking dry floodproofing</span></div>
+        <div class="row"><span class="key">TB-7 (2022)</span><span class="val2">Wet floodproofing design</span></div>
+        <div class="row"><span class="key">P-936 (2013)</span><span class="val2">Floodproofing non-residential buildings</span></div>
+        <div class="row"><span class="key">P-312 (5th ed)</span><span class="val2">Homeowner's guide to retrofitting</span></div>
+        <div class="row"><span class="key">P-259</span><span class="val2">Engineering principles &amp; practices</span></div>
+        <div class="row"><span class="key">P-2037</span><span class="val2">Manufactured home flood risk</span></div>
+        <div class="row"><span class="key">P-2140</span><span class="val2">Mitigation for residential buildings</span></div>
+      </div>
+
+      <h3>HMA Program Comparison</h3>
+      <div class="cheat">
+        <div class="row"><span class="key">HMGP trigger</span><span class="val2">Post-disaster declaration only</span></div>
+        <div class="row"><span class="key">HMGP amount</span><span class="val2">15% of total federal disaster $</span></div>
+        <div class="row"><span class="key">BRIC trigger</span><span class="val2">Annual; pre-disaster; competitive</span></div>
+        <div class="row"><span class="key">BRIC FY24+25</span><span class="val2">$1B combined; deadline Jul 23, 2026</span></div>
+        <div class="row"><span class="key">FMA</span><span class="val2">$600M FY24 base; SRL/RL priority</span></div>
+        <div class="row"><span class="key">Swift Current</span><span class="val2">$500M; post-disaster SRL/RL buyouts</span></div>
+        <div class="row"><span class="key">STORM Act</span><span class="val2">$500M IIJA revolving loan fund</span></div>
+      </div>
+    </div>
+    <div>
+      <h3>ASCE 24-24 Flood Design Classes</h3>
+      <div class="cheat">
+        <div class="row"><span class="key">FDC 1</span><span class="val2">Low-risk; agriculture, temporary</span></div>
+        <div class="row"><span class="key">FDC 2</span><span class="val2">Normal; residential, commercial; 100-yr</span></div>
+        <div class="row"><span class="key">FDC 3</span><span class="val2">High-risk; schools, assembly; 750-yr</span></div>
+        <div class="row"><span class="key">FDC 4</span><span class="val2">Essential; hospitals, EOC; 1,000-yr</span></div>
+        <div class="row"><span class="key">I-Code status</span><span class="val2">NOT in 2024 I-Codes; target 2027 cycle</span></div>
+        <div class="row"><span class="key">Deployable barriers</span><span class="val2">ANSI/FM 2510 + O&amp;M plan + annual drills</span></div>
+      </div>
+
+      <h3>LOMC Quick Reference</h3>
+      <div class="cheat">
+        <div class="row"><span class="key">LOMA</span><span class="val2">Natural ground above BFE; ~30 days</span></div>
+        <div class="row"><span class="key">LOMR-F</span><span class="val2">Fill above BFE; must not raise BFE elsewhere</span></div>
+        <div class="row"><span class="key">LOMR</span><span class="val2">Engineering revision; MT-2 forms; 6–18 mo</span></div>
+        <div class="row"><span class="key">CLOMR</span><span class="val2">Conditional (pre-construction); required first</span></div>
+      </div>
+
+      <h3>Flood Zone Quick Reference</h3>
+      <div class="cheat">
+        <div class="row"><span class="key">AE</span><span class="val2">1%; detailed study; BFE shown</span></div>
+        <div class="row"><span class="key">A</span><span class="val2">1%; approximate; no BFE</span></div>
+        <div class="row"><span class="key">AO</span><span class="val2">Sheet flow; depth (not elev) shown</span></div>
+        <div class="row"><span class="key">AH</span><span class="val2">Ponding; BFE shown</span></div>
+        <div class="row"><span class="key">VE</span><span class="val2">Coastal + wave action; BFE shown</span></div>
+        <div class="row"><span class="key">X shaded</span><span class="val2">500-yr; no BFE; not SFHA</span></div>
+        <div class="row"><span class="key">X unshaded</span><span class="val2">Minimal hazard</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Key Regulatory Citations — Use These Precisely</h3>
+  <table>
+    <tr><th>Citation</th><th>Subject</th><th>Key Content</th></tr>
+    <tr><td>44 CFR 60.3</td><td>NFIP Floodplain Management</td><td>Minimum requirements for communities; residential floodproofing prohibition</td></tr>
+    <tr><td>44 CFR 65</td><td>Identification and Mapping</td><td>FIRM production, LOMC procedures</td></tr>
+    <tr><td>44 CFR 80</td><td>Property Acquisition</td><td>Open space requirement for acquired parcels in perpetuity</td></tr>
+    <tr><td>EO 14148 (Jan 20, 2025)</td><td>FFRMS Rescission</td><td>Revoked EO 13690; ended federal FFRMS requirement</td></tr>
+    <tr><td>DRRA 2018 §1234</td><td>BRIC Authorization</td><td>Established BRIC as statutory program (basis for court injunction)</td></tr>
+    <tr><td>Wisconsin NR 116</td><td>State Floodplain Rules</td><td>FPE = BFE+2 ft; 0.01-ft floodway tolerance</td></tr>
+    <tr><td>ANSI/FM 2510 (2020)</td><td>Flood Barriers</td><td>Only national consensus standard for flood-mitigation equipment</td></tr>
+    <tr><td>OMB Circular A-94</td><td>BCA Discount Rate</td><td>7% real discount rate for federal program evaluation</td></tr>
+  </table>
+</div>
+
+<!-- ===================== GLOSSARY ===================== -->
+<div id="glossary" class="section">
+  <h2>Glossary</h2>
+  <p class="subtitle">100+ terms — sorted alphabetically</p>
+
+  <input id="gloss-search" type="text" placeholder="Filter glossary…" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);font-size:13px;margin-bottom:16px" oninput="filterGloss(this.value)">
+
+  <table id="gloss-table">
+    <tr><th>Term</th><th>Definition</th></tr>
+    <tr><td><strong>1% Annual Chance Flood</strong></td><td>Flood with 1% probability of being exceeded in any given year; colloquially called "100-year flood"; basis for SFHA and FIRM</td></tr>
+    <tr><td><strong>ADCIRC</strong></td><td>ADvanced CIRCulation model; finite-element coastal hydrodynamic model used for storm surge and coastal flooding</td></tr>
+    <tr><td><strong>AEP</strong></td><td>Annual Exceedance Probability; probability that a flood level will be exceeded in any given year; inverse of return period (1/T)</td></tr>
+    <tr><td><strong>ANSI/FM 2510</strong></td><td>American National Standard for flood mitigation equipment (2020); covers perimeter barriers, opening barriers, backwater valves, flood glazing; only national consensus standard</td></tr>
+    <tr><td><strong>ASPRS</strong></td><td>American Society for Photogrammetry and Remote Sensing; publishes positional accuracy standards for lidar and imagery</td></tr>
+    <tr><td><strong>ASPRS 2024</strong></td><td>ASPRS Positional Accuracy Standards Edition 2 Version 2 (2024); raised min checkpoints to 30; RMSEz as primary metric</td></tr>
+    <tr><td><strong>Atlas 14</strong></td><td>NOAA's Precipitation Frequency Data Server; provides rainfall depth-duration-frequency (DDF) estimates for U.S.</td></tr>
+    <tr><td><strong>Base Flood</strong></td><td>The 1% annual chance flood; the regulatory flood standard for NFIP</td></tr>
+    <tr><td><strong>BCA</strong></td><td>Benefit-Cost Analysis; required for BRIC, HMGP, FMA grants; BCR must ≥1.0; uses 7% discount rate</td></tr>
+    <tr><td><strong>BCR</strong></td><td>Benefit-Cost Ratio; total present value of benefits divided by total project cost; must exceed 1.0 for HMA eligibility</td></tr>
+    <tr><td><strong>BFE</strong></td><td>Base Flood Elevation; the elevation to which floodwater is predicted to rise during the 1% annual chance flood; shown on FIRM for detailed study zones</td></tr>
+    <tr><td><strong>BLE</strong></td><td>Base Level Engineering; automated HEC-RAS 1D/2D modeling at HUC-8/12 scale using QL2 lidar; non-regulatory screening tool</td></tr>
+    <tr><td><strong>BRIC</strong></td><td>Building Resilient Infrastructure and Communities; FEMA pre-disaster HMA grant program; terminated Apr 2025; reinstated by court injunction Dec 2025; $1B FY24+25 NOFO issued Mar 2026</td></tr>
+    <tr><td><strong>Bulletin 17C</strong></td><td>USGS publication defining statistical flood frequency analysis using Log-Pearson Type III distribution; superseded Bulletin 17B</td></tr>
+    <tr><td><strong>CFM</strong></td><td>Certified Floodplain Manager; ASFPM professional certification</td></tr>
+    <tr><td><strong>CLOMR</strong></td><td>Conditional Letter of Map Revision; FEMA conditional approval of proposed map change before construction</td></tr>
+    <tr><td><strong>Compound Flooding</strong></td><td>Simultaneous or sequential flooding from multiple mechanisms (e.g., storm surge + heavy rainfall; riverine + coastal)</td></tr>
+    <tr><td><strong>CRS</strong></td><td>Community Rating System; voluntary NFIP program; credit points reduce premiums 5–45%; ~1,500 communities enrolled</td></tr>
+    <tr><td><strong>DEM</strong></td><td>Digital Elevation Model; raster grid representing terrain elevation; derived from lidar; foundation of hydraulic models</td></tr>
+    <tr><td><strong>DFE</strong></td><td>Design Flood Elevation; in ASCE 24-24, the flood elevation used for design; varies by Flood Design Class (FDC)</td></tr>
+    <tr><td><strong>DRRA</strong></td><td>Disaster Recovery Reform Act (2018); authorized BRIC; established statutory basis for program (used in court challenge to termination)</td></tr>
+    <tr><td><strong>Dry Floodproofing</strong></td><td>Measures that make a building watertight; water does NOT enter; allowed for non-residential structures in A zones only; NEVER in V zones; PROHIBITED for residential in SFHA</td></tr>
+    <tr><td><strong>Early Warning System (EWS)</strong></td><td>Sensor + forecast + alert + action protocol; effective only if lead time exceeds response time</td></tr>
+    <tr><td><strong>EC</strong></td><td>Elevation Certificate; FEMA form documenting lowest floor elevation relative to BFE; required for new NFIP policies in SFHA</td></tr>
+    <tr><td><strong>EO 14148</strong></td><td>Executive Order signed Jan 20, 2025; rescinded FFRMS (EO 13690); ended federal requirement to build to higher flood standard</td></tr>
+    <tr><td><strong>FAIR</strong></td><td>Federal Assistance for Individuals and Renters; proposed replacement for FEMA Individual Assistance; up to $150K per household</td></tr>
+    <tr><td><strong>FDC</strong></td><td>Flood Design Class; ASCE 24-24 classification 1–4 determining required design flood elevation</td></tr>
+    <tr><td><strong>FEMA Review Council</strong></td><td>Advisory body; submitted final report May 7, 2026 proposing RAPID, R3P, FAIR replacements for PA, HMGP, IA</td></tr>
+    <tr><td><strong>FFRMS</strong></td><td>Federal Flood Risk Management Standard; established by EO 13690 (2015); rescinded by EO 14148 (2025); required federal agencies to build to higher flood standard</td></tr>
+    <tr><td><strong>FGCS</strong></td><td>Federal Geodetic Control Subcommittee; body responsible for approving national datum transitions; NAPGD2022 vote expected mid-2026</td></tr>
+    <tr><td><strong>FIRM</strong></td><td>Flood Insurance Rate Map; FEMA's regulatory flood map; designates SFHA, BFEs, flood zones; used for permitting and insurance</td></tr>
+    <tr><td><strong>FIS</strong></td><td>Flood Insurance Study; engineering report underlying FIRM; contains hydraulic model, frequency analysis, BFE profiles</td></tr>
+    <tr><td><strong>FMA</strong></td><td>Flood Mitigation Assistance; NFIP-funded HMA grant; $600M FY24 base; prioritizes SRL/RL properties</td></tr>
+    <tr><td><strong>Flood Fringe</strong></td><td>Area between floodway and outer SFHA boundary; fill allowed if BFE not exceeded; lower regulatory burden than floodway</td></tr>
+    <tr><td><strong>Flood Opening</strong></td><td>Opening in enclosed area below BFE that allows water to equalize; required for NFIP compliance in wet floodproofed spaces; minimum 1 in²/ft² of enclosed area</td></tr>
+    <tr><td><strong>Floodway</strong></td><td>Channel + adjacent floodplain area needed to convey 100-yr flood without increasing BFE more than the allowable surcharge (1.00 ft federal; 0.01 ft in Wisconsin)</td></tr>
+    <tr><td><strong>FFRD</strong></td><td>Future of Flood Risk Data; USACE-FEMA IRWA; probabilistic flood products 5-yr to 2,000-yr; Monte Carlo via HEC-WAT; non-regulatory; three pilot watersheds</td></tr>
+    <tr><td><strong>FPE</strong></td><td>Flood Protection Elevation; Wisconsin NR 116 term = BFE + 2 ft</td></tr>
+    <tr><td><strong>FY</strong></td><td>Federal Fiscal Year; October 1 – September 30</td></tr>
+    <tr><td><strong>GIS</strong></td><td>Geographic Information System; software/data ecosystem for spatial analysis; ArcGIS (Esri), QGIS (open source) are dominant platforms</td></tr>
+    <tr><td><strong>GISP</strong></td><td>GIS Professional; GISCI certification; signifies professional-level GIS competency</td></tr>
+    <tr><td><strong>HEC-HMS</strong></td><td>Hydrologic Engineering Center – Hydrologic Modeling System; USACE rainfall-runoff model</td></tr>
+    <tr><td><strong>HEC-RAS</strong></td><td>Hydrologic Engineering Center – River Analysis System; USACE hydraulic model; 1D and 2D; industry standard for FEMA flood studies</td></tr>
+    <tr><td><strong>HEC-WAT</strong></td><td>Watershed Analysis Tool; USACE platform for Monte Carlo ensemble flood frequency analysis; basis for FFRD</td></tr>
+    <tr><td><strong>HFIAA</strong></td><td>Homeowner Flood Insurance Affordability Act (2014); rolled back Biggert-Waters premium increases; established NFIP affordability framework</td></tr>
+    <tr><td><strong>HMA</strong></td><td>Hazard Mitigation Assistance; umbrella for FEMA grant programs: HMGP, BRIC, FMA, Swift Current</td></tr>
+    <tr><td><strong>HMGP</strong></td><td>Hazard Mitigation Grant Program; post-disaster; 15% of total federal disaster spending per declaration; proposed replacement: R3P</td></tr>
+    <tr><td><strong>HUC</strong></td><td>Hydrologic Unit Code; watershed delineation system; HUC-8 = subbasin (~700 sq mi avg); HUC-12 = watershed (~40 sq mi avg)</td></tr>
+    <tr><td><strong>IA</strong></td><td>Individual Assistance; FEMA program for disaster survivors; proposed replacement: FAIR</td></tr>
+    <tr><td><strong>IGLD 1985</strong></td><td>International Great Lakes Datum 1985; vertical datum for Great Lakes water levels (different from NAVD88)</td></tr>
+    <tr><td><strong>IRWA</strong></td><td>Interagency Research Working Agreement; the USACE-FEMA partnership producing FFRD</td></tr>
+    <tr><td><strong>Lidar</strong></td><td>Light Detection and Ranging; laser scanning technology; produces dense point clouds for terrain modeling; cannot penetrate water</td></tr>
+    <tr><td><strong>LOMA</strong></td><td>Letter of Map Amendment; FEMA letter removing property from SFHA based on natural ground elevation above BFE</td></tr>
+    <tr><td><strong>LOMR</strong></td><td>Letter of Map Revision; FEMA formal revision to FIRM based on new engineering analysis</td></tr>
+    <tr><td><strong>LOMR-F</strong></td><td>Letter of Map Revision based on Fill; removes property from SFHA after fill placed above BFE</td></tr>
+    <tr><td><strong>Manning's n</strong></td><td>Roughness coefficient in open-channel hydraulics; varies by channel material and vegetation; calibrated to observed flows</td></tr>
+    <tr><td><strong>MMSD</strong></td><td>Milwaukee Metropolitan Sewerage District; serves 411 sq mi, 28 communities, 1.1M customers; operates Deep Tunnel, Greenseams, Fresh Coast 740</td></tr>
+    <tr><td><strong>MRI</strong></td><td>Mean Recurrence Interval; same as return period; e.g., 750-yr MRI = 0.13% AEP</td></tr>
+    <tr><td><strong>MT-2</strong></td><td>FEMA form set for LOMR applications; requires engineering data, community concurrence, and signed certifications</td></tr>
+    <tr><td><strong>NAPGD2022</strong></td><td>North American-Pacific Geodetic Datum of 2022; replacement for NAVD88; FGCS vote expected mid-2026</td></tr>
+    <tr><td><strong>NAVD88</strong></td><td>North American Vertical Datum of 1988; current national vertical reference; ~0.5 m national bias; ~1 m coast-to-coast tilt; all FIRMs and ECs currently reference this datum</td></tr>
+    <tr><td><strong>NFHL</strong></td><td>National Flood Hazard Layer; FEMA GIS database of all effective FIRM data; &gt;90% U.S. population coverage; updated piecemeal</td></tr>
+    <tr><td><strong>NFIP</strong></td><td>National Flood Insurance Program; est. 1968; 4.6M policies; $1.3T coverage; 22,700+ communities; expires Sep 30, 2026; $20B+ Treasury debt</td></tr>
+    <tr><td><strong>NIBS</strong></td><td>National Institute of Building Sciences; published 2017 study showing $7:1 BCR for natural hazard mitigation</td></tr>
+    <tr><td><strong>NR 116</strong></td><td>Wisconsin administrative code governing floodplain management; FPE = BFE+2 ft; 0.01-ft floodway tolerance</td></tr>
+    <tr><td><strong>NVA</strong></td><td>Non-Vegetated Vertical Accuracy; lidar accuracy measured on hard surfaces; primary accuracy metric; RMSEz-based</td></tr>
+    <tr><td><strong>OMB Circular A-94</strong></td><td>Office of Management and Budget guidance on discount rates for federal programs; sets 7% real discount rate for BCA</td></tr>
+    <tr><td><strong>PA</strong></td><td>Public Assistance; FEMA reimbursement program for local governments' disaster costs; proposed replacement: RAPID</td></tr>
+    <tr><td><strong>Pluvial Flooding</strong></td><td>Flooding driven by rainfall exceeding soil/stormwater capacity; not riverine; dominates urban areas; essentially unmapped by current FIRM system</td></tr>
+    <tr><td><strong>QL0/QL1/QL2/QL3</strong></td><td>USGS 3DEP lidar quality levels; QL2 = minimum for FEMA mapping (≥2 pts/m², ≤10 cm RMSEz); QL1 preferred for floodplain mapping</td></tr>
+    <tr><td><strong>R3P</strong></td><td>Resilience, Recovery, and Rebuild Program; proposed FEMA Review Council replacement for HMGP; two-phase structure</td></tr>
+    <tr><td><strong>RAPID</strong></td><td>Responsive Aid for Public Infrastructure Disaster; proposed FEMA Review Council replacement for Public Assistance; parametric block grant</td></tr>
+    <tr><td><strong>Repetitive Loss (RL)</strong></td><td>NFIP property with ≥2 paid claims of ≥$1,000 within 10 years; priority for FMA mitigation funding</td></tr>
+    <tr><td><strong>Risk MAP</strong></td><td>Risk Mapping, Assessment, and Planning; FEMA's flood mapping program; produces FIRMs and risk products</td></tr>
+    <tr><td><strong>Risk Rating 2.0</strong></td><td>NFIP pricing methodology implemented Oct 2021; property-specific pricing replacing FIRM zone-based rates; caused 11–39% policy drop nationally</td></tr>
+    <tr><td><strong>RMSEz</strong></td><td>Root Mean Square Error in the vertical dimension; primary accuracy metric for lidar in ASPRS 2024</td></tr>
+    <tr><td><strong>SFHA</strong></td><td>Special Flood Hazard Area; area with 1% or greater annual chance of flooding; regulatory zone for NFIP</td></tr>
+    <tr><td><strong>SI</strong></td><td>Substantial Improvement; any renovation where cost ≥50% of pre-improvement market value; triggers bring-to-code requirement</td></tr>
+    <tr><td><strong>SLOSH</strong></td><td>Sea, Lake, and Overland Surges from Hurricanes; NOAA storm surge model; used in coastal FIRM production</td></tr>
+    <tr><td><strong>SRL</strong></td><td>Severe Repetitive Loss; NFIP property with ≥4 paid claims OR 2 claims exceeding building value; priority for acquisition/elevation</td></tr>
+    <tr><td><strong>STORM Act</strong></td><td>Safeguarding Tomorrow through Ongoing Risk Mitigation Act; IIJA-funded revolving loan fund; $500M FY22–26</td></tr>
+    <tr><td><strong>StreamStats</strong></td><td>USGS web application for estimating peak flows at ungauged sites using regression equations</td></tr>
+    <tr><td><strong>Substantial Damage (SD)</strong></td><td>Damage where cost to restore ≥50% of pre-damage fair market value; triggers bring-to-code (elevation or acquisition) requirement</td></tr>
+    <tr><td><strong>Swift Current</strong></td><td>FEMA HMA program; $500M for streamlined post-disaster buyouts of SRL/RL properties</td></tr>
+    <tr><td><strong>3DEP</strong></td><td>USGS 3D Elevation Program; national lidar acquisition initiative; goal: QL2 coverage of entire U.S.</td></tr>
+    <tr><td><strong>V Zone / VE Zone</strong></td><td>Coastal high hazard area; subject to wave action; dry floodproofing absolutely prohibited; elevated foundations required</td></tr>
+    <tr><td><strong>VVA</strong></td><td>Vegetated Vertical Accuracy; lidar accuracy under forest canopy; always worse than NVA; reported at 95th percentile</td></tr>
+    <tr><td><strong>Wet Floodproofing</strong></td><td>Allow water to enter; use flood-resistant materials; required for enclosed areas below BFE in residential structures; flood openings required</td></tr>
+    <tr><td><strong>WSE</strong></td><td>Water Surface Elevation; the elevation of the water surface at a given location and time; used for calibration and BFE determination</td></tr>
+    <tr><td><strong>X Zone (shaded)</strong></td><td>0.2% annual chance (500-yr) flood area; outside SFHA; no mandatory purchase requirement; accounts for ~25% of NFIP claims</td></tr>
+    <tr><td><strong>X Zone (unshaded)</strong></td><td>Minimal flood hazard; outside 500-yr floodplain; lowest regulatory burden</td></tr>
+  </table>
+</div>
+
+</div><!-- /main -->
+
+<script>
+function filterGloss(q) {
+  const rows = document.querySelectorAll('#gloss-table tr');
+  rows.forEach((row, i) => {
+    if (i === 0) return;
+    row.style.display = row.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+// ── Chart.js initialization ──
+Chart.defaults.color = '#8892a4';
+Chart.defaults.borderColor = '#2e3347';
+Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+const _charts = {};
+
+function initCharts() {
+  // 1. NFIP Claims donut
+  const cc = document.getElementById('chart-claims');
+  if (cc) _charts.claims = new Chart(cc, {
+    type: 'doughnut',
+    data: {
+      labels: ['SFHA内からの請求 (75%)', 'SFHA外からの請求 (25%)'],
+      datasets: [{ data: [75, 25], backgroundColor: ['#1d3a6b','#78350f'], borderColor: ['#3b82f6','#f59e0b'], borderWidth: 2, hoverOffset: 8 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } } }
+    }
+  });
+
+  // 2. Policy count trend
+  const cp = document.getElementById('chart-policies');
+  if (cp) _charts.policies = new Chart(cp, {
+    type: 'bar',
+    data: {
+      labels: ['2019','2020','2021\n(RR2.0)','2022','2023','2024','2025'],
+      datasets: [{ label: '有効契約 (百万件)', data: [5.06,5.05,5.03,4.85,4.72,4.65,4.60],
+        backgroundColor: (ctx) => ctx.dataIndex >= 2 ? 'rgba(239,68,68,0.45)' : 'rgba(59,130,246,0.45)',
+        borderColor: (ctx) => ctx.dataIndex >= 2 ? '#ef4444' : '#3b82f6',
+        borderWidth: 2, borderRadius: 4 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 4.4, max: 5.2, grid: { color: '#2e3347' }, ticks: { callback: v => v.toFixed(2)+'M' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // 3. Lidar QL comparison
+  const cl = document.getElementById('chart-lidar');
+  if (cl) _charts.lidar = new Chart(cl, {
+    type: 'bar',
+    data: {
+      labels: ['QL0 工学設計級','QL1 詳細マッピング推奨','QL2 FEMA最低基準','QL3 旧世代 (不可)'],
+      datasets: [{ label: '点群密度 (pts/m²)', data: [8,4,2,0.8],
+        backgroundColor: ['rgba(16,185,129,0.7)','rgba(16,185,129,0.5)','rgba(245,158,11,0.5)','rgba(239,68,68,0.4)'],
+        borderColor: ['#10b981','#10b981','#f59e0b','#ef4444'],
+        borderWidth: 2, borderRadius: 4 }]
+    },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { color: '#2e3347' }, title: { display: true, text: '点群密度 (pts/m²)' } }, y: { grid: { display: false } } }
+    }
+  });
+
+  // 4. NFIP premium reduction by elevation
+  const ce = document.getElementById('chart-elevation');
+  if (ce) _charts.elevation = new Chart(ce, {
+    type: 'bar',
+    data: {
+      labels: ['BFE同レベル','BFE +1 ft','BFE +2 ft\n(WI NR116基準)','BFE +3 ft'],
+      datasets: [{ label: '保険料削減率 (%)', data: [0, 30, 60, 72],
+        backgroundColor: ['rgba(239,68,68,0.4)','rgba(245,158,11,0.4)','rgba(16,185,129,0.5)','rgba(16,185,129,0.7)'],
+        borderColor: ['#ef4444','#f59e0b','#10b981','#10b981'],
+        borderWidth: 2, borderRadius: 6 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 0, max: 100, grid: { color: '#2e3347' }, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // 5. HMA Funding comparison
+  const ch = document.getElementById('chart-hma');
+  if (ch) _charts.hma = new Chart(ch, {
+    type: 'bar',
+    data: {
+      labels: ['BRIC\n(FY24+25合計)','FMA\n(FY24)','Swift Current','STORM Act\n(IIJA)'],
+      datasets: [{ label: '予算規模 (百万ドル)', data: [1000, 600, 500, 500],
+        backgroundColor: ['rgba(168,85,247,0.5)','rgba(59,130,246,0.5)','rgba(16,185,129,0.5)','rgba(6,182,212,0.5)'],
+        borderColor: ['#a855f7','#3b82f6','#10b981','#06b6d4'],
+        borderWidth: 2, borderRadius: 5 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { grid: { color: '#2e3347' }, ticks: { callback: v => '$'+v+'M' } }, x: { grid: { display: false } } }
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', initCharts);
+
+function show(id, navItem) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  navItem.classList.add('active');
+  setTimeout(() => Object.values(_charts).forEach(c => c && c.resize()), 50);
+}
+
+document.querySelectorAll('.acc-header').forEach(h => {
+  h.addEventListener('click', () => {
+    h.parentElement.classList.toggle('open');
+  });
+});
+
+function doSearch(q) {
+  document.querySelectorAll('.search-match').forEach(el => {
+    el.replaceWith(document.createTextNode(el.textContent));
+  });
+  document.getElementById('main').normalize();
+  if (!q || q.length < 3) return;
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+  const walker = document.createTreeWalker(document.getElementById('main'), NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n => {
+    const text = n.nodeValue;
+    re.lastIndex = 0;
+    if (!re.test(text)) return;
+
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+    re.lastIndex = 0;
+    let match;
+    while ((match = re.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+      }
+      const mark = document.createElement('span');
+      mark.className = 'search-match';
+      mark.textContent = match[0];
+      fragment.appendChild(mark);
+      lastIndex = match.index + match[0].length;
+    }
+    if (lastIndex < text.length) {
+      fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
+    n.parentNode.replaceChild(fragment, n);
+  });
+}
+</script>
+</body>
+</html>
