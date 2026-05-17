@@ -56,6 +56,7 @@ a{color:var(--blue);text-decoration:none}
 #search-box::placeholder{color:var(--muted)}
 #search-box:focus{outline:none;border-color:var(--blue)}
 #search-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;display:none}
+#search-clear.is-visible{display:block}
 #search-clear:hover{color:var(--text)}
 #search-status{min-width:86px;color:var(--muted);font-size:12px;white-space:nowrap}
 .search-nav-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:12px;line-height:1;display:none;align-items:center;justify-content:center;flex-shrink:0}
@@ -2059,6 +2060,11 @@ function setSearchNavVisible(visible) {
   });
 }
 
+function setSearchClearVisible(visible) {
+  const clear = document.getElementById("search-clear");
+  if (clear) clear.classList.toggle("is-visible", visible);
+}
+
 function clearSearchState() {
   document.querySelectorAll(".search-match").forEach(el => {
     el.replaceWith(document.createTextNode(el.textContent));
@@ -2113,8 +2119,7 @@ function stepMatch(dir) {
 function clearSearch() {
   const box = document.getElementById("search-box");
   if (box) { box.value = ""; box.focus(); }
-  const clr = document.getElementById("search-clear");
-  if (clr) clr.style.display = "none";
+  setSearchClearVisible(false);
   clearSearchState();
   const status = document.getElementById("search-status");
   if (status) status.textContent = "";
@@ -2123,8 +2128,7 @@ function clearSearch() {
 function doSearch(q) {
   clearSearchState();
 
-  const clr = document.getElementById("search-clear");
-  if (clr) clr.style.display = q ? "" : "none";
+  setSearchClearVisible(q.length > 0);
 
   const term = q.trim();
   if (!term || Array.from(term).length < 2) {
