@@ -54,6 +54,7 @@ a{color:var(--blue);text-decoration:none}
 #search-box{flex:1;max-width:400px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text);font-size:13px}
 #search-box::placeholder{color:var(--muted)}
 #search-box:focus{outline:none;border-color:var(--blue)}
+#search-status{min-width:86px;color:var(--muted);font-size:12px;white-space:nowrap}
 .print-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px}
 .print-btn:hover{color:var(--text);border-color:var(--blue)}
 /* SIDEBAR */
@@ -146,7 +147,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .argument .arg-claim{font-weight:600;color:var(--text);margin-bottom:4px}
 .argument .arg-evidence{font-size:12px;color:var(--muted)}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:900px){.grid2,.grid3,.two-col{grid-template-columns:1fr}#sidebar{width:100%;position:static;border-right:none;border-bottom:1px solid var(--border)}#main{margin-left:0}}
+@media(max-width:900px){.grid2,.grid3,.two-col{grid-template-columns:1fr}#sidebar{width:100%;position:static;border-right:none;border-bottom:1px solid var(--border)}#main{margin-left:0}#search-status{display:none}}
 @media print{#topbar,#sidebar{display:none}#main{margin:0;padding:0}.section{display:block!important}.acc-body{display:block!important}}
 .search-match{background:#f59e0b33;border-radius:2px}
 </style>
@@ -158,6 +159,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
   <h1>ASFPM 2026</h1>
   <span class="conf-tag">Milwaukee · May 31–Jun 4</span>
   <input id="search-box" type="text" placeholder="Search topics, acronyms, numbers…" oninput="doSearch(this.value)">
+  <span id="search-status" aria-live="polite"></span>
   <button class="print-btn" onclick="window.print()">⎙ Print</button>
 </div>
 
@@ -1921,13 +1923,15 @@ function filterGloss(q) {
   });
 }
 
-// ── Chart.js initialization ──
-Chart.defaults.color = '#8892a4';
-Chart.defaults.borderColor = '#2e3347';
-Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+// Chart.js initialization
 const _charts = {};
 
 function initCharts() {
+  if (typeof Chart === "undefined") return;
+  Chart.defaults.color = "#8892a4";
+  Chart.defaults.borderColor = "#2e3347";
+  Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+
   // 1. NFIP Claims donut
   const cc = document.getElementById('chart-claims');
   if (cc) _charts.claims = new Chart(cc, {
@@ -2011,34 +2015,74 @@ function initCharts() {
 }
 window.addEventListener('DOMContentLoaded', initCharts);
 
+function findNavItem(id) {
+  return Array.from(document.querySelectorAll(".nav-item")).find(n => {
+    return (n.getAttribute("onclick") || "").includes("'" + id + "'");
+  });
+}
+
 function show(id, navItem) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  navItem.classList.add('active');
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  const activeNav = navItem || findNavItem(id);
+  if (activeNav) activeNav.classList.add("active");
   setTimeout(() => Object.values(_charts).forEach(c => c && c.resize()), 50);
 }
 
-document.querySelectorAll('.acc-header').forEach(h => {
-  h.addEventListener('click', () => {
-    h.parentElement.classList.toggle('open');
+document.querySelectorAll(".acc-header").forEach(h => {
+  h.addEventListener("click", () => {
+    h.parentElement.classList.toggle("open");
   });
 });
 
-function doSearch(q) {
-  document.querySelectorAll('.search-match').forEach(el => {
+function clearSearchState() {
+  document.querySelectorAll(".search-match").forEach(el => {
     el.replaceWith(document.createTextNode(el.textContent));
   });
-  document.getElementById('main').normalize();
-  if (!q || q.length < 3) return;
-  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
-  const walker = document.createTreeWalker(document.getElementById('main'), NodeFilter.SHOW_TEXT);
+  document.querySelectorAll(".acc-item.search-open").forEach(item => {
+    item.classList.remove("open", "search-open");
+  });
+  document.getElementById("main").normalize();
+}
+
+function escapeSearchRegExp(value) {
+  const specials = new Set(["\\", "^", "$", ".", "*", "+", "?", "(", ")", "[", "]", "{", "}", "|"]);
+  return Array.from(value).map(ch => specials.has(ch) ? "\\" + ch : ch).join("");
+}
+
+function doSearch(q) {
+  const status = document.getElementById("search-status");
+  clearSearchState();
+
+  const term = q.trim();
+  if (!term || Array.from(term).length < 2) {
+    if (status) status.textContent = "";
+    return;
+  }
+
+  const re = new RegExp(escapeSearchRegExp(term), "gi");
+  const walker = document.createTreeWalker(document.getElementById("main"), NodeFilter.SHOW_TEXT);
   const nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  const sectionMatches = new Map();
+  let matchCount = 0;
+
   nodes.forEach(n => {
     const text = n.nodeValue;
     re.lastIndex = 0;
-    if (!re.test(text)) return;
+    const found = text.match(re);
+    if (!found) return;
+
+    matchCount += found.length;
+    const section = n.parentElement.closest(".section");
+    if (section) sectionMatches.set(section.id, (sectionMatches.get(section.id) || 0) + found.length);
+
+    const accItem = n.parentElement.closest(".acc-item");
+    if (accItem && !accItem.classList.contains("open")) {
+      accItem.classList.add("open", "search-open");
+    }
 
     const fragment = document.createDocumentFragment();
     let lastIndex = 0;
@@ -2048,8 +2092,8 @@ function doSearch(q) {
       if (match.index > lastIndex) {
         fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
       }
-      const mark = document.createElement('span');
-      mark.className = 'search-match';
+      const mark = document.createElement("span");
+      mark.className = "search-match";
       mark.textContent = match[0];
       fragment.appendChild(mark);
       lastIndex = match.index + match[0].length;
@@ -2059,6 +2103,13 @@ function doSearch(q) {
     }
     n.parentNode.replaceChild(fragment, n);
   });
+
+  if (status) status.textContent = matchCount ? (matchCount === 1 ? "1 match" : matchCount + " matches") : "No matches";
+
+  const active = document.querySelector(".section.active");
+  if (sectionMatches.size && (!active || !sectionMatches.has(active.id))) {
+    show(sectionMatches.keys().next().value);
+  }
 }
 </script>
 </body>
