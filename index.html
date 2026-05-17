@@ -55,6 +55,10 @@ a{color:var(--blue);text-decoration:none}
 #search-box::placeholder{color:var(--muted)}
 #search-box:focus{outline:none;border-color:var(--blue)}
 #search-status{min-width:86px;color:var(--muted);font-size:12px;white-space:nowrap}
+.search-nav-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:12px;line-height:1;display:none;align-items:center;justify-content:center;flex-shrink:0}
+.search-nav-btn.is-visible{display:inline-flex}
+.search-nav-btn:hover{color:var(--text);border-color:var(--blue)}
+.search-nav-btn:disabled{opacity:0.3;cursor:default}
 .print-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px}
 .print-btn:hover{color:var(--text);border-color:var(--blue)}
 /* SIDEBAR */
@@ -149,7 +153,8 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:900px){.grid2,.grid3,.two-col{grid-template-columns:1fr}#sidebar{width:100%;position:static;border-right:none;border-bottom:1px solid var(--border)}#main{margin-left:0}#search-status{display:none}}
 @media print{#topbar,#sidebar{display:none}#main{margin:0;padding:0}.section{display:block!important}.acc-body{display:block!important}}
-.search-match{background:#f59e0b33;border-radius:2px}
+.search-match{background:#fde047;color:#111827;border-radius:3px;padding:0 2px;font-weight:700;box-shadow:0 0 0 1px rgba(253,224,71,.45)}
+.search-match-active{background:#f97316;color:#fff7ed;outline:2px solid #fef08a;box-shadow:0 0 0 4px rgba(249,115,22,.28);scroll-margin-top:calc(var(--topbar-h) + 18px)}
 </style>
 </head>
 <body>
@@ -159,6 +164,8 @@ tr:hover td{background:rgba(255,255,255,.02)}
   <h1>ASFPM 2026</h1>
   <span class="conf-tag">Milwaukee · May 31–Jun 4</span>
   <input id="search-box" type="text" placeholder="Search topics, acronyms, numbers…" oninput="doSearch(this.value)">
+  <button id="search-prev" class="search-nav-btn" type="button" onclick="stepMatch(-1)" title="前のマッチ" aria-label="前のマッチ">▲</button>
+  <button id="search-next" class="search-nav-btn" type="button" onclick="stepMatch(1)" title="次のマッチ" aria-label="次のマッチ">▼</button>
   <span id="search-status" aria-live="polite"></span>
   <button class="print-btn" onclick="window.print()">⎙ Print</button>
 </div>
@@ -2036,6 +2043,16 @@ document.querySelectorAll(".acc-header").forEach(h => {
   });
 });
 
+let _searchMatches = [];
+let _searchIndex = -1;
+
+function setSearchNavVisible(visible) {
+  ["search-prev","search-next"].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.classList.toggle("is-visible", visible);
+  });
+}
+
 function clearSearchState() {
   document.querySelectorAll(".search-match").forEach(el => {
     el.replaceWith(document.createTextNode(el.textContent));
@@ -2044,6 +2061,9 @@ function clearSearchState() {
     item.classList.remove("open", "search-open");
   });
   document.getElementById("main").normalize();
+  _searchMatches = [];
+  _searchIndex = -1;
+  setSearchNavVisible(false);
 }
 
 function escapeSearchRegExp(value) {
@@ -2051,12 +2071,45 @@ function escapeSearchRegExp(value) {
   return Array.from(value).map(ch => specials.has(ch) ? "\\" + ch : ch).join("");
 }
 
-function doSearch(q) {
+function updateSearchStatus() {
   const status = document.getElementById("search-status");
+  const total = _searchMatches.length;
+  if (!total) { if (status) status.textContent = "No matches"; return; }
+  const pos = _searchIndex >= 0 ? _searchIndex + 1 : 1;
+  if (status) status.textContent = pos + " / " + total + " matches";
+  const prev = document.getElementById("search-prev");
+  const next = document.getElementById("search-next");
+  if (prev) { prev.disabled = total <= 1; }
+  if (next) { next.disabled = total <= 1; }
+}
+
+function activateMatch(idx) {
+  _searchMatches.forEach(el => el.classList.remove("search-match-active"));
+  const el = _searchMatches[idx];
+  if (!el) return;
+  el.classList.add("search-match-active");
+
+  const section = el.closest(".section");
+  if (section) {
+    const active = document.querySelector(".section.active");
+    if (!active || active.id !== section.id) show(section.id);
+  }
+  setTimeout(() => el.scrollIntoView({behavior:"smooth", block:"center"}), 50);
+}
+
+function stepMatch(dir) {
+  if (!_searchMatches.length) return;
+  _searchIndex = (_searchIndex + dir + _searchMatches.length) % _searchMatches.length;
+  activateMatch(_searchIndex);
+  updateSearchStatus();
+}
+
+function doSearch(q) {
   clearSearchState();
 
   const term = q.trim();
   if (!term || Array.from(term).length < 2) {
+    const status = document.getElementById("search-status");
     if (status) status.textContent = "";
     return;
   }
@@ -2066,18 +2119,10 @@ function doSearch(q) {
   const nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
 
-  const sectionMatches = new Map();
-  let matchCount = 0;
-
   nodes.forEach(n => {
     const text = n.nodeValue;
     re.lastIndex = 0;
-    const found = text.match(re);
-    if (!found) return;
-
-    matchCount += found.length;
-    const section = n.parentElement.closest(".section");
-    if (section) sectionMatches.set(section.id, (sectionMatches.get(section.id) || 0) + found.length);
+    if (!text.match(re)) return;
 
     const accItem = n.parentElement.closest(".acc-item");
     if (accItem && !accItem.classList.contains("open")) {
@@ -2104,12 +2149,18 @@ function doSearch(q) {
     n.parentNode.replaceChild(fragment, n);
   });
 
-  if (status) status.textContent = matchCount ? (matchCount === 1 ? "1 match" : matchCount + " matches") : "No matches";
-
-  const active = document.querySelector(".section.active");
-  if (sectionMatches.size && (!active || !sectionMatches.has(active.id))) {
-    show(sectionMatches.keys().next().value);
+  _searchMatches = Array.from(document.querySelectorAll("#main .search-match"));
+  if (!_searchMatches.length) {
+    const status = document.getElementById("search-status");
+    if (status) status.textContent = "No matches";
+    return;
   }
+
+  setSearchNavVisible(true);
+
+  _searchIndex = 0;
+  activateMatch(0);
+  updateSearchStatus();
 }
 </script>
 </body>
