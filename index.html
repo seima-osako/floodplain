@@ -51,9 +51,12 @@ a{color:var(--blue);text-decoration:none}
 #topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:100}
 #topbar h1{font-size:15px;font-weight:700;color:var(--text);white-space:nowrap}
 #topbar .conf-tag{background:var(--blue-dim);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;white-space:nowrap}
-#search-box{flex:1;max-width:400px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text);font-size:13px}
+#search-wrap{position:relative;flex:1;max-width:400px}
+#search-box{width:100%;box-sizing:border-box;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 30px 6px 12px;color:var(--text);font-size:13px}
 #search-box::placeholder{color:var(--muted)}
 #search-box:focus{outline:none;border-color:var(--blue)}
+#search-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;display:none}
+#search-clear:hover{color:var(--text)}
 #search-status{min-width:86px;color:var(--muted);font-size:12px;white-space:nowrap}
 .search-nav-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:12px;line-height:1;display:none;align-items:center;justify-content:center;flex-shrink:0}
 .search-nav-btn.is-visible{display:inline-flex}
@@ -163,7 +166,10 @@ tr:hover td{background:rgba(255,255,255,.02)}
 <div id="topbar">
   <h1>ASFPM 2026</h1>
   <span class="conf-tag">Milwaukee · May 31–Jun 4</span>
-  <input id="search-box" type="text" placeholder="Search topics, acronyms, numbers…" oninput="doSearch(this.value)">
+  <div id="search-wrap">
+    <input id="search-box" type="text" placeholder="Search topics, acronyms, numbers…" oninput="doSearch(this.value)">
+    <button id="search-clear" type="button" aria-label="検索をクリア" onclick="clearSearch()">×</button>
+  </div>
   <button id="search-prev" class="search-nav-btn" type="button" onclick="stepMatch(-1)" title="前のマッチ" aria-label="前のマッチ">▲</button>
   <button id="search-next" class="search-nav-btn" type="button" onclick="stepMatch(1)" title="次のマッチ" aria-label="次のマッチ">▼</button>
   <span id="search-status" aria-live="polite"></span>
@@ -2104,8 +2110,21 @@ function stepMatch(dir) {
   updateSearchStatus();
 }
 
+function clearSearch() {
+  const box = document.getElementById("search-box");
+  if (box) { box.value = ""; box.focus(); }
+  const clr = document.getElementById("search-clear");
+  if (clr) clr.style.display = "none";
+  clearSearchState();
+  const status = document.getElementById("search-status");
+  if (status) status.textContent = "";
+}
+
 function doSearch(q) {
   clearSearchState();
+
+  const clr = document.getElementById("search-clear");
+  if (clr) clr.style.display = q ? "" : "none";
 
   const term = q.trim();
   if (!term || Array.from(term).length < 2) {
