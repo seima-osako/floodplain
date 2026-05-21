@@ -409,13 +409,29 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="acc-header">FIRM — Flood Insurance Rate Map</div>
     <div class="acc-body">
       <ul>
+        <li>Most common FEMA flood map product; panel maps combine hazard zones with base-map features such as streets, landmarks, and community boundaries.</li>
         <li>Regulatory map used by communities for permitting under 44 CFR 60.3</li>
-        <li>Zones: <strong>AE</strong> = detailed study with BFE; <strong>A</strong> = approximate, no BFE; <strong>AO</strong> = shallow sheet flow (depth shown); <strong>AH</strong> = shallow ponding with BFE; <strong>V/VE</strong> = coastal wave action; <strong>X-shaded</strong> = 500-yr; <strong>X-unshaded</strong> = minimal hazard</li>
+        <li>Zones: <strong>AE</strong> = detailed study with BFE; <strong>A</strong> = approximate, no BFE; <strong>AH</strong> = 1-3 ft shallow ponding with BFE; <strong>AO</strong> = 1-3 ft shallow sheet flow with average depth shown; <strong>AR</strong> = levee/flood-control restoration area; <strong>A99</strong> = federal flood-control system under construction; <strong>V</strong> = coastal wave action, no BFE; <strong>VE</strong> = coastal wave action with BFE; <strong>X-shaded</strong> = 500-yr / moderate flood hazard; <strong>X-unshaded</strong> = minimal hazard; <strong>D</strong> = possible but undetermined hazard</li>
+        <li>Legacy FIRM labels: <strong>A1-30</strong> maps to modern <strong>AE</strong>; <strong>V1-30</strong> maps to modern <strong>VE</strong>; <strong>B</strong> maps to shaded <strong>X</strong>; <strong>C</strong> maps to unshaded <strong>X</strong>.</li>
         <li>FIRM panels updated piecemeal — not a unified national snapshot</li>
         <li>Effective date can be 5–30+ years old for rural areas</li>
         <li><strong>FIS (Flood Insurance Study)</strong> = engineering report that underlies the FIRM; contains the hydraulic model, frequency analysis, cross-sections, and BFE profiles</li>
         <li>FIRM = regulatory product; BLE = non-regulatory screening tool (unless state converts it)</li>
+        <li>Post-Risk Rating 2.0 cue: the FIRM still controls regulation and SFHA-based mandatory purchase, but it is no longer the sole or controlling factor for NFIP premium pricing.</li>
       </ul>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">FEMA-Mapped Flood Categories — Riverine, Shallow, Coastal</div>
+    <div class="acc-body">
+      <p>For FIRM/FIS work, FEMA commonly groups mapped flood risk into three primary categories. This is a mapping-product taxonomy, not a complete physical-risk taxonomy.</p>
+      <table>
+        <tr><th>Category</th><th>Typical FIRM expression</th><th>Practical meaning</th></tr>
+        <tr><td><strong>Riverine</strong></td><td>A / AE zones, BFEs, flood profiles, floodways</td><td>Flooding from rivers, streams, and channels. The FIS profile and cross sections are usually the key technical record.</td></tr>
+        <tr><td><strong>Shallow</strong></td><td>AO / AH zones; sheet flow or ponding</td><td>Flooding generally mapped by depth or shallow ponding rather than a full river profile. AO is shown as a DEPTH value; AH is shown as an EL/BFE value. Important for local drainage, alluvial fans, and flat urban or low-gradient areas.</td></tr>
+        <tr><td><strong>Coastal</strong></td><td>V / VE zones, coastal A zones, coastal transects</td><td>Flooding driven by coastal water levels, wave action, runup, erosion, and debris impact; foundations and floodproofing rules are much stricter.</td></tr>
+      </table>
+      <div class="highlight amber">Workshop cue: do not equate FEMA's "shallow" category with all pluvial flooding. AO/AH zones capture some sheet-flow and ponding hazards, but many urban drainage, storm-sewer surcharge, and manhole-overflow failures still sit outside mapped SFHA boundaries.</div>
     </div>
   </div>
   <div class="acc-item">
@@ -448,15 +464,35 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="acc-body">
       <table>
         <tr><th>Zone</th><th>Description</th><th>BFE?</th><th>Mandatory purchase?</th></tr>
-        <tr><td>AE</td><td>1% annual chance; detailed study</td><td>Yes</td><td>Yes (federally-backed loan)</td></tr>
         <tr><td>A</td><td>1% annual chance; approximate only</td><td>No</td><td>Yes</td></tr>
-        <tr><td>AO</td><td>Shallow sheet flow; depth labeled</td><td>Depth (not elevation)</td><td>Yes</td></tr>
-        <tr><td>AH</td><td>Shallow ponding</td><td>Yes</td><td>Yes</td></tr>
-        <tr><td>VE</td><td>Coastal; wave action; velocity</td><td>Yes</td><td>Yes</td></tr>
-        <tr><td>X (shaded)</td><td>500-yr / 0.2% annual chance</td><td>No</td><td>No (but ~25% of claims come from here)</td></tr>
-        <tr><td>X (unshaded)</td><td>Minimal hazard</td><td>No</td><td>No</td></tr>
+        <tr><td>AE / A1-30</td><td>1% annual chance base floodplain with BFEs provided; A1-30 is the older FIRM designation</td><td>Yes</td><td>Yes (federally-backed loan)</td></tr>
+        <tr><td>AH</td><td>Flood depths of 1-3 ft, usually ponding; FIRM label uses EL/elevation</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>AO</td><td>Flood depths of 1-3 ft, usually sheet flow on sloping terrain; FIRM label uses DEPTH/average depth; alluvial fan areas may also show velocity</td><td>Depth (not elevation)</td><td>Yes</td></tr>
+        <tr><td>AR</td><td>SFHA formerly protected by a flood-control system that was later decertified; restoration underway</td><td>Varies</td><td>Yes</td></tr>
+        <tr><td>A99</td><td>1% flood area expected to be protected by a federal flood-control system under construction</td><td>No</td><td>Yes</td></tr>
+        <tr><td>V</td><td>Coastal high hazard area with velocity hazard / wave action</td><td>No</td><td>Yes</td></tr>
+        <tr><td>VE / V1-30</td><td>Coastal high hazard area with velocity hazard / wave action; BFEs shown; V1-30 is the older FIRM designation</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>X (shaded) / B</td><td>Moderate flood hazard between the 1% and 0.2% flood limits; also includes some shallow/small-drainage or levee-protected 1% areas</td><td>No</td><td>No (but ~25% of claims come from outside SFHA)</td></tr>
+        <tr><td>X (unshaded) / C</td><td>Minimal flood hazard outside the 0.2% annual chance floodplain; C is the older FIRM designation</td><td>No</td><td>No</td></tr>
+        <tr><td>D</td><td>Flood hazards are undetermined but possible</td><td>No</td><td>No federal SFHA-based mandate</td></tr>
       </table>
+      <div class="highlight">Map-reading cue: <strong>A-family zones</strong> are SFHAs subject to the 1% annual chance flood; <strong>V-family zones</strong> are coastal high hazard SFHAs with wave action. "AN" and "Z" are not standard current FEMA flood zone labels; check whether the intended label is AE, AH, AO, or X.</div>
+      <div class="highlight amber">Hatching cue: diagonal hatching in a riverine AE area often marks a regulatory floodway, but coastal cross-hatching can indicate a <strong>CBRS</strong> or related protected-area overlay. Always read the FIRM legend before assuming the pattern means floodway.</div>
       <div class="highlight amber">~25% of NFIP claims come from outside the SFHA (X zones). This is the strongest argument for flood insurance regardless of zone.</div>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Approximate Zone A — Estimating a BFE</div>
+    <div class="acc-body">
+      <p>Zone A has no published BFE. For screening-level work, a simplified BFE can be estimated from topographic contours, but final permitting should use best available local, FEMA, or engineering data.</p>
+      <table>
+        <tr><th>Method</th><th>How it works</th><th>Use with care</th></tr>
+        <tr><td><strong>Contour interpolation</strong></td><td>Overlay the Zone A floodplain boundary on a topographic contour map, matching map scale. Check whether the left and right floodplain banks follow contour lines within acceptable limits.</td><td>If bank elevations differ by more than about half the contour interval, the estimate is weak.</td></tr>
+        <tr><td><strong>BFE estimate</strong></td><td>If acceptable, use the lower floodplain-boundary water-surface elevation plus one-half contour interval. Example: 597 ft + 5 ft = 602 ft for a 10-ft contour interval.</td><td>This is an approximate BFE, not a detailed-study BFE.</td></tr>
+        <tr><td><strong>GIS contour interpolation</strong></td><td>Use DEM/contours and mapped Zone A boundaries to check bank elevations and calculate the same lower-elevation + half-interval estimate.</td><td>Output quality depends on terrain data resolution, datum, and floodplain boundary accuracy.</td></tr>
+        <tr><td><strong>Data extrapolation</strong></td><td>Extend nearby detailed-study flood profiles beyond the detailed study area when appropriate. Use only within about 500 ft upstream of a detailed-study Zone AE reach and only where channel characteristics remain similar.</td><td>Do not extrapolate through major hydraulic changes such as dams, waterfalls, bridges, culverts, confluences, reservoirs, or abrupt slope changes; avoid areas with downstream backwater effects.</td></tr>
+        <tr><td><strong>Best available data</strong></td><td>Use available federal, state, and local data for Approximate Zone A areas.</td><td>Data should reasonably reflect flooding conditions, be technically correct, represent the best available information, and be documented with its source.</td></tr>
+      </table>
     </div>
   </div>
 
@@ -728,6 +764,23 @@ tr:hover td{background:rgba(255,255,255,.02)}
       </table>
     </div>
   </div>
+  <div class="acc-item">
+    <div class="acc-header">Coastal Flooding — Surge, Runup, Erosion, and Higher Standards</div>
+    <div class="acc-body">
+      <ul>
+        <li><strong>Primary drivers:</strong> storm surge, wave runup, severe-storm water levels, and in lake systems, wind setup and seiche.</li>
+        <li><strong>Transect logic:</strong> coastal analysis runs from offshore to onshore across shoreline, dunes, vegetation, buildings, overland wind fetch, and the inland limit of tidal flooding and waves.</li>
+        <li><strong>Wave-height thresholds:</strong> VE / coastal high hazard area generally means breaking-wave height ≥3 ft. Coastal A Zone means wave height below the V-zone threshold but still damaging; LiMWA marks the inland limit of the ≥1.5 ft moderate-wave-action area.</li>
+        <li><strong>Coastal erosion matters:</strong> beaches, dunes, bluffs, vegetation, sand characteristics, waves, and wind can change the protective landform before or during a flood.</li>
+        <li><strong>Human activities matter:</strong> seawalls, dredging, shoreline armoring, fill, and navigation projects can shift erosion, wave reflection, sediment transport, and flood exposure.</li>
+        <li><strong>Not just ocean coasts:</strong> coastal-style flood hazards also apply around the Great Lakes and large inland water bodies such as the Great Salt Lake.</li>
+        <li><strong>Minimum NFIP standards are not maximum safety standards:</strong> they regulate the base flood framework, but do not guarantee protection from extremely large, rare, compound, or rapidly changing coastal events.</li>
+        <li>Communities can adopt higher standards: larger freeboard, erosion setbacks, V-zone-style construction in coastal A zones, lower substantial-damage thresholds, and stricter limits on fill or shoreline armoring.</li>
+      </ul>
+      <div class="highlight amber">Workshop cue: for coastal and Great Lakes sites, ask whether the chosen mitigation standard addresses only mapped base-flood water level, or also wave action, runup, erosion, debris impact, and future shoreline change.</div>
+      <div class="highlight">Map-reading cue: the LiMWA line separates coastal A Zone areas with moderate wave action from inland AE areas. It is not the same as the VE boundary: VE is the high-hazard wave area, while LiMWA identifies where ≥1.5 ft waves stop.</div>
+    </div>
+  </div>
 
   <!-- FLOOD TYPES DIAGRAM -->
   <h3>洪水メカニズム図解 — 内水・外水・沿岸浸水</h3>
@@ -837,6 +890,44 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <text x="750" y="197" text-anchor="middle" fill="#6b7280" font-size="9" font-family="sans-serif">津波は別シナリオで扱うことが多い</text>
     </svg>
     <div class="diagram-label">3種類の洪水メカニズム — Pluvial=内水、Fluvial=外水、Coastal=沿岸浸水として理解すると日本でも通じやすい</div>
+  </div>
+
+  <h3>Damage Modes — Forces of Water and Prolonged Contact</h3>
+  <div class="acc-item open">
+    <div class="acc-header">How Floodwater Actually Damages Buildings</div>
+    <div class="acc-body">
+      <p>Flood source tells you where water comes from; damage mode tells you what the building must resist or tolerate. This is the bridge between flood mechanism taxonomy and the mitigation toolbox.</p>
+      <table>
+        <tr><th>Damage mode</th><th>What it does</th><th>Mitigation implication</th></tr>
+        <tr><td><strong>Buoyant force / flotation</strong></td><td>Uplifts tanks, slabs, lightweight structures, and enclosed spaces when water pressure exceeds dead load or anchorage.</td><td>Anchor tanks and utilities; avoid sealed below-grade enclosures that can float or fail.</td></tr>
+        <tr><td><strong>Hydrostatic force</strong></td><td>Still water pushes laterally on walls and vertically on floors; unequal inside/outside water levels can cause collapse.</td><td>Wet floodproofing uses flood openings to equalize pressure; dry floodproofing must be engineered for the design floodproofing height.</td></tr>
+        <tr><td><strong>Hydrodynamic force</strong></td><td>Moving water adds lateral load, scour, and impact-like pressure, especially in fast fluvial or flash-pluvial flow.</td><td>Elevation, relocation, open foundations, and avoiding obstructive encroachment are more reliable than relying on wall seals.</td></tr>
+        <tr><td><strong>Debris impact</strong></td><td>Floating cars, lumber, ice, trees, tanks, and street debris can puncture walls, barriers, doors, and glazing.</td><td>Deployable barriers and floodproof glazing need impact assumptions; coastal/V zones and high-velocity flow are poor candidates for dry floodproofing.</td></tr>
+        <tr><td><strong>Water damage / contamination</strong></td><td>Prolonged contact weakens structural integrity, destroys nonstructural components, ruins drywall, and promotes mold.</td><td>Use flood-resistant materials below BFE, elevate utilities, and plan for cleanup access; do not confuse shallow water with low damage.</td></tr>
+      </table>
+      <div class="highlight amber">Workshop cue: wet floodproofing accepts water entry to prevent hydrostatic collapse and then limits damage with flood-resistant materials. Dry floodproofing tries to keep water out, so it must answer a harder question: can the building, openings, barriers, O&amp;M plan, warning lead time, and debris exposure all perform together?</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card danger">
+      <h3>Prolonged Water Contact</h3>
+      <ul>
+        <li>Weakens a building's structural integrity, especially when wood framing, connections, subfloors, or masonry assemblies stay wet.</li>
+        <li>Destroys nonstructural components such as gypsum board, cabinets, finishes, insulation, electrical devices, and HVAC components.</li>
+        <li>Drywall is usually ruined once saturated; flood cuts and replacement are often more realistic than drying in place.</li>
+        <li>Mold can develop in walls, ductwork, and insulation when moisture remains trapped after visible water recedes.</li>
+      </ul>
+    </div>
+    <div class="card ws2">
+      <h3>Why This Matters for WS2</h3>
+      <ul>
+        <li><strong>Elevation:</strong> avoids both forces and prolonged contact by keeping occupiable floors above the damaging water level.</li>
+        <li><strong>Wet floodproofing:</strong> manages hydrostatic force, but accepts cleanup and material replacement as part of the design logic.</li>
+        <li><strong>Dry floodproofing:</strong> reduces contact damage only if barriers are deployed in time and are strong enough for water pressure and debris exposure.</li>
+        <li><strong>EWS:</strong> useful only when warning lead time exceeds the time needed to install barriers, move contents, shut down utilities, and evacuate.</li>
+      </ul>
+    </div>
   </div>
 
   <h3>Nonstructural Mitigation Toolbox</h3>
@@ -1222,6 +1313,44 @@ tr:hover td{background:rgba(255,255,255,.02)}
     </div>
   </div>
 
+  <div class="acc-item open">
+    <div class="acc-header">Hydrologic Analysis — From Stage Records to Flood Discharge</div>
+    <div class="acc-body">
+      <p>Hydrologic analysis estimates how much water is flowing during flood events. In FIS/FIRM work, it provides the discharge inputs that hydraulic models then translate into water-surface elevations, BFEs, floodways, and inundation boundaries.</p>
+      <table>
+        <tr><th>Concept</th><th>Plain meaning</th><th>Workshop cue</th></tr>
+        <tr><td><strong>Stage</strong></td><td>Water-surface height at a gauge, usually reported in feet or meters.</td><td>Stage is what gauges often observe directly; it is not the same thing as discharge.</td></tr>
+        <tr><td><strong>Discharge / flow</strong></td><td>Volume rate of water moving through a cross section, usually cfs or m³/s.</td><td>Hydrologic studies estimate peak discharges for design floods.</td></tr>
+        <tr><td><strong>Rating curve</strong></td><td>Empirical relationship converting stage to discharge from repeated stage/flow measurements.</td><td>Bad or extrapolated rating curves can distort the estimated 1% annual chance discharge.</td></tr>
+        <tr><td><strong>Flood frequency</strong></td><td>Statistical estimate of how often a discharge is expected to be equaled or exceeded.</td><td>Requires adequate historical data; ungauged or short-record basins carry much higher uncertainty.</td></tr>
+      </table>
+      <div class="highlight amber">Technical distinction: hydrology determines the flow entering the model; hydraulics determines how that flow moves through channels, structures, floodplains, and storage areas. A good terrain model cannot fix a bad flood-frequency estimate.</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Common Flood Frequency Outputs</h3>
+      <table>
+        <tr><th>AEP</th><th>Common name</th><th>How it is used</th></tr>
+        <tr><td>25%</td><td>4-year flood</td><td>Sometimes included for frequent nuisance or channel-capacity studies.</td></tr>
+        <tr><td>10%</td><td>10-year flood</td><td>Often used for minor drainage, channel behavior, and lower-frequency profiles.</td></tr>
+        <tr><td>2%</td><td>50-year flood</td><td>Intermediate flood profile; useful for damage curves and model calibration checks.</td></tr>
+        <tr><td>1%</td><td>100-year flood</td><td>Base flood; core NFIP/SFHA/BFE regulatory standard.</td></tr>
+        <tr><td>0.2%</td><td>500-year flood</td><td>X-shaded zone, critical-facility context, and ASCE 24-24 FDC 2+ design framing.</td></tr>
+      </table>
+    </div>
+    <div class="card warn">
+      <h3>Known Weak Spots</h3>
+      <ul>
+        <li>Short or missing gauge records force analysts to use regional regression, rainfall-runoff models, or transferred data from nearby basins.</li>
+        <li>Rating curves are weakest when extrapolated beyond measured high-water events; the largest floods are exactly where measurements are sparse.</li>
+        <li>Random obstructions such as debris jams, blocked culverts, ice, sediment, or temporary construction are often not represented in standard frequency estimates.</li>
+        <li>Urbanization and climate-shifted rainfall can make older historical records less representative of current and future flood behavior.</li>
+      </ul>
+    </div>
+  </div>
+
   <div class="acc-item">
     <div class="acc-header">Hydrology Methods — Peak Discharge Estimation</div>
     <div class="acc-body">
@@ -1582,6 +1711,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <tr><td>No astronomical tide</td><td>Unlike ocean coasts, no predictable tidal cycle</td><td>Means no "low tide window" for recovery; flooding can persist for days</td></tr>
       </table>
       <div class="highlight amber">FEMA's coastal FIRM methodology (SLOSH + ADCIRC) was designed for ocean coasts with astronomical tides. Great Lakes lack tides but have seiches — FEMA does NOT have a standardized Great Lakes coastal FIRM methodology. This is a critical mapping gap.</div>
+      <div class="highlight green">Minimum NFIP requirements are a floor, not a coastal resilience target. Great Lakes communities can adopt higher standards such as additional freeboard, erosion or bluff setbacks, stricter shoreline development rules, and V-zone-style construction practices where wave action or runup is credible.</div>
     </div>
   </div>
 
@@ -1949,18 +2079,43 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <div class="row"><span class="key">10/50/100/500-yr BFEs</span><span class="val2">Displayed on the FIS flood profile for rivers/streams</span></div>
         <div class="row"><span class="key">Floodway table</span><span class="val2">Use for cross-section hydraulics and floodway data</span></div>
         <div class="row"><span class="key">Coastal transect</span><span class="val2">Use for coastal/V-zone hazard transects, not riverine profiles</span></div>
+        <div class="row"><span class="key">Transect descriptions</span><span class="val2">Coastal</span></div>
+        <div class="row"><span class="key">Stillwater elevation tables</span><span class="val2">Lakes or ponds</span></div>
+        <div class="row"><span class="key">Flood profiles</span><span class="val2">Riverine</span></div>
+        <div class="row"><span class="key">Coastal cross-hatching</span><span class="val2">May indicate CBRS/protected-area overlay; check legend</span></div>
+      </div>
+
+      <h3>BFE Lookup by Flood Zone</h3>
+      <div class="cheat">
+        <div class="row"><span class="key">Riverine AE / A1-30</span><span class="val2">Use FIS flood profile; interpolate between cross sections</span></div>
+        <div class="row"><span class="key">Riverine Zone A</span><span class="val2">No published BFE; approximate from best available data, local/FEMA sources, or engineering analysis</span></div>
+        <div class="row"><span class="key">Zone A contour method</span><span class="val2">Overlay floodplain on topo contours; banks should be within 1/2 contour interval</span></div>
+        <div class="row"><span class="key">Zone A estimate</span><span class="val2">Lower bank water-surface elevation + 1/2 contour interval</span></div>
+        <div class="row"><span class="key">Data extrapolation</span><span class="val2">Only about 500 ft upstream of AE detailed study; similar channel; no backwater/structures</span></div>
+        <div class="row"><span class="key">Zone A data</span><span class="val2">Use federal/state/local best available data; document source</span></div>
+        <div class="row"><span class="key">AO</span><span class="val2">FIRM shows DEPTH; add depth to ground elevation for design elevation</span></div>
+        <div class="row"><span class="key">AH</span><span class="val2">FIRM shows EL/elevation; use mapped stillwater BFE for ponding</span></div>
+        <div class="row"><span class="key">Coastal AE / VE</span><span class="val2">Use coastal transects, stillwater elevations, wave setup/runup, and selected BFEs</span></div>
+        <div class="row"><span class="key">VE threshold</span><span class="val2">Coastal high hazard; breaking waves generally >=3 ft</span></div>
+        <div class="row"><span class="key">LiMWA</span><span class="val2">Limit of Moderate Wave Action; inland limit of >=1.5 ft waves in coastal A Zone</span></div>
       </div>
 
       <h3>Flood Zone Quick Reference</h3>
       <div class="cheat">
-        <div class="row"><span class="key">AE</span><span class="val2">1%; detailed study; BFE shown</span></div>
         <div class="row"><span class="key">A</span><span class="val2">1%; approximate; no BFE</span></div>
-        <div class="row"><span class="key">AO</span><span class="val2">Sheet flow; depth (not elev) shown</span></div>
-        <div class="row"><span class="key">AH</span><span class="val2">Ponding; BFE shown</span></div>
-        <div class="row"><span class="key">VE</span><span class="val2">Coastal + wave action; BFE shown</span></div>
+        <div class="row"><span class="key">AE / A1-30</span><span class="val2">1%; detailed study; BFE shown</span></div>
+        <div class="row"><span class="key">AH</span><span class="val2">1-3 ft ponding; EL/BFE shown</span></div>
+        <div class="row"><span class="key">AO</span><span class="val2">1-3 ft sheet flow; DEPTH/avg depth shown; alluvial fan may show velocity</span></div>
+        <div class="row"><span class="key">AR</span><span class="val2">Decertified flood-control system; restoration underway</span></div>
+        <div class="row"><span class="key">A99</span><span class="val2">Federal flood-control system under construction; no BFE</span></div>
+        <div class="row"><span class="key">V</span><span class="val2">Coastal velocity hazard; wave action; no BFE</span></div>
+        <div class="row"><span class="key">VE / V1-30</span><span class="val2">Coastal velocity hazard; wave action; BFE shown</span></div>
+        <div class="row"><span class="key">Coastal A Zone</span><span class="val2">AE landward of VE with moderate wave action; use LiMWA cue</span></div>
         <div class="row"><span class="key">Floodway fringe</span><span class="val2">If fully encroached, expected surcharge is 1 ft under NFIP</span></div>
-        <div class="row"><span class="key">X shaded</span><span class="val2">500-yr; no BFE; not SFHA</span></div>
-        <div class="row"><span class="key">X unshaded</span><span class="val2">Minimal hazard</span></div>
+        <div class="row"><span class="key">X shaded / B</span><span class="val2">Moderate hazard between 1% and 0.2%; plus some shallow/small-drainage/levee cases</span></div>
+        <div class="row"><span class="key">X unshaded / C</span><span class="val2">Outside 0.2% floodplain; minimal hazard</span></div>
+        <div class="row"><span class="key">D</span><span class="val2">Flood hazard undetermined but possible</span></div>
+        <div class="row"><span class="key">CBRS</span><span class="val2">Coastal Barrier Resources System overlay; not a flood zone</span></div>
       </div>
 
       <h3>44 CFR 60.3 Applicability Ladder</h3>
@@ -2066,6 +2221,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>BLE</strong></td><td>Base Level Engineering; automated HEC-RAS 1D/2D modeling at HUC-8/12 scale using QL2 lidar; non-regulatory screening tool</td></tr>
     <tr><td><strong>BRIC</strong></td><td>Building Resilient Infrastructure and Communities; FEMA pre-disaster HMA grant program; terminated Apr 2025; reinstated by court injunction Dec 2025; $1B FY24+25 NOFO issued Mar 2026</td></tr>
     <tr><td><strong>Bulletin 17C</strong></td><td>USGS publication defining statistical flood frequency analysis using Log-Pearson Type III distribution; superseded Bulletin 17B</td></tr>
+    <tr><td><strong>CBRS</strong></td><td>Coastal Barrier Resources System; protected coastal barrier overlay shown on some FIRMs with cross-hatching; not itself a flood zone, and distinct from floodway hatching</td></tr>
     <tr><td><strong>CFM</strong></td><td>Certified Floodplain Manager; ASFPM professional certification</td></tr>
     <tr><td><strong>CLOMR</strong></td><td>Conditional Letter of Map Revision; FEMA conditional approval of proposed map change before construction</td></tr>
     <tr><td><strong>Compound Flooding</strong></td><td>Simultaneous or sequential flooding from multiple mechanisms (e.g., storm surge + heavy rainfall; riverine + coastal)</td></tr>
@@ -2110,6 +2266,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>IGLD 1985</strong></td><td>International Great Lakes Datum 1985; vertical datum for Great Lakes water levels (different from NAVD88)</td></tr>
     <tr><td><strong>IRWA</strong></td><td>Interagency Research Working Agreement; the USACE-FEMA partnership producing FFRD</td></tr>
     <tr><td><strong>Lidar</strong></td><td>Light Detection and Ranging; laser scanning technology; produces dense point clouds for terrain modeling; cannot penetrate water</td></tr>
+    <tr><td><strong>LiMWA</strong></td><td>Limit of Moderate Wave Action; FIRM line marking the inland limit of the coastal A Zone area subject to ≥1.5 ft breaking waves during the base flood</td></tr>
     <tr><td><strong>LOMA</strong></td><td>Letter of Map Amendment; FEMA letter removing property from SFHA based on natural ground elevation above BFE</td></tr>
     <tr><td><strong>LOMR</strong></td><td>Letter of Map Revision; FEMA formal revision to FIRM based on new engineering analysis</td></tr>
     <tr><td><strong>LOMR-F</strong></td><td>Letter of Map Revision based on Fill; removes property from SFHA after fill placed above BFE</td></tr>
