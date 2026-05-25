@@ -460,6 +460,20 @@ tr:hover td{background:rgba(255,255,255,.02)}
     </div>
   </div>
   <div class="acc-item">
+    <div class="acc-header">FIRM Changes, Mandatory Purchase, and Outreach</div>
+    <div class="acc-body">
+      <p>Accurate FIRMs are not just mapping products; they set the regulatory and finance context for permits, owner notices, lender determinations, and mitigation conversations.</p>
+      <table>
+        <tr><th>Operational item</th><th>What to track</th><th>Why it matters</th></tr>
+        <tr><td><strong>Map-change inventory</strong></td><td>Preliminary maps, new effective panels, PMRs, LOMRs, LOMAs/LOMR-Fs, floodway changes, BFE changes, and NFHL updates.</td><td>Prevents the community from issuing permits, public advice, or owner letters from stale map data.</td></tr>
+        <tr><td><strong>SFHA boundary shifts</strong></td><td>Buildings newly mapped into or removed from the SFHA, including partial building-footprint overlaps.</td><td>Boundary changes can create or remove the federal mandatory-purchase trigger for covered loans, even though physical risk may remain.</td></tr>
+        <tr><td><strong>Owner and lender messaging</strong></td><td>Plain-language explanation of what changed, when it becomes effective, how to appeal or request a LOMC, and what insurance choices remain outside the SFHA.</td><td>Map adoption is also a communications event. Owners often hear "mandatory insurance" before they understand the map basis or appeal path.</td></tr>
+        <tr><td><strong>Local systems</strong></td><td>Permit software, parcel layers, public map viewers, building inventory, SD inventory, CRS files, and standard permit conditions.</td><td>A new FIRM or LOMR is not operational until the local workflow uses it.</td></tr>
+      </table>
+      <div class="highlight amber">Workshop cue: treat map changes as governance changes. A revised floodplain that is deeper, longer, or newly removed from flooding changes permits, lending conversations, public outreach, and the credibility of the local floodplain office.</div>
+    </div>
+  </div>
+  <div class="acc-item">
     <div class="acc-header">Flood Zones — Regulatory Significance</div>
     <div class="acc-body">
       <table>
@@ -689,6 +703,21 @@ tr:hover td{background:rgba(255,255,255,.02)}
       </table>
       <div class="highlight amber">Mandatory purchase cue: a lender can make a loan-level flood-zone determination, but only FEMA can amend or revise the flood zone designation. A LOMA based on natural ground above BFE is the cleanest path to remove a structure from the SFHA for federal mandatory-purchase purposes.</div>
       <p>Process time: LOMA ~30 days; LOMR 6-18 months depending on complexity and FEMA workload. LOMRs that change BFEs commonly involve a 90-day appeal period and become effective months after issuance.</p>
+    </div>
+  </div>
+  <div class="acc-item">
+    <div class="acc-header">Budgeting for Map Change</div>
+    <div class="acc-body">
+      <p>CLOMRs and LOMRs should be budgeted as project-delivery tasks, not as paperwork afterthoughts. The expensive part is often not the FEMA form itself; it is assembling defensible data and keeping the community, applicant, FEMA, and public aligned.</p>
+      <table>
+        <tr><th>Budget item</th><th>What to include</th><th>Workshop cue</th></tr>
+        <tr><td><strong>FEMA review fees</strong></td><td>Applicable MT-1/MT-2 review and processing fees, with attention to fee exemptions and lower online-submittal fees where available.</td><td>Do not assume every map change is free; do not assume every public-benefit data correction is fee-bearing.</td></tr>
+        <tr><td><strong>Professional work</strong></td><td>Survey, topography, H&amp;H modeling, bridge/culvert data, as-built plans, floodway analysis, datum checks, and licensed certifications.</td><td>The map-change request is only as good as the technical record behind it.</td></tr>
+        <tr><td><strong>Application package</strong></td><td>MT-2 forms, community concurrence, affected-owner notifications, public notice/appeal support, ESA or environmental coordination where required, and follow-up data responses.</td><td>Incomplete packages stretch review time and create avoidable public confusion.</td></tr>
+        <tr><td><strong>Staff time</strong></td><td>Coordination with FEMA, state NFIP staff, CTP reviewers, engineers, applicants, adjacent communities, elected officials, real-estate interests, lenders, and residents.</td><td>Budget staff hours for meetings, comments, public questions, and record updates, not just consultant invoices.</td></tr>
+        <tr><td><strong>Closeout</strong></td><td>After construction, submit the LOMR/as-built package, update local GIS and permit systems, retain the determination, and revise public-facing materials.</td><td>A CLOMR does not revise the effective map; the post-project LOMR is the action that makes the revision usable.</td></tr>
+      </table>
+      <div class="highlight green">Practical question for the session: when a capital project changes flood elevations or the floodway, who owns the CLOMR-before / LOMR-after budget line, and who owns the staff time for public communication?</div>
     </div>
   </div>
 
@@ -1153,7 +1182,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <li>Required in all enclosed areas below BFE for NFIP compliance (residential)</li>
         <li>Standard: 1 in² net open area per 1 ft² of enclosed floor area; minimum 2 openings; openings within 1 ft of grade</li>
         <li>Engineered openings: must be certified by PE; can use smaller area if designed to equalize pressure faster</li>
-        <li>Automatic openings (ICC/ANSI 1209): rated to open at ≤12 in of water depth; close when water recedes; do not require manual operation</li>
+        <li>Automatic openings (ICC-ES/ANSI 1209): rated to open at ≤12 in of water depth; close when water recedes; do not require manual operation</li>
         <li>Covers: must be removable or automatically open; screen mesh counts against net area if flow restricted</li>
         <li>FEMA TB-1 (2021) is the authoritative reference</li>
       </ul>
@@ -1258,6 +1287,56 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="card ws2">
       <h3>HMAプログラム別 予算規模比較</h3>
       <div class="chart-wrap"><canvas id="chart-hma"></canvas></div>
+    </div>
+  </div>
+
+  <h3>ICC Coverage — NFIP's Post-Loss Mitigation Bridge</h3>
+  <div class="acc-item open">
+    <div class="acc-header">Increased Cost of Compliance (ICC): What to Know for WS2</div>
+    <div class="acc-body">
+      <p>ICC is worth adding because it is the insurance mechanism that can turn a substantial-damage or repetitive-damage determination into partial funding for nonstructural mitigation. It is not a grant, and it is not automatic owner assistance: it is SFIP Coverage D, adjusted separately from the physical flood-damage claim.</p>
+      <table>
+        <tr><th>Topic</th><th>Practical rule</th><th>Workshop cue</th></tr>
+        <tr><td><strong>Amount</strong></td><td>Up to $30,000, subject to eligibility, for costs needed to comply with state or local floodplain management laws or ordinances.</td><td>Useful but rarely enough by itself. Treat it as gap funding that must be coordinated with insurance proceeds, owner funds, HMA grants, or community projects.</td></tr>
+        <tr><td><strong>Covered mitigation options</strong></td><td>Elevation, relocation, demolition, and eligible floodproofing, or combinations of those measures.</td><td>These are exactly the nonstructural options in WS2; ICC is the claims-side funding hook for the same toolbox.</td></tr>
+        <tr><td><strong>Floodproofing limit</strong></td><td>Floodproofing is primarily for non-residential buildings; residential basement exceptions are narrow and must meet FEMA standards.</td><td>Do not use ICC to imply general residential dry floodproofing is allowed in the SFHA.</td></tr>
+        <tr><td><strong>Eligibility trigger</strong></td><td>The community official must determine the building is substantially damaged or repetitively damaged by flood, usually during the repair-permit process.</td><td>Local SI/SD administration controls whether ICC becomes available. Poor post-event permitting can close the funding window.</td></tr>
+        <tr><td><strong>Bring-to-code purpose</strong></td><td>ICC supports the extra cost of bringing the structure into compliance after the qualifying flood damage determination.</td><td>The community's SD decision is not just a paperwork step; it is the bridge between damaged-building repair and lawful mitigation.</td></tr>
+        <tr><td><strong>Basic policy prerequisites</strong></td><td>The building needs SFIP building coverage, must be in the SFHA, and the policyholder must not have reached the applicable NFIP building payment limit.</td><td>This separates ICC from general flood insurance, contents coverage, disaster assistance, and voluntary mitigation grants.</td></tr>
+        <tr><td><strong>Not eligible / excluded</strong></td><td>Emergency Program policies, contents-only policies, GFIPs, Dwelling Form policies on individual condominium units, and detached garages unless separately insured.</td><td>When discussing condominiums or accessory structures, ask which policy insures the building-level compliance obligation.</td></tr>
+        <tr><td><strong>Claim handling</strong></td><td>The ICC claim is filed separately with the flood insurer after the community determination; estimates, permits, proof of loss, and completion documentation matter.</td><td>ICC is operational, not just conceptual: the owner, adjuster, local official, contractor, and permit file all have to align.</td></tr>
+      </table>
+      <div class="highlight amber">Workshop cue: ask how presenters sequence ICC with HMA. A homeowner may need an SD letter, a permit path, contractor estimates, proof-of-loss paperwork, and a mitigation grant timeline before they know whether elevation, relocation, demolition, or eligible floodproofing is financially possible.</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header">ICC, Grants, and Owner Motivation After a Disaster</div>
+    <div class="acc-body">
+      <p>Post-disaster ICC is also an owner-communication tool. It helps explain why mitigation is not only a compliance burden after substantial damage.</p>
+      <table>
+        <tr><th>Message</th><th>Practical meaning</th><th>Workshop cue</th></tr>
+        <tr><td><strong>Multiple benefits</strong></td><td>Mitigation can reduce future flood risk, may lower flood insurance premiums when the rating variables improve, and can make a building easier to finance or sell.</td><td>Avoid promising a guaranteed resale premium; frame this as risk, cost, and marketability improvement.</td></tr>
+        <tr><td><strong>Presidential disaster link</strong></td><td>After a Presidentially declared major disaster, grant funding may be available through state, territorial, tribal, or local government subapplicants.</td><td>ICC alone is small; the practical project often depends on pairing it with HMA or other post-disaster funding.</td></tr>
+        <tr><td><strong>ICC as cost share</strong></td><td>An NFIP policyholder may assign eligible Coverage D / ICC benefits to the community so the community can use the payment as non-federal cost share for an approved mitigation project.</td><td>This is a major implementation detail for community-scale elevation, relocation, demolition, or eligible floodproofing projects.</td></tr>
+        <tr><td><strong>Limits of assignment</strong></td><td>The policyholder assigns the eligible ICC benefit to the subapplicant/community, not to another private individual; participation in the community mitigation project is voluntary.</td><td>Ask who explains the assignment, who controls contractors and documentation, and how owners are protected if their ICC payment is counted as match.</td></tr>
+      </table>
+      <div class="highlight green">Discussion line: ICC is most powerful when it is treated as part of the local recovery architecture, not as a small side payment handled after the owner has already chosen ordinary repair.</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header">ICC Repetitive-Damage Eligibility — Different from Generic RL/SRL</div>
+    <div class="acc-body">
+      <p>Do not collapse all "repetitive loss" definitions into one. ICC uses its own repetitive-damage pathway tied to local ordinance enforcement and claim history.</p>
+      <table>
+        <tr><th>Requirement</th><th>Meaning</th><th>Why it matters</th></tr>
+        <tr><td><strong>Local provision</strong></td><td>The state or community must have adopted and be enforcing a cumulative substantial-damage or repetitive-loss provision in its floodplain management ordinance.</td><td>If the ordinance does not have the higher-standard trigger, ICC may be available for substantial damage but not the repetitive-damage pathway.</td></tr>
+        <tr><td><strong>Two flood losses</strong></td><td>The building must have suffered flood damage on two occasions during a 10-year period ending on the date of the second loss.</td><td>This is narrower than simply being "high risk"; it depends on event timing and documentation.</td></tr>
+        <tr><td><strong>25% average repair-cost test</strong></td><td>The cost to repair flood damage, on average, must equal or exceed 25% of the building's market value at the time of each flood.</td><td>This explains why good repair-cost and structure-value records matter before and after each event.</td></tr>
+        <tr><td><strong>NFIP claim history</strong></td><td>In addition to the current claim, the NFIP must have paid the previous qualifying claim.</td><td>Community damage history alone may not satisfy the ICC claim test if the policy-payment record is missing.</td></tr>
+      </table>
+      <div class="highlight green">Clean distinction: RL/SRL status helps target mitigation; ICC eligibility is a claims-and-ordinance test. Use the right definition for the program being discussed.</div>
     </div>
   </div>
 
@@ -1677,6 +1756,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <tr><td><strong>Consistency across communities</strong></td><td>Gives floodplain administrators, surveyors, engineers, insurers, and owners a common form and measurement vocabulary.</td><td>Useful when comparing local practices, CRS communities, and multi-state consulting work.</td></tr>
         <tr><td><strong>Flood and building elevation data</strong></td><td>Records BFE, datum, lowest floor, lowest horizontal structural member, attached garage, machinery/equipment, LAG/HAG, and related building features.</td><td>WS1 datum and map-data quality issues show up directly in EC fields.</td></tr>
         <tr><td><strong>Insurance and LOMC support</strong></td><td>Can support NFIP rating information and requests such as LOMA/LOMR-F when building or ground elevations matter.</td><td>Helps explain why the same elevation error can affect permits, premiums, and map-change requests.</td></tr>
+        <tr><td><strong>Rating after Risk Rating 2.0</strong></td><td>Most homeowners do not need an EC just to get flood insurance. EC information does not set the rate by itself, but it can document First Floor Height, LAG, machinery/equipment elevation, and openings that may identify a lower premium.</td><td>Do not promise an EC will lower the premium. The useful message is narrower: if EC data is more favorable than FEMA-sourced elevation data, NFIP rating can use the lower premium outcome; providing EC information should not increase the premium.</td></tr>
         <tr><td><strong>CRS documentation</strong></td><td>CRS communities are required to use FEMA's Elevation Certificate process and keep documentation.</td><td>Connects technical accuracy to CRS credit and administrative capacity.</td></tr>
         <tr><td><strong>Copy retention</strong></td><td>Keep the full EC and attachments in the community permit file, and provide complete copies for the insurance agent/company and building owner.</td><td>Partial ECs are hard to audit; missing pages, photos, comments, or attachments can hide the actual compliance basis.</td></tr>
       </table>
@@ -2115,11 +2195,15 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <table>
         <tr><th>Item</th><th>Practical meaning</th><th>Workshop cue</th></tr>
         <tr><td><strong>Who is affected</strong></td><td>Property owners who receive federal disaster assistance for acquisition, construction, repair, or replacement of an insurable flood-damaged structure in an SFHA.</td><td>Connects IA, HMA, insurance, and rebuilding decisions after the event.</td></tr>
-        <tr><td><strong>GFIP</strong></td><td>FEMA may provide a Group Flood Insurance Policy for some eligible disaster survivors; this can satisfy the initial flood-insurance requirement for a limited period.</td><td>GFIP helps close the immediate coverage gap, but it is not a permanent solution.</td></tr>
-        <tr><td><strong>Maintenance duty</strong></td><td>After the group policy or initial coverage period, the owner must maintain flood insurance as required.</td><td>Communities should warn owners before coverage lapses, not after the next disaster.</td></tr>
+        <tr><td><strong>GFIP trigger</strong></td><td>FEMA may provide a Group Flood Insurance Policy to eligible individuals or households without flood insurance who receive IHP assistance for flood damage after a Presidentially declared major disaster.</td><td>GFIP is not ordinary voluntary insurance and is not available just because a property flooded.</td></tr>
+        <tr><td><strong>Coverage term</strong></td><td>GFIP coverage is temporary: the regulatory term is 36 months, beginning 60 days after the disaster declaration, with individual coverage effective on the 30th day after NFIP receives the required data and premium payment.</td><td>This creates a transition clock that starts during recovery, when owners are least likely to track insurance deadlines.</td></tr>
+        <tr><td><strong>Limited coverage</strong></td><td>Coverage is limited and tied to the Stafford Act IHP maximum grant amount, not the ordinary residential NFIP maximum building limit.</td><td>Do not let survivors think GFIP is equivalent to a full $250,000 residential building policy.</td></tr>
+        <tr><td><strong>Transition to SFIP</strong></td><td>GFIP does not renew like a normal policy. The survivor should purchase a Standard Flood Insurance Policy before GFIP expires; NFIP guidance tells policyholders to act at least 30 days before expiration to avoid a lapse.</td><td>This is a concrete outreach calendar item for communities and agents around the third disaster anniversary.</td></tr>
+        <tr><td><strong>Maintenance duty</strong></td><td>After the group policy or initial coverage period, the owner must maintain flood insurance as required by the disaster-assistance condition.</td><td>Communities should warn owners before coverage lapses, not after the next disaster.</td></tr>
         <tr><td><strong>Lapse consequence</strong></td><td>If required flood insurance lapses, the owner may be ineligible for certain future federal disaster assistance for flood damage to that property.</td><td>This is a practical outreach message: "letting the policy lapse can cost you future aid."</td></tr>
         <tr><td><strong>Mitigation connection</strong></td><td>Insurance maintenance preserves a funding backstop, but elevation, acquisition, relocation, and floodproofing reduce the next loss.</td><td>Do not frame GFIP as resilience. It is a temporary financial bridge.</td></tr>
       </table>
+      <div class="highlight amber">Workshop cue: GFIP is where Individual Assistance, flood insurance, and future eligibility collide. Ask who owns the 30-month / 36-month outreach process so survivors do not lose coverage just as the temporary policy ends.</div>
     </div>
   </div>
 
@@ -2153,6 +2237,21 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <tr><td><strong>5. Other programs and unmet needs</strong></td><td>Voluntary agencies, state/local programs, case management, donations, and later mitigation programs may address remaining eligible needs.</td><td>Unmet-needs work is where buyouts, elevation, relocation, and floodproofing conversations can either mature or disappear.</td></tr>
       </table>
       <div class="highlight amber">Workshop cue: ask how communities communicate this sequence before owners start repairs. A homeowner who spends insurance proceeds on noncompliant like-for-like repair may lose the window for elevation, relocation, acquisition, ICC, or HMA-funded mitigation.</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header">ICC in the Recovery Funding Sequence</div>
+    <div class="acc-body">
+      <p>ICC sits in an awkward but important place: it is an NFIP insurance benefit, but it pays only after the local compliance trigger exists. That makes it a bridge between the permit file and the mitigation funding stack.</p>
+      <table>
+        <tr><th>Sequence point</th><th>What has to happen</th><th>Risk if missed</th></tr>
+        <tr><td><strong>Before repair spending</strong></td><td>Owner needs clear messaging that permanent repair may require SI/SD review and current-code compliance.</td><td>Owner spends claim proceeds on like-for-like repair before elevation, relocation, demolition, or eligible floodproofing is evaluated.</td></tr>
+        <tr><td><strong>Local determination</strong></td><td>Community issues a substantial-damage or qualifying repetitive-damage determination through the repair-permit path.</td><td>Without the local determination, the insurer cannot treat ICC as available just because the building flooded.</td></tr>
+        <tr><td><strong>Claim documentation</strong></td><td>Policyholder files a separate ICC claim, gathers estimates, obtains permits, and documents completion.</td><td>The project may be technically eligible but cash flow fails because claim, permit, and contractor timelines do not match.</td></tr>
+        <tr><td><strong>Funding coordination</strong></td><td>ICC can be paired with other funds when duplication-of-benefits rules are respected.</td><td>Uncoordinated insurance, IA, SBA, HMA, and community funds can create repayment or ineligibility problems.</td></tr>
+      </table>
+      <div class="highlight green">Discussion line: ICC is the small but concrete test of whether a community can connect claims, permits, SI/SD, and nonstructural mitigation quickly enough after a flood.</div>
     </div>
   </div>
 
@@ -2527,13 +2626,25 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 
   <div class="q-box sharp">
-    <div class="q-num">WS2 · Q7 · Recovery Funding Sequence</div>
+    <div class="q-num">WS2 · Q7 · ICC Bridge</div>
+    <div class="q-text">For substantially damaged or repetitively damaged NFIP-insured buildings, how are communities practically sequencing ICC coverage with HMA grants, owner funds, permits, and contractor timelines? In particular, what should a floodplain administrator do before the next flood so the SD letter, ICC claim, and mitigation option are ready before owners spend repair proceeds?</div>
+    <div class="q-why">Why sharp: Connects the workshop's nonstructural toolbox to the actual post-flood cash-flow and permit trigger. ICC is small relative to elevation costs, but it is often the first mitigation-specific money an owner can point to.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q8 · Recovery Funding Sequence</div>
     <div class="q-text">For disasters declared after FEMA's March 22, 2024 Individual Assistance reforms, how should communities explain the Sequence of Delivery to homeowners so insurance, FEMA IA/ONA, SBA loans, ICC, and HMA mitigation do not conflict? What outreach message prevents owners from spending insurance proceeds on like-for-like repairs before elevation, relocation, or floodproofing options are evaluated?</div>
     <div class="q-why">Why sharp: Connects nonstructural mitigation to the real recovery cash-flow sequence. The best technical retrofit is irrelevant if the owner has already spent the recoverable money on noncompliant repair.</div>
   </div>
 
   <div class="q-box sharp">
-    <div class="q-num">WS2 · Q8 · USACE Delivery</div>
+    <div class="q-num">WS2 · Q9 · GFIP Transition</div>
+    <div class="q-text">For uninsured survivors who receive a FEMA Group Flood Insurance Policy after a declared flood disaster, who is responsible for the transition message before the 36-month GFIP term ends? Do communities, states, FEMA, NFIP Direct, or agents have a standard outreach workflow to prevent a lapse before the survivor buys a Standard Flood Insurance Policy?</div>
+    <div class="q-why">Why sharp: GFIP is temporary, limited coverage. A lapse can affect future assistance eligibility, so this is an operational recovery problem, not just an insurance detail.</div>
+  </div>
+
+  <div class="q-box sharp">
+    <div class="q-num">WS2 · Q10 · USACE Delivery</div>
     <div class="q-text">FEMA HMA programs are unstable, while USACE has more than 50 years of nonstructural authority and active programs like FIMP. If communities increasingly want elevation, floodproofing, relocation, and acquisition at scale, how should they decide whether to pursue FEMA HMA funding versus USACE project authorities, and who owns implementation risk after construction?</div>
     <div class="q-why">Why sharp: Moves the discussion from "what works technically" to "which institution can actually deliver it, inspect it, maintain it, and carry liability."</div>
   </div>
@@ -2628,6 +2739,18 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 
   <div class="argument">
+    <div class="arg-topic">ICC as Implementation Test</div>
+    <div class="arg-claim">ICC is the practical test of whether a community can connect insurance, permits, SI/SD, and mitigation fast enough after a flood.</div>
+    <div class="arg-evidence">ICC may provide up to $30,000 for elevation, relocation, demolition, or eligible floodproofing, but only after a qualifying local substantial-damage or repetitive-damage determination and a separate claim process. If the community lacks pre-event SD procedures, owner messaging, permit triage, and contractor-estimate workflows, the owner may exhaust ordinary claim proceeds before the mitigation pathway becomes usable.</div>
+  </div>
+
+  <div class="argument">
+    <div class="arg-topic">GFIP Transition Risk</div>
+    <div class="arg-claim">GFIP solves an immediate uninsured-survivor problem but can become a future-assistance trap if the transition to standard flood insurance is not managed.</div>
+    <div class="arg-evidence">GFIP is temporary and limited. It can satisfy the initial flood-insurance requirement after IHP assistance, but the survivor must maintain required coverage after it expires. If communities, states, FEMA, NFIP Direct, and agents do not coordinate outreach before the 36-month term ends, a survivor may lose coverage and jeopardize future federal disaster assistance.</div>
+  </div>
+
+  <div class="argument">
     <div class="arg-topic">USACE Delivery Capacity</div>
     <div class="arg-claim">Nonstructural mitigation is becoming a federal delivery-capacity question, not just a mitigation-method question.</div>
     <div class="arg-evidence">USACE has had statutory nonstructural authority since WRDA Section 73 in 1974 and built floodproofing expertise through the National Nonstructural Committee, ERDC testing, Silver Jackets, and major projects. ASFPM reports 88,000+ structures identified for nonstructural mitigation in approved or developing USACE projects. FIMP alone targets 4,000+ structures in the 10-year floodplain, with a 245-structure pilot. The contested question is whether USACE will embrace or pause this implementation role while FEMA mitigation remains unstable.</div>
@@ -2718,13 +2841,18 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="row"><span class="key">Not community duty</span><span class="val2">Do not complete permit applications for the homeowner</span></div>
     <div class="row"><span class="key">Development definition</span><span class="val2">Broad: human-made change to land, structures, earthwork, paving, drilling, or storage</span></div>
     <div class="row"><span class="key">NFIP origin</span><span class="val2">Created Aug 1, 1968 to cut disaster aid costs, reduce risk, and provide flood insurance</span></div>
-    <div class="row"><span class="key">NFIP stool</span><span class="val2">Know risk with FIRM/FIS; manage risk with ordinances/mitigation; insure financial loss</span></div>
+    <div class="row"><span class="key">NFIP stool</span><span class="val2">Hazard identification, mitigation, and flood insurance are the NFIP three-legged stool</span></div>
+    <div class="row"><span class="key">Reduce flood losses</span><span class="val2">Adopt and enforce floodplain management ordinances; do not shrink maps to avoid risk</span></div>
+    <div class="row"><span class="key">Disaster plan</span><span class="val2">Community document detailing steps to reduce damage and loss of life during an event</span></div>
     <div class="row"><span class="key">Insurance vs mitigation</span><span class="val2">Insurance pays losses; only mitigation changes the physical risk</span></div>
     <div class="row"><span class="key">NFIP flood definition</span><span class="val2">2+ acres or 2+ properties; overflow/runoff/mudflow/shoreline collapse; surface water, not groundwater</span></div>
-    <div class="row"><span class="key">NFIP building</span><span class="val2">2+ rigid walls + secured roof + permanent site; principally above ground and not entirely over water</span></div>
+    <div class="row"><span class="key">Base flood quiz</span><span class="val2">The flood with a 1% chance of occurring in any given year is the base flood</span></div>
+    <div class="row"><span class="key">BFE quiz</span><span class="val2">Base Flood Elevation is the height/elevation of the base-flood water surface</span></div>
+    <div class="row"><span class="key">NFIP building</span><span class="val2">Walled, roofed structures principally above ground, manufactured homes, and buildings under construction can be NFIP-insurable</span></div>
     <div class="row"><span class="key">NFIP insurable</span><span class="val2">Eligible buildings, manufactured homes/travel trailers when permanently affixed, construction, contents</span></div>
     <div class="row"><span class="key">Not NFIP insurable</span><span class="val2">Over-water/below-ground buildings, unanchored manufactured homes, vehicles/RVs, outdoor equipment/tanks, pools</span></div>
     <div class="row"><span class="key">NFIP unavailable</span><span class="val2">Nonparticipating/suspended community, CBRS/OPA post-designation structures, Section 1316 property</span></div>
+    <div class="row"><span class="key">Section 1316 quiz</span><span class="val2">Can deny NFIP coverage for a violating property; it does not put the property into the Emergency Program</span></div>
     <div class="row"><span class="key">ACV vs RCV</span><span class="val2">ACV = replacement cost minus depreciation; RCV = same-kind replacement without depreciation</span></div>
     <div class="row"><span class="key">Contents ACV</span><span class="val2">NFIP contents claims are generally ACV; depreciation can leave a real recovery gap</span></div>
     <div class="row"><span class="key">RCV exception</span><span class="val2">Single-family principal residence may get RCV if insured to at least 80% of RCV or max NFIP limit</span></div>
@@ -2746,11 +2874,18 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="row"><span class="key">Lender determination</span><span class="val2">Lender determines loan requirement; only FEMA changes official flood zone by LOMC</span></div>
     <div class="row"><span class="key">LOMA effect</span><span class="val2">Removes federal mandatory purchase for affected structure/land; may not change RR2.0 premium</span></div>
     <div class="row"><span class="key">LOMA elevation</span><span class="val2">Structure removal usually needs LAG at/above BFE; lot removal needs lowest lot elevation support</span></div>
+    <div class="row"><span class="key">Map-change outreach</span><span class="val2">Track new panels/LOMRs and explain SFHA boundary changes before lender/owner confusion starts</span></div>
+    <div class="row"><span class="key">Map-change budget</span><span class="val2">Include FEMA fees where applicable, H&amp;H/survey/as-built work, public notice, and staff coordination</span></div>
+    <div class="row"><span class="key">GFIP trigger</span><span class="val2">Uninsured IHP flood-damage recipient after presidential major disaster; temporary group policy</span></div>
+    <div class="row"><span class="key">GFIP term</span><span class="val2">36 months; begins 60 days after declaration; individual coverage starts 30th day after NFIP data/premium receipt</span></div>
+    <div class="row"><span class="key">GFIP limit</span><span class="val2">Limited coverage tied to Stafford Act IHP max, not ordinary $250k residential building limit</span></div>
+    <div class="row"><span class="key">GFIP transition</span><span class="val2">Buy SFIP before GFIP expires; act at least 30 days early to avoid lapse</span></div>
     <div class="row"><span class="key">GFIP / maintenance</span><span class="val2">Disaster aid can create flood-insurance maintenance duty; lapse can affect future aid</span></div>
     <div class="row"><span class="key">Insurance vs aid</span><span class="val2">Insurance can pay covered claims without a disaster declaration; IA/SBA depends on declaration and eligibility</span></div>
     <div class="row"><span class="key">FIRM data cue</span><span class="val2">Not satellite-only: uses LiDAR/survey, hydrology, hydraulics, GIS, and local review</span></div>
     <div class="row"><span class="key">EC current form</span><span class="val2">FEMA FF-206-FY-22-152; expires Jun 30, 2026; re-check after expiry</span></div>
     <div class="row"><span class="key">EC core use</span><span class="val2">Permit compliance record, insurance data, LOMC support, CRS documentation</span></div>
+    <div class="row"><span class="key">EC rating cue</span><span class="val2">Usually not required to buy NFIP coverage; can document FFH/LAG/openings and should not raise premium if submitted</span></div>
     <div class="row"><span class="key">Deteriorated building value</span><span class="val2">Use market value as of permit application date</span></div>
     <div class="row"><span class="key">SI/SD formula</span><span class="val2">Improvement or repair cost ÷ pre-improvement/pre-damage market value ≥50%</span></div>
     <div class="row"><span class="key">SI market value</span><span class="val2">Structure only; exclude land, site improvements, occupancy/use, and location premium</span></div>
@@ -2758,6 +2893,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="row"><span class="key">SI costs</span><span class="val2">Include labor/materials, donated work, demo, finishes, utilities, roofs, siding, decks</span></div>
     <div class="row"><span class="key">SI cost sources</span><span class="val2">Itemized contractor/design estimates, independent estimators, Marshall &amp; Swift, RSMeans</span></div>
     <div class="row"><span class="key">SD applicability</span><span class="val2">≥50% repair cost + SFHA + community SD declaration + noncompliance</span></div>
+    <div class="row"><span class="key">SD survey</span><span class="val2">Substantial damage surveys assess damaged structures to test repair cost &gt;=50% of market value</span></div>
     <div class="row"><span class="key">Pre/Post-FIRM</span><span class="val2">SD applies to both; cutoff is initial FIRM or Dec. 31, 1974 rule</span></div>
     <div class="row"><span class="key">SD letter</span><span class="val2">Local community issues official determination and provides appeal process</span></div>
     <div class="row"><span class="key">SD preparedness</span><span class="val2">Inventory + risk info + SD plan + trained permit/inspection staff + templates</span></div>
@@ -2769,6 +2905,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="row"><span class="key">Disaster declaration</span><span class="val2">Governor/tribal request -> President designates areas and assistance categories</span></div>
     <div class="row"><span class="key">Sequence of delivery</span><span class="val2">Emergency aid -> insurance -> FEMA IA/ONA -> SBA/other programs -> unmet needs; verify current declaration guidance</span></div>
     <div class="row"><span class="key">Duplication of benefits</span><span class="val2">Insurance, FEMA, SBA, state/local, donations, and voluntary aid cannot pay twice for the same loss</span></div>
+    <div class="row"><span class="key">ICC purpose</span><span class="val2">SFIP Coverage D: up to $30k for compliance-driven mitigation after qualifying flood damage</span></div>
+    <div class="row"><span class="key">ICC options</span><span class="val2">Elevation, relocation, demolition, and eligible floodproofing; floodproofing mainly non-residential</span></div>
+    <div class="row"><span class="key">ICC trigger</span><span class="val2">Community SD or repetitive-damage determination + separate ICC claim with insurer</span></div>
+    <div class="row"><span class="key">ICC repetitive test</span><span class="val2">2 flood losses in 10 yrs + avg repair cost >=25% market value + paid qualifying claim + local provision</span></div>
+    <div class="row"><span class="key">ICC assignment</span><span class="val2">Policyholder may assign ICC to community as non-federal HMA cost share for eligible work</span></div>
+    <div class="row"><span class="key">ICC not eligible</span><span class="val2">Finding a different rental property; also Emergency Program, contents-only, GFIP, individual condo-unit Dwelling Form</span></div>
     <div class="row"><span class="key">IA / PA / HMA</span><span class="val2">Households / governments+PNPs / mitigation funding; authorization varies by declaration</span></div>
     <div class="row"><span class="key">DRRA 1206</span><span class="val2">PA reimbursement for code/FPM admin and enforcement up to 180 days post-declaration</span></div>
     <div class="row"><span class="key">1206 activities</span><span class="val2">Permits, plan reviews, COs, inspections, violations, SD determinations, outreach</span></div>
@@ -2786,6 +2928,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="row"><span class="key">NFIP community benefit</span><span class="val2">Flood insurance becomes available when regulations are adopted/enforced</span></div>
     <div class="row"><span class="key">Variance risk</span><span class="val2">Variances are rare because they increase risk to life and property</span></div>
     <div class="row"><span class="key">1% annual chance zones</span><span class="val2">Zone A and Zone V are subject to inundation by the base flood</span></div>
+    <div class="row"><span class="key">RV quiz</span><span class="val2">In the SFHA, an RV must meet manufactured-home rules unless &lt;180 days or fully licensed and ready for highway use</span></div>
     <div class="row"><span class="key">Premium discount program</span><span class="val2">Community Rating System rewards standards above NFIP minimums</span></div>
   </div>
 
@@ -2833,8 +2976,13 @@ tr:hover td{background:rgba(255,255,255,.02)}
 
       <h3>ICC Coverage Cues</h3>
       <div class="cheat">
-        <div class="row"><span class="key">Eligible</span><span class="val2">Elevation, relocation, demolition, non-residential floodproofing</span></div>
-        <div class="row"><span class="key">Not eligible</span><span class="val2">Finding a different rental property</span></div>
+        <div class="row"><span class="key">Meaning</span><span class="val2">Increased Cost of Compliance; SFIP Coverage D, not a mitigation grant</span></div>
+        <div class="row"><span class="key">Limit</span><span class="val2">Up to $30,000; separate from flood-damage claim but subject to policy max rules</span></div>
+        <div class="row"><span class="key">Eligible work</span><span class="val2">Elevation, relocation, demolition, eligible floodproofing or combinations</span></div>
+        <div class="row"><span class="key">Trigger</span><span class="val2">Local SD or repetitive-damage determination; separate ICC claim required</span></div>
+        <div class="row"><span class="key">Repetitive test</span><span class="val2">2 flood losses / 10 yrs; avg repair cost >=25% value; paid prior claim; local provision</span></div>
+        <div class="row"><span class="key">Cost share</span><span class="val2">Assigned ICC can count as non-federal match for eligible community mitigation work</span></div>
+        <div class="row"><span class="key">Not eligible</span><span class="val2">Finding a different rental property / rental replacement; Emergency Program, contents-only, GFIP</span></div>
       </div>
     </div>
     <div>
@@ -2855,6 +3003,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <div class="row"><span class="key">LOMR-F</span><span class="val2">Fill above BFE; changes property status, not full panel</span></div>
         <div class="row"><span class="key">LOMR</span><span class="val2">Engineering revision; may change SFHA, BFEs, floodway</span></div>
         <div class="row"><span class="key">CLOMR</span><span class="val2">Pre-construction comment; does not change FIRM</span></div>
+        <div class="row"><span class="key">Map-change budget</span><span class="val2">Fees + survey/H&amp;H/as-built + notices + FEMA/state/applicant/public coordination</span></div>
         <div class="row"><span class="key">Floodway rise quiz</span><span class="val2">Answer: all above; CLOMR before, LOMR/as-built after, community sign-off</span></div>
         <div class="row"><span class="key">65.12 formal actor</span><span class="val2">Community applies/signs; owner/developer usually supplies engineering package</span></div>
       </div>
@@ -2944,6 +3093,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <div class="row"><span class="key">60.3(e)(4)</span><span class="val2">Pile/column foundation; bottom horizontal member at/above BFE; simultaneous wind/water loads</span></div>
         <div class="row"><span class="key">V-zone certificate</span><span class="val2">PE/architect certifies design, specs, plans, construction methods; keep in permit file</span></div>
         <div class="row"><span class="key">60.3(e)(5)</span><span class="val2">Below lowest floor: open or breakaway; parking/access/storage only</span></div>
+        <div class="row"><span class="key">Breakaway quiz</span><span class="val2">Breakaway walls should collapse under flood/water loads; piers, posts, stairs, and LHSM should not</span></div>
         <div class="row"><span class="key">60.3(e)(6)</span><span class="val2">No fill for structural support of V-zone buildings</span></div>
         <div class="row"><span class="key">60.3(e)(7)</span><span class="val2">No dune/mangrove alteration that increases potential flood damage</span></div>
         <div class="row"><span class="key">60.3(e)(8)</span><span class="val2">Manufactured homes in V zones generally meet e(2)-(7); existing-park exception may use c(12)</span></div>
@@ -2973,10 +3123,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <div class="row"><span class="key">Return vs deny</span><span class="val2">Incomplete = return for info; noncompliant = correction path or denial</span></div>
         <div class="row"><span class="key">Other approvals</span><span class="val2">Verify federal/state/tribal/local permits before floodplain permit issuance</span></div>
         <div class="row"><span class="key">All development</span><span class="val2">Permit review covers more than buildings: fill, grading, paving, storage, utilities</span></div>
+        <div class="row"><span class="key">Reasonably safe sites</span><span class="val2">Use the development permit application process to ensure building sites are reasonably safe from flooding</span></div>
         <div class="row"><span class="key">No FIRM yet</span><span class="val2">Use community-wide permit review to determine whether the site is flood-prone</span></div>
         <div class="row"><span class="key">No adverse impact</span><span class="val2">Development should not increase flood hazard on other properties</span></div>
         <div class="row"><span class="key">Inspection role</span><span class="val2">Confirm construction matches approved plans, ECs, certificates, openings, utilities</span></div>
         <div class="row"><span class="key">Violation role</span><span class="val2">Follow up, require correction, and take enforcement action when needed</span></div>
+        <div class="row"><span class="key">Complaints / appeals</span><span class="val2">FPA investigates complaints, works in appeals/variance process, and takes enforcement action for violations</span></div>
         <div class="row"><span class="key">Records role</span><span class="val2">Keep permits, elevations, floodproofing certs, SI/SD, variances, enforcement</span></div>
         <div class="row"><span class="key">Data role</span><span class="val2">Maintain local flood data, LOMRs, high-water marks, and map-change evidence</span></div>
         <div class="row"><span class="key">SI/SD role</span><span class="val2">Make substantial improvement/damage determinations and trigger compliance</span></div>
@@ -2991,6 +3143,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <div class="row"><span class="key">After flood</span><span class="val2">Support re-entry info, damaged-building permits, SD inspection, owner outreach</span></div>
         <div class="row"><span class="key">SD triage</span><span class="val2">Triage plan, SDE/docs, determination letter, appeal path, ongoing owner info</span></div>
         <div class="row"><span class="key">State coordination</span><span class="val2">Coordinate early with State NFIP Coordinator and State Hazard Mitigation Officer</span></div>
+        <div class="row"><span class="key">CAC / CAV</span><span class="val2">FEMA/state contacts and visits identify program deficiencies and potential violations; CAV/CAC transition to NFIP Compliance Audit in 2026</span></div>
         <div class="row"><span class="key">PA 1206 use</span><span class="val2">Document staff/contract costs for post-disaster code and FPM enforcement surge</span></div>
       </div>
     </div>
@@ -3003,6 +3156,8 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td>44 CFR 60.1(d)</td><td>Higher Standards</td><td>Communities may exceed NFIP minimum criteria with more comprehensive floodplain management regulations</td></tr>
     <tr><td>44 CFR 60.3</td><td>NFIP Floodplain Management</td><td>Minimum requirements for communities; residential floodproofing prohibition</td></tr>
     <tr><td>44 CFR 60.6</td><td>Variances</td><td>Variance criteria, floodway no-rise limit, written applicant notice, and variance recordkeeping/reporting duties</td></tr>
+    <tr><td>44 CFR 61.17</td><td>Group Flood Insurance Policy</td><td>GFIP definition, IHP link, 36-month term, 60-day start, individual coverage timing, deductible, and expiration notice</td></tr>
+    <tr><td>44 CFR Part 61, App. A(1), Coverage D</td><td>Increased Cost of Compliance</td><td>SFIP ICC coverage limit, eligibility, repetitive-loss test, and exclusions for Coverage D claims</td></tr>
     <tr><td>44 CFR 65</td><td>Identification and Mapping</td><td>FIRM production, LOMC procedures</td></tr>
     <tr><td>44 CFR 65.12</td><td>Proposed Encroachments</td><td>Conditional approval path before permitting floodway or floodplain encroachments that would exceed allowed BFE increases</td></tr>
     <tr><td>44 CFR 80</td><td>Property Acquisition</td><td>Open space requirement for acquired parcels in perpetuity</td></tr>
@@ -3034,7 +3189,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     </div>
     <div class="source-card">
       <div class="src-title">ASFPM 2026 Program Schedule</div>
-      <div class="src-note">Checked May 24, 2026. Confirms the two target workshops, times, presenters, Baird Center venue note, and additional fees.</div>
+      <div class="src-note">Checked May 25, 2026. Confirms the two target workshops, times, presenters, Baird Center venue note, and additional fees.</div>
       <a href="https://www.floods.org/conference/program/program-schedule/" target="_blank" rel="noreferrer">Open program schedule</a>
     </div>
     <div class="source-card">
@@ -3043,8 +3198,8 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <a href="us-japan-floodplain-workshop-log.md">Open local workshop log</a>
     </div>
     <div class="source-card">
-      <div class="src-title">Attached Floodplain Administrator Slides</div>
-      <div class="src-note">Used for the local authority, permitting, technical-compliance review, inspection, enforcement, recordkeeping, flood-data maintenance, SI/SD, permit-process, Elevation Certificate error cues, substantial damage preparedness, pre-event and post-event operations, mitigation and emergency-plan coordination, mutual aid, communications, temporary occupancy, alert-enrollment, flood-insurance definition, insurance-vs-assistance, and Sequence of Delivery cues added to Technical Primer, Policy Dossier, and Quick Reference.</div>
+      <div class="src-title">Attached Floodplain Administrator / ICC Slides</div>
+      <div class="src-note">Used for the local authority, permitting, technical-compliance review, inspection, enforcement, recordkeeping, flood-data maintenance, SI/SD, permit-process, Elevation Certificate error cues, substantial damage preparedness, pre-event and post-event operations, mitigation and emergency-plan coordination, mutual aid, communications, temporary occupancy, alert-enrollment, flood-insurance definition, insurance-vs-assistance, Sequence of Delivery, ICC, and GFIP cues added to Technical Primer, Policy Dossier, Workshop 2, and Quick Reference.</div>
     </div>
     <div class="source-card">
       <div class="src-title">NWS Flood Safety and Turn Around Don't Drown</div>
@@ -3096,6 +3251,21 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <a href="https://agents.floodsmart.gov/topics/handling-claims/wildfire-exception" target="_blank" rel="noreferrer">Open FloodSmart wildfire waiting-period exception</a>
     </div>
     <div class="source-card">
+      <div class="src-title">FEMA / FloodSmart Increased Cost of Compliance</div>
+      <div class="src-note">Used for ICC amount, covered mitigation options, substantial-damage and repetitive-damage triggers, separate ICC claim handling, eligibility exclusions, ICC assignment to a community, and the distinction between ICC, HMA grants, and disaster assistance.</div>
+      <a href="https://www.fema.gov/floodplain-management/financial-help/increased-cost-compliance" target="_blank" rel="noreferrer">Open FEMA ICC coverage page</a>
+      <br>
+      <a href="https://agents.floodsmart.gov/topics/handling-claims/increased-cost-of-compliance" target="_blank" rel="noreferrer">Open NFIP agent ICC claims page</a>
+      <br>
+      <a href="https://agents.floodsmart.gov/sites/default/files/media/document/2025-09/fema_nfip-FloodInsuranceManual-October2025-508c.pdf" target="_blank" rel="noreferrer">Open NFIP Flood Insurance Manual October 2025</a>
+      <br>
+      <a href="https://www.fema.gov/sites/default/files/documents/fema_hma-guide-v2.1_2025.pdf" target="_blank" rel="noreferrer">Open FEMA HMA Guide v2.1</a>
+      <br>
+      <a href="https://agents.floodsmart.gov/sites/default/files/media/document/2025-08/Appendix_G_Assignment%20of%20Coverage%20D.pdf" target="_blank" rel="noreferrer">Open Assignment of Coverage D form</a>
+      <br>
+      <a href="https://www.ecfr.gov/current/title-44/chapter-I/subchapter-B/part-61/appendix-Appendix%20A%281%29%20to%20Part%2061" target="_blank" rel="noreferrer">Open eCFR SFIP Dwelling Form Coverage D</a>
+    </div>
+    <div class="source-card">
       <div class="src-title">FEMA Flood Mitigation Assistance and RL/SRL Mitigation</div>
       <div class="src-note">Used for the workshop cue that repetitive-loss and severe-repetitive-loss properties are priority candidates for mitigation screening, owner outreach, acquisition/relocation, elevation, mitigation reconstruction, and eligible floodproofing pathways.</div>
       <a href="https://www.fema.gov/grants/mitigation/floods" target="_blank" rel="noreferrer">Open FEMA FMA program page</a>
@@ -3106,23 +3276,31 @@ tr:hover td{background:rgba(255,255,255,.02)}
     </div>
     <div class="source-card">
       <div class="src-title">FEMA / Federal Lender Flood Insurance Purchase Rules</div>
-      <div class="src-note">Used for mandatory purchase triggers, MIRE flood determinations, lender determination limits, force-placement context, LOMA removal effects, GFIP, and the flood-insurance maintenance requirement after certain disaster assistance.</div>
+      <div class="src-note">Used for mandatory purchase triggers, MIRE flood determinations, lender determination limits, force-placement context, LOMA removal effects, GFIP eligibility, 36-month term, limited coverage, SFIP transition timing, and the flood-insurance maintenance requirement after certain disaster assistance.</div>
       <a href="https://www.fema.gov/flood-insurance/rules-legislation/mandatory-purchase" target="_blank" rel="noreferrer">Open FEMA mandatory purchase page</a>
       <br>
       <a href="https://www.fema.gov/flood-maps/change-your-flood-zone/loma-lomr-f" target="_blank" rel="noreferrer">Open FEMA LOMA / LOMR-F page</a>
       <br>
       <a href="https://www.fema.gov/assistance/individual/policy-guidance-and-fact-sheets/group-flood-insurance-policy" target="_blank" rel="noreferrer">Open FEMA GFIP page</a>
       <br>
+      <a href="https://www.fema.gov/emergency-managers/practitioners/recovery-resilience-resource-library/group-flood-insurance" target="_blank" rel="noreferrer">Open FEMA GFIP recovery resource</a>
+      <br>
+      <a href="https://agents.floodsmart.gov/articles/understanding-group-flood-insurance-policies-gfips" target="_blank" rel="noreferrer">Open NFIP agent GFIP overview</a>
+      <br>
+      <a href="https://www.ecfr.gov/current/title-44/chapter-I/subchapter-B/part-61/section-61.17" target="_blank" rel="noreferrer">Open eCFR 44 CFR 61.17</a>
+      <br>
       <a href="https://www.fdic.gov/resources/bankers/supervisory-insights/siwin12/si-winter2012-article01.html" target="_blank" rel="noreferrer">Open FDIC flood insurance lending overview</a>
     </div>
     <div class="source-card">
       <div class="src-title">FEMA / FloodSmart Risk Rating 2.0 and Pricing Factors</div>
-      <div class="src-note">Used for the flood-insurance rating-factor discussion: geographic location, distance to water or flooding sources, relative elevation, first-floor height, foundation type, replacement cost, construction date, number of floors, primary residence status, floodproofing, mitigation discounts, CRS discounts, flood-opening discount cues, and the continuing role of Elevation Certificates.</div>
+      <div class="src-note">Used for the flood-insurance rating-factor discussion: geographic location, distance to water or flooding sources, relative elevation, first-floor height, foundation type, replacement cost, construction date, number of floors, primary residence status, floodproofing, mitigation discounts, CRS discounts, flood-opening discount cues, the continuing role of Elevation Certificates, and the point that submitted EC information should not increase the premium when compared with FEMA-sourced elevation data.</div>
       <a href="https://www.fema.gov/flood-insurance/risk-rating" target="_blank" rel="noreferrer">Open FEMA Risk Rating 2.0 page</a>
       <br>
       <a href="https://www.fema.gov/flood-insurance/work-with-nfip/risk-rating/single-family-home" target="_blank" rel="noreferrer">Open FEMA single-family rating factors page</a>
       <br>
       <a href="https://www.floodsmart.gov/get-insured/elevation-certificates" target="_blank" rel="noreferrer">Open FloodSmart Elevation Certificate page</a>
+      <br>
+      <a href="https://agents.floodsmart.gov/sites/default/files/media/document/2025-09/fema_nfip-FloodInsuranceManual-October2025-508c.pdf" target="_blank" rel="noreferrer">Open NFIP Flood Insurance Manual October 2025</a>
       <br>
       <a href="https://www.floodsmart.gov/get-insured/discounts" target="_blank" rel="noreferrer">Open FloodSmart discounts page</a>
       <br>
@@ -3162,8 +3340,14 @@ tr:hover td{background:rgba(255,255,255,.02)}
     </div>
     <div class="source-card">
       <div class="src-title">FEMA Flood Maps</div>
-      <div class="src-note">Primary FEMA entry point for flood maps, Risk MAP, FIRMs, FIS products, and map service resources.</div>
+      <div class="src-note">Primary FEMA entry point for flood maps, Risk MAP, FIRMs, FIS products, map service resources, LOMR/CLOMR pathways, MT-2 submittals, map-change fees, and the need to budget both project costs and staff coordination for map revisions.</div>
       <a href="https://www.fema.gov/flood-maps" target="_blank" rel="noreferrer">Open FEMA flood maps page</a>
+      <br>
+      <a href="https://www.fema.gov/flood-maps/change-your-flood-zone/lomr-clomr" target="_blank" rel="noreferrer">Open FEMA LOMR / CLOMR page</a>
+      <br>
+      <a href="https://www.fema.gov/flood-maps/change-your-flood-zone/paper-application-forms/mt-2" target="_blank" rel="noreferrer">Open FEMA MT-2 forms page</a>
+      <br>
+      <a href="https://www.fema.gov/flood-maps/change-your-flood-zone/status/flood-map-related-fees" target="_blank" rel="noreferrer">Open FEMA flood map-related fees page</a>
     </div>
     <div class="source-card">
       <div class="src-title">FEMA FIRM Database Technical Reference</div>
@@ -3194,6 +3378,19 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <div class="src-title">eCFR 44 CFR 65.12</div>
       <div class="src-note">Conditional approval requirements for proposed encroachments that would create BFE increases beyond the normal 60.3(c)/(d) limits.</div>
       <a href="https://www.ecfr.gov/current/title-44/part-65/section-65.12" target="_blank" rel="noreferrer">Open eCFR 44 CFR 65.12</a>
+    </div>
+    <div class="source-card">
+      <div class="src-title">FEMA NFIP Compliance, RV, Section 1316, and Emergency Program Notes</div>
+      <div class="src-note">Used for CAV/CAC deficiency and violation cues, the 2026 transition to NFIP Compliance Audit, recreational vehicle highway-ready requirements, Section 1316 denial-of-insurance framing, and the distinction between Section 1316 property status and the community-level Emergency Program.</div>
+      <a href="https://www.fema.gov/about/glossary/community-assistance-visit-cav" target="_blank" rel="noreferrer">Open FEMA CAV glossary</a>
+      <br>
+      <a href="https://www.fema.gov/floodplain-management/community-assistance-program/about" target="_blank" rel="noreferrer">Open FEMA CAP-SSSE page</a>
+      <br>
+      <a href="https://www.fema.gov/about/glossary/recreational-vehicle" target="_blank" rel="noreferrer">Open FEMA recreational vehicle glossary</a>
+      <br>
+      <a href="https://www.fema.gov/about/glossary/section-1316" target="_blank" rel="noreferrer">Open FEMA Section 1316 glossary</a>
+      <br>
+      <a href="https://www.fema.gov/about/glossary/emergency-program" target="_blank" rel="noreferrer">Open FEMA Emergency Program glossary</a>
     </div>
     <div class="source-card">
       <div class="src-title">Verification Discipline</div>
@@ -3229,9 +3426,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>BFE</strong></td><td>Base Flood Elevation; the elevation to which floodwater is predicted to rise during the 1% annual chance flood; shown on FIRM for detailed study zones</td></tr>
     <tr><td><strong>BLE</strong></td><td>Base Level Engineering; automated HEC-RAS 1D/2D modeling at HUC-8/12 scale using QL2 lidar; non-regulatory screening tool</td></tr>
     <tr><td><strong>BRIC</strong></td><td>Building Resilient Infrastructure and Communities; FEMA pre-disaster HMA grant program; terminated Apr 2025; reinstated by court injunction Dec 2025; $1B FY24+25 NOFO issued Mar 2026</td></tr>
+    <tr><td><strong>Breakaway Wall</strong></td><td>Sacrificial wall below an elevated coastal/V-zone building that is designed to collapse under flood loads without transferring damaging loads to the elevated building, piles, piers, posts, or lowest horizontal structural member</td></tr>
     <tr><td><strong>Building (NFIP insurance)</strong></td><td>Walled and roofed structure with at least two outside rigid walls and a fully secured roof, principally above ground, not entirely over water, and affixed to a permanent site; includes qualifying manufactured homes and certain travel trailers</td></tr>
     <tr><td><strong>Building Replacement Cost Value</strong></td><td>Estimated cost to rebuild the insured building; used in Risk Rating 2.0 pricing and distinct from market value or substantial damage market value</td></tr>
     <tr><td><strong>Bulletin 17C</strong></td><td>USGS publication defining statistical flood frequency analysis using Log-Pearson Type III distribution; superseded Bulletin 17B</td></tr>
+    <tr><td><strong>CAC</strong></td><td>Community Assistance Contact; FEMA/state NFIP engagement used to identify compliance concerns, technical-assistance needs, program deficiencies, and potential violations</td></tr>
+    <tr><td><strong>CAV</strong></td><td>Community Assistance Visit; FEMA/state visit that provides technical assistance and checks whether the community is adequately enforcing floodplain management regulations; problems or potential violations must be corrected</td></tr>
     <tr><td><strong>CBRS</strong></td><td>Coastal Barrier Resources System; protected coastal barrier overlay shown on some FIRMs with cross-hatching; not itself a flood zone, and distinct from floodway hatching</td></tr>
     <tr><td><strong>CFM</strong></td><td>Certified Floodplain Manager; ASFPM professional certification</td></tr>
     <tr><td><strong>CLOMR</strong></td><td>Conditional Letter of Map Revision; FEMA conditional approval of proposed map change before construction</td></tr>
@@ -3245,11 +3445,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>Development</strong></td><td>NFIP term for a broad human-made change to land or structures, including construction, filling, grading, paving, excavation, drilling, dredging, mining, and storage of equipment or materials</td></tr>
     <tr><td><strong>DFE</strong></td><td>Design Flood Elevation; in ASCE 24-24, the flood elevation used for design; varies by Flood Design Class (FDC)</td></tr>
     <tr><td><strong>Disaster Assistance</strong></td><td>Federal, state, local, SBA, voluntary-agency, or other support after a disaster; federal FEMA assistance normally depends on a presidential declaration and cannot duplicate insurance or other benefits</td></tr>
+    <tr><td><strong>Disaster Plan</strong></td><td>Community document that lays out steps to reduce damage and loss of life during an event; usually coordinated with emergency operations, warning, evacuation, response, and recovery roles</td></tr>
     <tr><td><strong>DRRA</strong></td><td>Disaster Recovery Reform Act (2018); authorized BRIC; established statutory basis for program (used in court challenge to termination)</td></tr>
     <tr><td><strong>Dry Floodproofing</strong></td><td>Measures that make a building watertight; water does NOT enter; allowed for non-residential structures in A zones only; NEVER in V zones; PROHIBITED for residential in SFHA</td></tr>
     <tr><td><strong>Duplication of Benefits</strong></td><td>Legal recovery principle that FEMA, SBA, insurance, state/local aid, donations, and voluntary agencies cannot pay twice for the same disaster loss or need</td></tr>
     <tr><td><strong>Early Warning System (EWS)</strong></td><td>Sensor + forecast + alert + action protocol; effective only if lead time exceeds response time</td></tr>
-    <tr><td><strong>Emergency Program</strong></td><td>Initial NFIP phase for some communities with lower building and contents coverage limits before the community enters the Regular Program</td></tr>
+    <tr><td><strong>Emergency Program</strong></td><td>Initial community-level NFIP phase with lower coverage limits before Regular Program status; it is not an effect of declaring a particular property under Section 1316</td></tr>
     <tr><td><strong>EC</strong></td><td>Elevation Certificate; FEMA FF-206-FY-22-152 form documenting flood and building elevations for permit compliance, insurance rating information, LOMC support, CRS documentation, and local permit records</td></tr>
     <tr><td><strong>EO 14148</strong></td><td>Executive Order signed Jan 20, 2025; rescinded FFRMS (EO 13690); ended federal requirement to build to higher flood standard</td></tr>
     <tr><td><strong>ERDC</strong></td><td>U.S. Army Engineer Research and Development Center; USACE research facility used for hydraulic testing, including floodproofing technology evaluation</td></tr>
@@ -3276,11 +3477,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>FY</strong></td><td>Federal Fiscal Year; October 1 – September 30</td></tr>
     <tr><td><strong>GIS</strong></td><td>Geographic Information System; software/data ecosystem for spatial analysis; ArcGIS (Esri), QGIS (open source) are dominant platforms</td></tr>
     <tr><td><strong>GISP</strong></td><td>GIS Professional; GISCI certification; signifies professional-level GIS competency</td></tr>
-    <tr><td><strong>GFIP</strong></td><td>Group Flood Insurance Policy; FEMA-provided temporary group flood insurance for some eligible disaster survivors that can satisfy an initial post-disaster flood-insurance requirement</td></tr>
+    <tr><td><strong>GFIP</strong></td><td>Group Flood Insurance Policy; FEMA-provided temporary group policy for eligible uninsured IHP flood-damage recipients after a Presidentially declared major disaster; 36-month term, limited coverage, and transition to a Standard Flood Insurance Policy before expiration</td></tr>
     <tr><td><strong>HEC-HMS</strong></td><td>Hydrologic Engineering Center – Hydrologic Modeling System; USACE rainfall-runoff model</td></tr>
     <tr><td><strong>HEC-RAS</strong></td><td>Hydrologic Engineering Center – River Analysis System; USACE hydraulic model; 1D and 2D; industry standard for FEMA flood studies</td></tr>
     <tr><td><strong>HEC-WAT</strong></td><td>Watershed Analysis Tool; USACE platform for Monte Carlo ensemble flood frequency analysis; basis for FFRD</td></tr>
     <tr><td><strong>HFIAA</strong></td><td>Homeowner Flood Insurance Affordability Act (2014); rolled back Biggert-Waters premium increases; established NFIP affordability framework</td></tr>
+    <tr><td><strong>ICC</strong></td><td>Increased Cost of Compliance; SFIP Coverage D benefit that may pay up to $30,000, subject to eligibility, for elevation, relocation, demolition, or eligible floodproofing after a qualifying substantial-damage or repetitive-damage determination</td></tr>
     <tr><td><strong>HMA</strong></td><td>Hazard Mitigation Assistance; umbrella for FEMA grant programs: HMGP, BRIC, FMA, Swift Current</td></tr>
     <tr><td><strong>HMGP</strong></td><td>Hazard Mitigation Grant Program; post-disaster; 15% of total federal disaster spending per declaration; proposed replacement: R3P</td></tr>
     <tr><td><strong>HUC</strong></td><td>Hydrologic Unit Code; watershed delineation system; HUC-8 = subbasin (~700 sq mi avg); HUC-12 = watershed (~40 sq mi avg)</td></tr>
@@ -3329,6 +3531,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>Regular Program</strong></td><td>NFIP community status with full flood insurance coverage limits and ongoing floodplain management requirements, distinct from the lower-limit Emergency Program</td></tr>
     <tr><td><strong>Repetitive Loss (RL)</strong></td><td>NFIP-insured structure with ≥2 paid flood losses of more than $1,000 each in any 10-year period since 1978; definitions can differ by insurance, grant, CRS, ICC, and local ordinance context</td></tr>
     <tr><td><strong>Repetitive Loss Higher Standard</strong></td><td>Local ordinance option that requires repetitive-loss structures to meet substantial-damage-style current-code compliance even when a single event does not independently trigger the NFIP minimum 50% SD rule</td></tr>
+    <tr><td><strong>Recreational Vehicle</strong></td><td>In the SFHA, an RV must meet manufactured-home elevation and anchoring requirements unless it is on site fewer than 180 consecutive days or is fully licensed and ready for highway use</td></tr>
     <tr><td><strong>Restrictive Covenant</strong></td><td>Recorded property restriction used in nonstructural projects to preserve mitigation conditions and bind future owners</td></tr>
     <tr><td><strong>Remote Sensing</strong></td><td>Data collection from aircraft, satellites, drones, or sensors; in flood mapping, LiDAR and imagery can support terrain, land cover, change detection, and flood documentation, but satellite imagery alone does not set regulatory BFEs</td></tr>
     <tr><td><strong>Risk MAP</strong></td><td>Risk Mapping, Assessment, and Planning; FEMA's flood mapping program; produces FIRMs and risk products</td></tr>
@@ -3339,7 +3542,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>SDE</strong></td><td>Substantial Damage Estimator; FEMA tool communities can use to estimate building damage consistently and support substantial damage determinations</td></tr>
     <tr><td><strong>SDP</strong></td><td>Substantial Damage Management Plan; CRS Activity 510 element for pre-event substantial damage planning, SDE pre-population, and pre-event mitigation alternatives</td></tr>
     <tr><td><strong>SEA</strong></td><td>Supplemental Environmental Assessment; NEPA environmental review document supplementing prior analysis when project details or impacts need additional review</td></tr>
-    <tr><td><strong>Section 1316</strong></td><td>National Flood Insurance Act enforcement tool allowing flood insurance denial for a property declared by the community or state to be in violation of floodplain management regulations</td></tr>
+    <tr><td><strong>Section 1316</strong></td><td>National Flood Insurance Act enforcement tool allowing flood insurance denial for a property declared by the community or state to be in violation of floodplain management regulations; it does not put the property into the NFIP Emergency Program</td></tr>
     <tr><td><strong>Sequence of Delivery</strong></td><td>Order for routing disaster survivors through emergency aid, insurance, FEMA IA/ONA, SBA loans, other programs, and unmet-needs resources while preventing duplication of benefits</td></tr>
     <tr><td><strong>SFHA</strong></td><td>Special Flood Hazard Area; area with 1% or greater annual chance of flooding; regulatory zone for NFIP</td></tr>
     <tr><td><strong>SI</strong></td><td>Substantial Improvement; reconstruction, rehabilitation, addition, or other improvement where cost ≥50% of the structure's market value before the start of construction; substantially damaged structures are treated as SI regardless of actual repair work</td></tr>
@@ -3351,6 +3554,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <tr><td><strong>Temporary Occupancy</strong></td><td>Local post-disaster permission, if allowed, for limited use of a damaged structure; should be documented separately from permanent repair approval and SI/SD compliance</td></tr>
     <tr><td><strong>Three-Legged Stool</strong></td><td>NFIP framing: know the risk through hazard identification and maps, manage the risk through regulations and mitigation, and insure the risk through flood insurance</td></tr>
     <tr><td><strong>Substantial Damage (SD)</strong></td><td>Damage where cost to restore ≥50% of pre-damage fair market value; triggers bring-to-code (elevation or acquisition) requirement</td></tr>
+    <tr><td><strong>Substantial Damage Survey</strong></td><td>Field and administrative assessment process used after damage to estimate whether repair costs equal or exceed 50% of the structure's pre-damage market value</td></tr>
     <tr><td><strong>Swift Current</strong></td><td>FEMA HMA program; $500M for streamlined post-disaster buyouts of SRL/RL properties</td></tr>
     <tr><td><strong>3DEP</strong></td><td>USGS 3D Elevation Program; national lidar acquisition initiative; goal: QL2 coverage of entire U.S.</td></tr>
     <tr><td><strong>USACE</strong></td><td>U.S. Army Corps of Engineers; federal water resources agency with flood risk management, coastal storm risk management, and nonstructural mitigation authorities</td></tr>
